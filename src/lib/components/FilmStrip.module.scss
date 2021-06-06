@@ -1,0 +1,46 @@
+.container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+}
+
+.wrapper {
+  position: relative;
+  overflow: hidden;
+}
+
+.wrapperInner {
+  display: flex;
+  overflow-x: scroll;
+  scroll-snap-type: x mandatory;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  margin: 10px;
+}
+
+.wrapperInner::-webkit-scrollbar {
+  display: none;
+}
+
+.wrapperInner > * {
+  scroll-snap-align: center;
+  margin: 5px;
+}
+
+.navigation {
+  z-index: 100;
+  flex: 0 1 auto;
+  align-self: auto;
+  cursor: pointer;
+  user-select: none;
+  opacity: 0;
+  transition: transform 1s ease;
+}
+
+.navigationVisible {
+  opacity: 1;
+  transition: transform 1s;
+}
