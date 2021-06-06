@@ -34,9 +34,9 @@ export const GridGallery: FC<GridGalleryProps> = memo(({ items, targetSize, padd
       zoomTargetSize = Math.floor(zoomTargetSize * POSITIVE_ZOOM_LEVELS[zoomLevel - 1]);
     }
     // remove padding from width
-    const normalizedRectWidth = rect.width - padding * 2;
+    const normalizedRectWidth = Math.floor(rect.width - padding * 2);
     // get optimal column count based on adjusted target size and with
-    const columnCount = Math.ceil(normalizedRectWidth / zoomTargetSize);
+    const columnCount = Math.floor(normalizedRectWidth / zoomTargetSize);
     // find optimal target size; account for margins around images
     const normalizedTargetSize = Math.floor(normalizedRectWidth / columnCount) - margin * 2;
 

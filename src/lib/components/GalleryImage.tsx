@@ -1,4 +1,4 @@
-import React, { CSSProperties, FC, ImgHTMLAttributes, memo, useMemo } from 'react';
+import React, { CSSProperties, FC, ImgHTMLAttributes, memo, useMemo, useState } from 'react';
 
 import { CircularProgress } from '@material-ui/core';
 import ModuleStyles from './GalleryImage.module.scss';
@@ -14,35 +14,47 @@ export const GalleryImage: FC<GalleryImageProps> = memo(
   ({ src, srcSet, alt, onClick = noop, style = {}, className, ...imageElementProps }) => {
     const { ref, inView } = useInView({ threshold: 0.1 });
 
+    const [loading, setLoading] = useState(true);
+
     const imageClassName = className ?? ModuleStyles.image;
 
     const content = useMemo(() => {
-      const placeholder = <div className={imageClassName} style={style}></div>;
+      const placeholder = (
+        <div className={imageClassName} style={style}>
+          {loading && <CircularProgress />}
+        </div>
+      );
 
-      if (src) {
-        return inView ? (
-          <img
-            {...imageElementProps}
-            src={src}
-            srcSet={srcSet}
-            className={imageClassName}
-            role="presentation"
-            alt={alt}
-            onClick={onClick}
-            style={style}
-          />
-        ) : (
-          placeholder
+      const image = (
+        <img
+          {...imageElementProps}
+          src={src}
+          srcSet={srcSet}
+          className={imageClassName}
+          role="presentation"
+          alt={alt}
+          onClick={onClick}
+          style={{
+            ...(style ?? {}),
+            display: loading ? 'none' : 'block'
+          }}
+          onLoad={(): void => {
+            setLoading(false);
+          }}
+        />
+      );
+
+      if (src && inView) {
+        return (
+          <>
+            {image}
+            {loading && placeholder}
+          </>
         );
       }
-      return inView ? (
-        <div className={imageClassName} style={style}>
-          <CircularProgress />
-        </div>
-      ) : (
-        placeholder
-      );
-    }, [alt, imageClassName, imageElementProps, inView, onClick, src, srcSet, style]);
+
+      return placeholder;
+    }, [alt, imageClassName, imageElementProps, inView, loading, onClick, src, srcSet, style]);
 
     return (
       <div className={ModuleStyles.container} ref={ref}>
