@@ -4,8 +4,8 @@
   align-self: auto;
   justify-content: center;
   align-items: center;
-  height: 72px;
-  width: 72px;
+  height: 100px;
+  width: 100px;
   object-fit: cover;
   object-position: center;
   transition: transform 0.25s ease;
@@ -16,7 +16,11 @@
 
 .image:hover,
 .selected {
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.25), 0 0 0 2px rgba(0, 0, 0, 1);
+  opacity: 0.75;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.25), 0 0 2px 1px rgba(0, 0, 0, 0.75);
   transition: transform 0.25;
+}
+
+.selected {
   transform: scale(1.05);
 }

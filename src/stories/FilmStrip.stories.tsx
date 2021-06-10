@@ -2,7 +2,7 @@ import { FilmStrip, FilmStripProps } from '../lib';
 import { Meta, Story } from '@storybook/react/types-6-0';
 import { useRef, useState } from 'react';
 
-import { useUnsplashImages } from './hooks/useUnsplashImages';
+import { useLoremPicsum } from './hooks/useLoremPicsum';
 
 export default {
   title: 'Components/FilmStrip',
@@ -12,7 +12,7 @@ export default {
   },
   argTypes: {
     imageCount: {
-      control: { type: 'range', min: 1, max: 250, step: 1 }
+      control: { type: 'range', min: 1, max: 500, step: 1 }
     }
   },
   parameters: {
@@ -24,7 +24,7 @@ const Template: Story<FilmStripProps & { imageCount: number }> = ({ imageCount }
   const [selectedItem, setSelectedItem] = useState(0);
   const elementRef = useRef<HTMLDivElement | null>(null);
 
-  const images = useUnsplashImages({ imageCount, maxDefaultImageWidth: 200 });
+  const images = useLoremPicsum({ imageCount, targetSize: 200 });
 
   return (
     <div

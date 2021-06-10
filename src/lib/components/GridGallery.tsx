@@ -2,11 +2,11 @@ import React, { FC, memo, useMemo, useRef } from 'react';
 
 import { GalleryImage } from './GalleryImage';
 import ModuleStyles from './GridGallery.module.scss';
-import { VirtualImageData } from 'lib/types/ImageData';
+import { VirtualImageItem } from 'lib/types/ImageItem';
 import { useRect } from 'lib/hooks/useRect';
 
 export type GridGalleryProps = {
-  items: VirtualImageData[];
+  items: VirtualImageItem[];
   targetSize: number;
   padding: number;
   margin: number;
@@ -41,11 +41,15 @@ export const GridGallery: FC<GridGalleryProps> = memo(({ items, targetSize, padd
     const normalizedTargetSize = Math.floor(normalizedRectWidth / columnCount) - margin * 2;
 
     return items.map((item, index) => {
+      if (!item) {
+        return null;
+      }
       return (
         <GalleryImage
           key={index}
           className={ModuleStyles.image}
-          src={item?.src}
+          {...item.src}
+          src={item.src.url}
           alt={`thumbnail - ${index}`}
           style={{
             height: normalizedTargetSize,

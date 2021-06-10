@@ -2,6 +2,8 @@ import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
 import React from 'react';
 import { addDecorator } from '@storybook/react';
+import { create } from '@storybook/theming/create';
+import pkg from '../package.json';
 import { withPerformance } from 'storybook-addon-performance';
 
 export const parameters = {
@@ -13,6 +15,13 @@ export const parameters = {
     }
   },
   options: {
+    theme: create({
+      base: 'light',
+      fontBase: '"Roboto", sans-serif',
+      fontCode: 'monospace',
+      brandTitle: `Material Gallery ${pkg.version}`,
+      brandUrl: 'https://github.com/Icehunter/material-gallery'
+    }),
     storySort: {
       order: ['Introduction']
     }

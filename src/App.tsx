@@ -3,21 +3,21 @@ import React, { FC, useCallback, useRef, useState } from 'react';
 import { SlideshowGallery } from './lib';
 import styles from './App.module.scss';
 import { useKeyDownEvent } from './lib/hooks/useKeyDownEvent';
-import { useUnsplashImages } from 'stories/hooks/useUnsplashImages';
+import { useLoremPicsum } from 'stories/hooks/useLoremPicsum';
 
 const App: FC = () => {
   const [selectedItem, setSelectedItem] = useState(0);
   const elementRef = useRef<HTMLDivElement | null>(null);
 
-  const items = useUnsplashImages();
+  const images = useLoremPicsum();
 
   const previousItem = useCallback(() => {
-    setSelectedItem((prev) => (prev === 0 ? items.length - 1 : prev - 1));
-  }, [items.length]);
+    setSelectedItem((prev) => (prev === 0 ? images.length - 1 : prev - 1));
+  }, [images.length]);
 
   const nextItem = useCallback(() => {
-    setSelectedItem((prev) => (prev === items.length - 1 ? 0 : prev + 1));
-  }, [items.length]);
+    setSelectedItem((prev) => (prev === images.length - 1 ? 0 : prev + 1));
+  }, [images.length]);
 
   useKeyDownEvent(elementRef, 'ArrowLeft', previousItem);
   useKeyDownEvent(elementRef, 'ArrowRight', nextItem);
@@ -32,7 +32,7 @@ const App: FC = () => {
         outline: 'none'
       }}>
       <SlideshowGallery
-        items={items}
+        items={images}
         previousItem={previousItem}
         nextItem={nextItem}
         selectedItem={selectedItem}

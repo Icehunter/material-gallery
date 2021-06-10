@@ -3,7 +3,7 @@ import { Meta, Story } from '@storybook/react/types-6-0';
 import { useCallback, useRef, useState } from 'react';
 
 import { useKeyDownEvent } from '../lib/hooks/useKeyDownEvent';
-import { useUnsplashImages } from './hooks/useUnsplashImages';
+import { useLoremPicsum } from './hooks/useLoremPicsum';
 
 export default {
   title: 'Galleries/ImageCarousel',
@@ -13,7 +13,7 @@ export default {
   },
   argTypes: {
     imageCount: {
-      control: { type: 'range', min: 1, max: 250, step: 1 }
+      control: { type: 'range', min: 1, max: 500, step: 1 }
     },
     autoplay: {
       type: 'boolean',
@@ -42,7 +42,7 @@ const Template: Story<ImageCarouselProps & { imageCount: number; autoplay: boole
   const [selectedItem, setSelectedItem] = useState(0);
   const elementRef = useRef<HTMLDivElement | null>(null);
 
-  const images = useUnsplashImages({ imageCount });
+  const images = useLoremPicsum({ imageCount });
 
   const previousItem = useCallback(() => {
     setSelectedItem((prev) => (prev === 0 ? images.length - 1 : prev - 1));

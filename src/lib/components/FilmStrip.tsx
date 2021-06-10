@@ -4,17 +4,20 @@ import React, { Dispatch, FC, SetStateAction, memo, useEffect, useMemo, useRef }
 import { IconButton } from '@material-ui/core';
 import ModuleStyles from './FilmStrip.module.scss';
 import { Thumbnail } from './Thumbnail';
-import { VirtualImageData } from '../types/ImageData';
+import { VirtualImageItem } from '../types/ImageItem';
 import clsx from 'clsx';
+import { getNeighborIndexes } from 'lib/utils/getNeighborIndexes';
 import { useHorizontalScrollPosition } from '../hooks/useHorizontalScrollPosition';
 
 export type FilmStripProps = {
-  items: VirtualImageData[];
+  items: VirtualImageItem[];
   selectedItem: number;
   setSelectedItem: Dispatch<SetStateAction<number>>;
 };
 
 export const FilmStrip: FC<FilmStripProps> = memo(({ items, selectedItem, setSelectedItem }) => {
+  const neighbors = useMemo(() => getNeighborIndexes(selectedItem, items.length, 20), [items.length, selectedItem]);
+
   const currentNodeRef = useRef<HTMLDivElement | null>(null);
 
   const { scrollToElement, canScrollLeft, canScrollRight, scrollPageRight, scrollPageLeft } =
@@ -32,19 +35,24 @@ export const FilmStrip: FC<FilmStripProps> = memo(({ items, selectedItem, setSel
 
   const scrollItems = useMemo(() => {
     return items.map((item, index) => {
-      const selected = selectedItem === index;
+      if (!item) {
+        return null;
+      }
+      const preload = neighbors.includes(index);
       return (
         <Thumbnail
           key={index}
-          src={item?.thumbnail}
-          selected={selected}
+          {...item.thumbnail}
+          src={item.thumbnail.url}
+          selected={selectedItem === index}
+          preload={preload}
           onClick={(): void => {
             setSelectedItem(index);
           }}
         />
       );
     });
-  }, [selectedItem, items, setSelectedItem]);
+  }, [items, selectedItem, neighbors, setSelectedItem]);
 
   return (
     <div className={ModuleStyles.container}>

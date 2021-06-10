@@ -4,21 +4,24 @@ import React, { FC, memo, useLayoutEffect, useMemo } from 'react';
 import { GalleryImage } from './GalleryImage';
 import { IconButton } from '@material-ui/core';
 import ModuleStyles from './ImageCarousel.module.scss';
-import { VirtualImageData } from '../types/ImageData';
+import { VirtualImageItem } from '../types/ImageItem';
 import clsx from 'clsx';
+import { getNeighborIndexes } from 'lib/utils/getNeighborIndexes';
 import { noop } from '../utils/noop';
 
 export type ImageCarouselProps = {
-  items: VirtualImageData[];
+  items: VirtualImageItem[];
   previousItem: () => void;
   nextItem: () => void;
-  selectedItem?: number;
+  selectedItem: number;
   autoplay?: boolean;
   delay?: number;
 };
 
 export const ImageCarousel: FC<ImageCarouselProps> = memo(
   ({ items, previousItem = noop, nextItem = noop, selectedItem, autoplay = false, delay = 2500 }) => {
+    const neighbors = useMemo(() => getNeighborIndexes(selectedItem, items.length), [items.length, selectedItem]);
+
     useLayoutEffect(() => {
       // just return if not using effect
       // for slow loading images, wait until it's loaded before using 1 full tick
@@ -35,7 +38,13 @@ export const ImageCarousel: FC<ImageCarouselProps> = memo(
     }, [autoplay, delay, nextItem]);
 
     const itemElements = useMemo(() => {
+      // handle if we should preload future neighbors
+
       return items.map((item, index) => {
+        if (!item) {
+          return null;
+        }
+        const preload = neighbors.includes(index);
         return (
           <figure
             className={clsx(ModuleStyles.slide, {
@@ -43,18 +52,20 @@ export const ImageCarousel: FC<ImageCarouselProps> = memo(
               [ModuleStyles.inActiveSlide]: index !== selectedItem
             })}
             key={index}>
-            {index === selectedItem && (
+            {(index === selectedItem || preload) && (
               <GalleryImage
-                src={item?.src}
-                srcSet={item?.srcSet}
+                {...item.src}
+                src={item.src.url}
+                srcSet={item.srcSet}
                 className={ModuleStyles.image}
+                preload={preload}
                 alt={`thumbnail-${index}`}
               />
             )}
           </figure>
         );
       });
-    }, [items, selectedItem]);
+    }, [items, neighbors, selectedItem]);
 
     return (
       <div className={ModuleStyles.container}>

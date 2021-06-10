@@ -3,7 +3,7 @@ import { Thumbnail, ThumbnailProps } from '../lib';
 
 import React from 'react';
 import { noop } from 'lib/utils/noop';
-import { useUnsplashImages } from './hooks/useUnsplashImages';
+import { useLoremPicsum } from './hooks/useLoremPicsum';
 
 export default {
   title: 'Components/Thumbnail',
@@ -18,7 +18,7 @@ export default {
 } as Meta<ThumbnailProps>;
 
 const Template: Story<ThumbnailProps> = (props) => {
-  const [item] = useUnsplashImages({ imageCount: 1 });
+  const [item] = useLoremPicsum({ imageCount: 1, targetSize: 200 });
 
   return (
     <div
@@ -29,7 +29,7 @@ const Template: Story<ThumbnailProps> = (props) => {
         width: '100%',
         height: '100%'
       }}>
-      <Thumbnail {...props} src={item?.src} srcSet={item?.srcSet} />
+      <Thumbnail {...props} src={item?.src.url} srcSet={item?.srcSet} />
     </div>
   );
 };

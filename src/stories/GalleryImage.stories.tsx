@@ -4,7 +4,7 @@ import { Meta, Story } from '@storybook/react/types-6-0';
 import ModuleStyles from './GalleryImage.stories.module.scss';
 import React from 'react';
 import { noop } from 'lib/utils/noop';
-import { useUnsplashImages } from './hooks/useUnsplashImages';
+import { useLoremPicsum } from './hooks/useLoremPicsum';
 
 export default {
   title: 'Components/GalleryImage',
@@ -19,7 +19,7 @@ export default {
 } as Meta<GalleryImageProps>;
 
 const Template: Story<GalleryImageProps> = (props) => {
-  const [item] = useUnsplashImages({ imageCount: 5 });
+  const [item] = useLoremPicsum({ imageCount: 1 });
 
   return (
     <div
@@ -30,7 +30,7 @@ const Template: Story<GalleryImageProps> = (props) => {
         width: '100%',
         height: '100%'
       }}>
-      <GalleryImage {...props} src={item?.src} srcSet={item?.srcSet} />
+      <GalleryImage {...props} src={item?.src.url} srcSet={item?.srcSet} />
     </div>
   );
 };

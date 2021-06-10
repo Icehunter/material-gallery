@@ -1,4 +1,5 @@
 export * from './FilmStrip';
+export * from './FlowGallery';
 export * from './GalleryImage';
 export * from './GridGallery';
 export * from './ImageCarousel';

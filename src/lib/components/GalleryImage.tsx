@@ -1,39 +1,45 @@
-import React, { CSSProperties, FC, ImgHTMLAttributes, memo, useMemo, useState } from 'react';
+import React, { FC, ImgHTMLAttributes, memo, useMemo, useState } from 'react';
 
 import { CircularProgress } from '@material-ui/core';
 import ModuleStyles from './GalleryImage.module.scss';
-import { noop } from 'lib/utils/noop';
 import { useInView } from 'react-intersection-observer';
 
 export type GalleryImageProps = {
-  onClick?: () => void;
-  style?: CSSProperties;
+  preload?: boolean;
 } & ImgHTMLAttributes<HTMLImageElement>;
 
 export const GalleryImage: FC<GalleryImageProps> = memo(
-  ({ src, srcSet, alt, onClick = noop, style = {}, className, ...imageElementProps }) => {
-    const { ref, inView } = useInView({ threshold: 0.1 });
+  ({ src, style, className, preload = false, ...imageElementProps }) => {
+    const { ref, inView } = useInView({
+      triggerOnce: true,
+      rootMargin: '200px'
+    });
 
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(!preload);
 
     const imageClassName = className ?? ModuleStyles.image;
 
     const content = useMemo(() => {
       const placeholder = (
-        <div className={imageClassName} style={style}>
-          {loading && <CircularProgress />}
+        <div
+          className={imageClassName}
+          style={{
+            ...(style ?? {}),
+            border: 'none',
+            boxShadow: 'none'
+          }}>
+          {loading && inView && <CircularProgress size={16} />}
         </div>
       );
 
       const image = (
         <img
           {...imageElementProps}
+          // why can't this be spread? I have no idea
+          alt={imageElementProps.alt}
           src={src}
-          srcSet={srcSet}
           className={imageClassName}
           role="presentation"
-          alt={alt}
-          onClick={onClick}
           style={{
             ...(style ?? {}),
             display: loading ? 'none' : 'block'
@@ -44,7 +50,7 @@ export const GalleryImage: FC<GalleryImageProps> = memo(
         />
       );
 
-      if (src && inView) {
+      if (src && (inView || preload)) {
         return (
           <>
             {image}
@@ -54,7 +60,7 @@ export const GalleryImage: FC<GalleryImageProps> = memo(
       }
 
       return placeholder;
-    }, [alt, imageClassName, imageElementProps, inView, loading, onClick, src, srcSet, style]);
+    }, [imageClassName, imageElementProps, inView, loading, preload, src, style]);
 
     return (
       <div className={ModuleStyles.container} ref={ref}>
