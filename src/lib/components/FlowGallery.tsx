@@ -35,7 +35,6 @@ const createGalleryImage = (
       key={key}
       className={className}
       src={item.src.url}
-      alt={key}
       style={{
         height,
         width,

@@ -24,9 +24,7 @@ export const GalleryImage: FC<GalleryImageProps> = memo(
         <div
           className={imageClassName}
           style={{
-            ...(style ?? {}),
-            border: 'none',
-            boxShadow: 'none'
+            ...(style ?? {})
           }}>
           {loading && inView && <CircularProgress size={16} />}
         </div>

@@ -53,14 +53,7 @@ export const ImageCarousel: FC<ImageCarouselProps> = memo(
             })}
             key={index}>
             {(index === selectedItem || preload) && (
-              <GalleryImage
-                {...item.src}
-                src={item.src.url}
-                srcSet={item.srcSet}
-                className={ModuleStyles.image}
-                preload={preload}
-                alt={`thumbnail-${index}`}
-              />
+              <GalleryImage {...item.src} src={item.src.url} className={ModuleStyles.image} preload={preload} />
             )}
           </figure>
         );

@@ -13,13 +13,43 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  object-fit: cover;
   object-position: center;
   transition: transform 0.25s ease;
   box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.25);
 }
 
+.column {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+}
+
+.normalizedRow {
+  justify-content: space-between;
+}
+
 .image:hover {
   opacity: 0.75;
   transition: transform 0.25s;
+}
+
+.container.Horizontal {
+  flex-direction: column;
+}
+
+.panel.Horizontal {
+  height: auto !important;
+}
+
+.Vertical {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+}
+
+.Horizontal {
+  display: flex;
+  height: 100%;
+  width: max-content;
+  flex-direction: row;
 }

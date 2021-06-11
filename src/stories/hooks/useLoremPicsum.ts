@@ -14,7 +14,19 @@ type LoremPicsumData = {
   download_url: string;
 };
 
-export const useLoremPicsum = ({ imageCount = 5, targetSize = 1000 } = {}) => {
+export type TargetType = 'width' | 'height';
+
+export type UseLoremPicsumOptions = {
+  imageCount?: number;
+  targetSize?: number;
+  targetType?: TargetType;
+};
+
+export const useLoremPicsum = ({
+  imageCount = 5,
+  targetSize = 1000,
+  targetType = 'height'
+}: UseLoremPicsumOptions = {}): VirtualImageItem[] => {
   // because I don't like the first four photos from API :)
   const minimumImageCount = clamp(imageCount + 4, 5, 500);
 
