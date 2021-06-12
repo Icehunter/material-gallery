@@ -71,8 +71,6 @@ const resolveImageNodes = (
   // find optimal target size; account for margins around images
   const normalizedTargetSize = Math.floor(normalizedRectSize / panelCount) - margin * 2;
 
-  console.log(normalizedRectSize, panelCount);
-
   if (panelCount <= 0) {
     return [];
   }
@@ -226,7 +224,12 @@ export const MasonryGallery: FC<MasonryGalleryProps> = memo(
     }, [direction, itemElements]);
 
     return (
-      <div style={{ height: '100%', width: '100%', overflow: 'auto' }}>
+      <div
+        style={{
+          height: '100%',
+          width: '100%',
+          ...(direction === MasonryGalleryDirection.Horizontal ? { overflow: 'auto' } : undefined)
+        }}>
         <div
           className={clsx(ModuleStyles.container, {
             [ModuleStyles.Vertical]: direction === MasonryGalleryDirection.Vertical,

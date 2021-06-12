@@ -43,7 +43,6 @@ const Template: Story<MasonryGalleryProps & { imageCount: number; zoomLevel: num
   imageCount,
   direction
 }) => {
-  console.log(Object.keys(MasonryGalleryDirection));
   const images = useLoremPicsum({ imageCount, targetSize: targetSize });
 
   return (
