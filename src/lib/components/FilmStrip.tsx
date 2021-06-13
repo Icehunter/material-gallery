@@ -11,11 +11,12 @@ import { useHorizontalScrollPosition } from '../hooks/useHorizontalScrollPositio
 
 export type FilmStripProps = {
   items: VirtualImageItem[];
+  thumbnailSize?: number;
   selectedItem: number;
   setSelectedItem: Dispatch<SetStateAction<number>>;
 };
 
-export const FilmStrip: FC<FilmStripProps> = memo(({ items, selectedItem, setSelectedItem }) => {
+export const FilmStrip: FC<FilmStripProps> = memo(({ items, thumbnailSize, selectedItem, setSelectedItem }) => {
   const neighbors = useMemo(() => getNeighborIndexes(selectedItem, items.length, 20), [items.length, selectedItem]);
 
   const currentNodeRef = useRef<HTMLDivElement | null>(null);
@@ -38,12 +39,21 @@ export const FilmStrip: FC<FilmStripProps> = memo(({ items, selectedItem, setSel
       if (!item) {
         return null;
       }
+      const {
+        width,
+        height,
+        meta: { thumbnail }
+      } = item;
       const preload = neighbors.includes(index);
       return (
         <Thumbnail
           key={index}
-          {...item.thumbnail}
-          src={item.thumbnail.url}
+          {...{
+            width,
+            height,
+            src: thumbnail
+          }}
+          size={thumbnailSize}
           selected={selectedItem === index}
           preload={preload}
           onClick={(): void => {
@@ -52,7 +62,7 @@ export const FilmStrip: FC<FilmStripProps> = memo(({ items, selectedItem, setSel
         />
       );
     });
-  }, [items, selectedItem, neighbors, setSelectedItem]);
+  }, [items, neighbors, thumbnailSize, selectedItem, setSelectedItem]);
 
   return (
     <div className={ModuleStyles.container}>

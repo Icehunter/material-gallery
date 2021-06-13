@@ -1,25 +1,40 @@
 import { GalleryImage, GalleryImageProps } from '../lib';
 import { Meta, Story } from '@storybook/react/types-6-0';
+import { UnsplashCollectionSource, useUnsplashStatic } from './hooks/useUnsplashStatic';
 
 import ModuleStyles from './GalleryImage.stories.module.scss';
 import React from 'react';
 import { noop } from 'lib/utils/noop';
-import { useLoremPicsum } from './hooks/useLoremPicsum';
 
 export default {
   title: 'Components/GalleryImage',
   component: GalleryImage,
   args: {
     className: undefined,
-    onClick: noop
+    onClick: noop,
+    collectionSource: UnsplashCollectionSource.Landscape
+  },
+  argTypes: {
+    collectionSource: {
+      defaultValue: UnsplashCollectionSource.Landscape,
+      control: {
+        type: 'select',
+        options: Object.keys(UnsplashCollectionSource)
+      }
+    }
   },
   parameters: {
     layout: 'fullscreen'
   }
 } as Meta<GalleryImageProps>;
 
-const Template: Story<GalleryImageProps> = (props) => {
-  const [item] = useLoremPicsum({ imageCount: 1 });
+const Template: Story<GalleryImageProps & { collectionSource: UnsplashCollectionSource }> = ({
+  collectionSource,
+  ...props
+}) => {
+  const [item] = useUnsplashStatic({ imageCount: 1 });
+
+  const { src, width, height } = item ?? {};
 
   return (
     <div
@@ -30,7 +45,14 @@ const Template: Story<GalleryImageProps> = (props) => {
         width: '100%',
         height: '100%'
       }}>
-      <GalleryImage {...props} src={item?.src.url} srcSet={item?.srcSet} />
+      <GalleryImage
+        {...props}
+        {...{
+          src,
+          width,
+          height
+        }}
+      />
     </div>
   );
 };

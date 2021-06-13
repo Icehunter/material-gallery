@@ -1,8 +1,8 @@
 import { MasonryGallery, MasonryGalleryDirection, MasonryGalleryProps } from '../lib';
 import { Meta, Story } from '@storybook/react/types-6-0';
+import { TargetType, UnsplashCollectionSource, useUnsplashStatic } from './hooks/useUnsplashStatic';
 
 import React from 'react';
-import { useLoremPicsum } from './hooks/useLoremPicsum';
 
 export default {
   title: 'Galleries/MasonryGallery',
@@ -13,11 +13,12 @@ export default {
     targetSize: 320,
     padding: 20,
     margin: 5,
-    direction: MasonryGalleryDirection.Vertical
+    direction: MasonryGalleryDirection.Vertical,
+    collectionSource: UnsplashCollectionSource.Landscape
   },
   argTypes: {
     imageCount: {
-      control: { type: 'range', min: 1, max: 500, step: 1 }
+      control: { type: 'range', min: 1, max: 300, step: 1 }
     },
     zoomLevel: {
       control: { type: 'range', min: -5, max: 5, step: 1 }
@@ -28,6 +29,13 @@ export default {
         type: 'select',
         options: Object.keys(MasonryGalleryDirection)
       }
+    },
+    collectionSource: {
+      defaultValue: UnsplashCollectionSource.Landscape,
+      control: {
+        type: 'select',
+        options: Object.keys(UnsplashCollectionSource)
+      }
     }
   },
   parameters: {
@@ -35,15 +43,15 @@ export default {
   }
 } as Meta<MasonryGalleryProps>;
 
-const Template: Story<MasonryGalleryProps & { imageCount: number; zoomLevel: number }> = ({
-  zoomLevel,
-  targetSize,
-  padding,
-  margin,
-  imageCount,
-  direction
-}) => {
-  const images = useLoremPicsum({ imageCount, targetSize: targetSize });
+const Template: Story<
+  MasonryGalleryProps & { imageCount: number; zoomLevel: number; collectionSource: UnsplashCollectionSource }
+> = ({ zoomLevel, targetSize, padding, margin, imageCount, direction, collectionSource }) => {
+  const images = useUnsplashStatic({
+    imageCount,
+    targetSize: targetSize,
+    targetType: direction === MasonryGalleryDirection.Vertical ? TargetType.Width : TargetType.Height,
+    collectionSource
+  });
 
   return (
     <div

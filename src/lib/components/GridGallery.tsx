@@ -48,8 +48,8 @@ export const GridGallery: FC<GridGalleryProps> = memo(({ items, targetSize, padd
         <GalleryImage
           key={index}
           className={ModuleStyles.image}
-          {...item.src}
-          src={item.src.url}
+          src={item.src}
+          srcSet={item.srcSet}
           style={{
             height: normalizedTargetSize,
             width: normalizedTargetSize,

@@ -1,24 +1,44 @@
 import { Meta, Story } from '@storybook/react/types-6-0';
 import { Thumbnail, ThumbnailProps } from '../lib';
+import { UnsplashCollectionSource, useUnsplashStatic } from './hooks/useUnsplashStatic';
 
+import { ImageItem } from 'lib/types/ImageItem';
 import React from 'react';
 import { noop } from 'lib/utils/noop';
-import { useLoremPicsum } from './hooks/useLoremPicsum';
 
 export default {
   title: 'Components/Thumbnail',
   component: Thumbnail,
   args: {
     selected: false,
-    onClick: noop
+    onClick: noop,
+    collectionSource: UnsplashCollectionSource.Landscape
+  },
+  argTypes: {
+    collectionSource: {
+      defaultValue: UnsplashCollectionSource.Landscape,
+      control: {
+        type: 'select',
+        options: Object.keys(UnsplashCollectionSource)
+      }
+    }
   },
   parameters: {
     layout: 'fullscreen'
   }
 } as Meta<ThumbnailProps>;
 
-const Template: Story<ThumbnailProps> = (props) => {
-  const [item] = useLoremPicsum({ imageCount: 1, targetSize: 200 });
+const Template: Story<ThumbnailProps & { collectionSource: UnsplashCollectionSource }> = ({
+  collectionSource,
+  ...props
+}) => {
+  const [item] = useUnsplashStatic({ imageCount: 1, targetSize: 200, collectionSource });
+
+  const {
+    width,
+    height,
+    meta: { thumbnail }
+  } = item as ImageItem;
 
   return (
     <div
@@ -29,7 +49,7 @@ const Template: Story<ThumbnailProps> = (props) => {
         width: '100%',
         height: '100%'
       }}>
-      <Thumbnail {...props} src={item?.src.url} srcSet={item?.srcSet} />
+      <Thumbnail {...props} {...{ src: thumbnail, width, height }} />
     </div>
   );
 };

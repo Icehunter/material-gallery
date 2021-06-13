@@ -1,21 +1,23 @@
 import React, { FC, ImgHTMLAttributes, memo, useMemo, useState } from 'react';
 
+import { CSSProperties } from '@material-ui/core/styles/withStyles';
 import { CircularProgress } from '@material-ui/core';
 import ModuleStyles from './GalleryImage.module.scss';
 import { useInView } from 'react-intersection-observer';
 
 export type GalleryImageProps = {
   preload?: boolean;
+  progressContainerStyles?: CSSProperties;
 } & ImgHTMLAttributes<HTMLImageElement>;
 
 export const GalleryImage: FC<GalleryImageProps> = memo(
-  ({ src, style, className, preload = false, ...imageElementProps }) => {
+  ({ src, style, className, preload = false, progressContainerStyles, ...imageElementProps }) => {
     const { ref, inView } = useInView({
       triggerOnce: true,
       rootMargin: '200px'
     });
 
-    const [loading, setLoading] = useState(!preload);
+    const [loading, setLoading] = useState(true);
 
     const imageClassName = className ?? ModuleStyles.image;
 
@@ -24,9 +26,20 @@ export const GalleryImage: FC<GalleryImageProps> = memo(
         <div
           className={imageClassName}
           style={{
-            ...(style ?? {})
+            ...(style ?? {}),
+            ...(progressContainerStyles ?? {})
           }}>
-          {loading && inView && <CircularProgress size={16} />}
+          {loading && inView && (
+            <CircularProgress
+              size={16}
+              style={{
+                display: 'flex',
+                padding: '10px',
+                justifyContent: 'center',
+                alignItems: 'center'
+              }}
+            />
+          )}
         </div>
       );
 
@@ -40,7 +53,7 @@ export const GalleryImage: FC<GalleryImageProps> = memo(
           role="presentation"
           style={{
             ...(style ?? {}),
-            display: loading ? 'none' : 'block'
+            display: loading ? 'none' : 'inline-block'
           }}
           onLoad={(): void => {
             setLoading(false);
@@ -58,7 +71,7 @@ export const GalleryImage: FC<GalleryImageProps> = memo(
       }
 
       return placeholder;
-    }, [imageClassName, imageElementProps, inView, loading, preload, src, style]);
+    }, [imageClassName, imageElementProps, inView, loading, preload, progressContainerStyles, src, style]);
 
     return (
       <div className={ModuleStyles.container} ref={ref}>

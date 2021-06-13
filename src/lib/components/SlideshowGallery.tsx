@@ -7,11 +7,11 @@ import ModuleStyles from './SlideshowGallery.module.scss';
 export type SlideshowGalleryProps = ImageCarouselProps & FilmStripProps;
 
 export const SlideshowGallery: FC<SlideshowGalleryProps> = memo(
-  ({ items, nextItem, previousItem, selectedItem = 0, setSelectedItem, autoplay, delay }) => {
+  ({ items, nextItem, previousItem, selectedItem = 0, setSelectedItem, autoplay, delay, thumbnailSize }) => {
     return (
       <div className={ModuleStyles.container}>
         <ImageCarousel {...{ items, previousItem, nextItem, selectedItem, autoplay, delay }} />
-        {items.length > 1 && <FilmStrip {...{ items, selectedItem, setSelectedItem }} />}
+        {items.length > 1 && <FilmStrip {...{ items, thumbnailSize, selectedItem, setSelectedItem }} />}
       </div>
     );
   }

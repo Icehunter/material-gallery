@@ -1,8 +1,8 @@
 import { FlowGallery, FlowGalleryProps } from '../lib';
 import { Meta, Story } from '@storybook/react/types-6-0';
+import { UnsplashCollectionSource, useUnsplashStatic } from './hooks/useUnsplashStatic';
 
 import React from 'react';
-import { useLoremPicsum } from './hooks/useLoremPicsum';
 
 export default {
   title: 'Galleries/FlowGallery',
@@ -12,14 +12,22 @@ export default {
     zoomLevel: 0,
     targetHeight: 180,
     padding: 20,
-    margin: 5
+    margin: 5,
+    collectionSource: UnsplashCollectionSource.Landscape
   },
   argTypes: {
     imageCount: {
-      control: { type: 'range', min: 1, max: 500, step: 1 }
+      control: { type: 'range', min: 1, max: 300, step: 1 }
     },
     zoomLevel: {
       control: { type: 'range', min: -5, max: 5, step: 1 }
+    },
+    collectionSource: {
+      defaultValue: UnsplashCollectionSource.Landscape,
+      control: {
+        type: 'select',
+        options: Object.keys(UnsplashCollectionSource)
+      }
     }
   },
   parameters: {
@@ -27,14 +35,10 @@ export default {
   }
 } as Meta<FlowGalleryProps>;
 
-const Template: Story<FlowGalleryProps & { imageCount: number; zoomLevel: number }> = ({
-  zoomLevel,
-  targetHeight,
-  padding,
-  margin,
-  imageCount
-}) => {
-  const images = useLoremPicsum({ imageCount, targetSize: targetHeight });
+const Template: Story<
+  FlowGalleryProps & { imageCount: number; zoomLevel: number; collectionSource: UnsplashCollectionSource }
+> = ({ zoomLevel, targetHeight, padding, margin, imageCount, collectionSource }) => {
+  const images = useUnsplashStatic({ imageCount, targetSize: targetHeight, collectionSource });
 
   return (
     <div

@@ -47,7 +47,7 @@ const createGalleryImage = (
     <GalleryImage
       key={key}
       className={className}
-      src={item.src.url}
+      src={item.src}
       style={{
         height,
         width,
@@ -94,7 +94,7 @@ const resolveImageNodes = (
       switch (direction) {
         case MasonryGalleryDirection.Vertical:
           {
-            const aspectRatio = item.src.height / item.src.width;
+            const aspectRatio = item.height / item.width;
 
             const normalizedWidth = normalizedTargetSize;
             const normalizedHeight = Math.floor(normalizedWidth * aspectRatio);
@@ -104,7 +104,7 @@ const resolveImageNodes = (
           break;
         case MasonryGalleryDirection.Horizontal:
           {
-            const aspectRatio = item.src.width / item.src.height;
+            const aspectRatio = item.width / item.height;
 
             const normalizedHeight = normalizedTargetSize;
             const normalizedWidth = Math.floor(normalizedHeight * aspectRatio);
@@ -138,14 +138,14 @@ const resolveImageNodes = (
       switch (direction) {
         case MasonryGalleryDirection.Vertical:
           {
-            const aspectRatio = item.src.height / item.src.width;
+            const aspectRatio = item.height / item.width;
             width = normalizedTargetSize;
             height = Math.floor(width * aspectRatio);
           }
           break;
         case MasonryGalleryDirection.Horizontal:
           {
-            const aspectRatio = item.src.width / item.src.height;
+            const aspectRatio = item.width / item.height;
             height = normalizedTargetSize;
             width = Math.floor(height * aspectRatio);
           }

@@ -7,7 +7,3 @@ lib/*
 types/*
 
 *.json
-
-src/stories/*
-*.stories.tsx
-*.test.tsx

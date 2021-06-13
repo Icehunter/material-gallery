@@ -1,8 +1,8 @@
 import { GridGallery, GridGalleryProps } from '../lib';
 import { Meta, Story } from '@storybook/react/types-6-0';
+import { TargetType, UnsplashCollectionSource, useUnsplashStatic } from './hooks/useUnsplashStatic';
 
 import React from 'react';
-import { useLoremPicsum } from './hooks/useLoremPicsum';
 
 export default {
   title: 'Galleries/GridGallery',
@@ -12,14 +12,22 @@ export default {
     zoomLevel: 0,
     targetSize: 180,
     padding: 20,
-    margin: 5
+    margin: 5,
+    collectionSource: UnsplashCollectionSource.Landscape
   },
   argTypes: {
     imageCount: {
-      control: { type: 'range', min: 1, max: 500, step: 1 }
+      control: { type: 'range', min: 1, max: 300, step: 1 }
     },
     zoomLevel: {
       control: { type: 'range', min: -5, max: 5, step: 1 }
+    },
+    collectionSource: {
+      defaultValue: UnsplashCollectionSource.Landscape,
+      control: {
+        type: 'select',
+        options: Object.keys(UnsplashCollectionSource)
+      }
     }
   },
   parameters: {
@@ -27,14 +35,15 @@ export default {
   }
 } as Meta<GridGalleryProps>;
 
-const Template: Story<GridGalleryProps & { imageCount: number; zoomLevel: number }> = ({
-  zoomLevel,
-  targetSize,
-  padding,
-  margin,
-  imageCount
-}) => {
-  const images = useLoremPicsum({ imageCount, targetSize: targetSize });
+const Template: Story<
+  GridGalleryProps & { imageCount: number; zoomLevel: number; collectionSource: UnsplashCollectionSource }
+> = ({ zoomLevel, targetSize, padding, margin, imageCount, collectionSource }) => {
+  const images = useUnsplashStatic({
+    imageCount,
+    targetSize: targetSize,
+    targetType: TargetType.Height,
+    collectionSource
+  });
 
   return (
     <div

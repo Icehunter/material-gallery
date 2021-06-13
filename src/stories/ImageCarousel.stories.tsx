@@ -1,19 +1,20 @@
 import { ImageCarousel, ImageCarouselProps } from '../lib';
 import { Meta, Story } from '@storybook/react/types-6-0';
+import { UnsplashCollectionSource, useUnsplashStatic } from './hooks/useUnsplashStatic';
 import { useCallback, useRef, useState } from 'react';
 
 import { useKeyDownEvent } from '../lib/hooks/useKeyDownEvent';
-import { useLoremPicsum } from './hooks/useLoremPicsum';
 
 export default {
   title: 'Galleries/ImageCarousel',
   component: ImageCarousel,
   args: {
-    imageCount: 50
+    imageCount: 50,
+    collectionSource: UnsplashCollectionSource.Landscape
   },
   argTypes: {
     imageCount: {
-      control: { type: 'range', min: 1, max: 500, step: 1 }
+      control: { type: 'range', min: 1, max: 300, step: 1 }
     },
     autoplay: {
       type: 'boolean',
@@ -24,9 +25,16 @@ export default {
         type: 'range',
         min: 1000,
         max: 10000,
-        step: 500
+        step: 300
       },
       defaultValue: 1500
+    },
+    collectionSource: {
+      defaultValue: UnsplashCollectionSource.Landscape,
+      control: {
+        type: 'select',
+        options: Object.keys(UnsplashCollectionSource)
+      }
     }
   },
   parameters: {
@@ -34,15 +42,18 @@ export default {
   }
 } as Meta<ImageCarouselProps>;
 
-const Template: Story<ImageCarouselProps & { imageCount: number; autoplay: boolean; delay: number }> = ({
-  imageCount,
-  autoplay,
-  delay
-}) => {
+const Template: Story<
+  ImageCarouselProps & {
+    imageCount: number;
+    autoplay: boolean;
+    delay: number;
+    collectionSource: UnsplashCollectionSource;
+  }
+> = ({ imageCount, autoplay, delay, collectionSource }) => {
   const [selectedItem, setSelectedItem] = useState(0);
   const elementRef = useRef<HTMLDivElement | null>(null);
 
-  const images = useLoremPicsum({ imageCount });
+  const images = useUnsplashStatic({ imageCount, collectionSource });
 
   const previousItem = useCallback(() => {
     setSelectedItem((prev) => (prev === 0 ? images.length - 1 : prev - 1));

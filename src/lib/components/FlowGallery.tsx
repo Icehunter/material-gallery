@@ -34,7 +34,8 @@ const createGalleryImage = (
     <GalleryImage
       key={key}
       className={className}
-      src={item.src.url}
+      src={item.src}
+      srcSet={item.srcSet}
       style={{
         height,
         width,
@@ -71,7 +72,7 @@ const resolveImageNodes = (
 
     if (item) {
       const remainingWidth = normalizedRectWidth - row.width;
-      const aspectRatio = item.src.width / item.src.height;
+      const aspectRatio = item.width / item.height;
       const normalizedHeight = zoomTargetSize;
       const normalizedWidth = Math.floor(normalizedHeight * aspectRatio);
       const normalizedWidthWithMargin = normalizedWidth + margin * 2;
@@ -104,7 +105,7 @@ const resolveImageNodes = (
     for (let j = 0; j < row.items.length; j++) {
       const item = row.items[j];
 
-      const aspectRatio = item.src.width / item.src.height;
+      const aspectRatio = item.width / item.height;
 
       const normalizedHeight = zoomTargetSize;
       const normalizedWidth = Math.floor(normalizedHeight * aspectRatio);
