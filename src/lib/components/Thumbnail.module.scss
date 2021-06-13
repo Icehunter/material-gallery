@@ -1,22 +1,20 @@
 .image {
-  display: flex;
-  flex: 0 1 auto;
-  align-self: auto;
-  justify-content: center;
-  align-items: center;
+  cursor: pointer;
   object-fit: cover;
   object-position: center;
   transition: transform 0.25s ease;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
-  cursor: pointer;
   transform: scale(0.95);
 }
 
 .image:hover,
 .selected {
-  opacity: 0.75;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.25), 0 0 2px 1px rgba(0, 0, 0, 0.75);
   transition: transform 0.25s;
+}
+
+.image:hover {
+  opacity: 0.75;
 }
 
 .selected {

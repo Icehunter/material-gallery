@@ -53,7 +53,7 @@ export const GalleryImage: FC<GalleryImageProps> = memo(
           role="presentation"
           style={{
             ...(style ?? {}),
-            display: loading ? 'none' : 'inline-block'
+            ...(loading ? { display: 'none' } : undefined)
           }}
           onLoad={(): void => {
             setLoading(false);
