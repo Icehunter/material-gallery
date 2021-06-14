@@ -1,21 +1,18 @@
 .container {
-  order: 0;
-  flex: 0 1 auto;
-  align-self: auto;
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
   justify-content: center;
-  align-content: stretch;
-  align-items: stretch;
+  align-content: center;
+  align-items: center;
 }
 
-.content {
+.wrapper {
   position: relative;
   overflow: hidden;
 }
 
-.contentInner {
+.wrapperInner {
   display: flex;
   overflow-x: scroll;
   scroll-snap-type: x mandatory;
@@ -24,32 +21,26 @@
   margin: 10px;
 }
 
-.contentInner::-webkit-scrollbar {
+.wrapperInner::-webkit-scrollbar {
   display: none;
 }
 
-.contentInner > * {
+.wrapperInner > * {
   scroll-snap-align: center;
   margin: 5px;
 }
 
 .navigation {
-  order: 0;
+  z-index: 100;
   flex: 0 1 auto;
   align-self: auto;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.icon {
   cursor: pointer;
   user-select: none;
   opacity: 0;
   transition: transform 1s ease;
 }
 
-.iconVisible {
+.navigationVisible {
   opacity: 1;
   transition: transform 1s;
 }
