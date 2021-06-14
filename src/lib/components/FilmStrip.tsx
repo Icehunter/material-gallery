@@ -66,27 +66,31 @@ export const FilmStrip: FC<FilmStripProps> = memo(({ items, thumbnailSize, selec
 
   return (
     <div className={ModuleStyles.container}>
-      <IconButton
-        color="primary"
-        className={clsx(ModuleStyles.navigation, {
-          [ModuleStyles.navigationVisible]: canScrollLeft
-        })}
-        onClick={scrollPageLeft}>
-        <ChevronLeftIcon />
-      </IconButton>
-      <div className={ModuleStyles.wrapper}>
-        <div className={ModuleStyles.wrapperInner} ref={currentNodeRef}>
+      <div className={ModuleStyles.navigation}>
+        <IconButton
+          color="primary"
+          className={clsx(ModuleStyles.icon, {
+            [ModuleStyles.iconVisible]: canScrollLeft
+          })}
+          onClick={scrollPageLeft}>
+          <ChevronLeftIcon />
+        </IconButton>
+      </div>
+      <div className={ModuleStyles.content}>
+        <div className={ModuleStyles.contentInner} ref={currentNodeRef}>
           {scrollItems}
         </div>
       </div>
-      <IconButton
-        color="primary"
-        className={clsx(ModuleStyles.navigation, {
-          [ModuleStyles.navigationVisible]: canScrollRight
-        })}
-        onClick={scrollPageRight}>
-        <ChevronRightIcon />
-      </IconButton>
+      <div className={ModuleStyles.navigation}>
+        <IconButton
+          color="primary"
+          className={clsx(ModuleStyles.icon, {
+            [ModuleStyles.iconVisible]: canScrollRight
+          })}
+          onClick={scrollPageRight}>
+          <ChevronRightIcon />
+        </IconButton>
+      </div>
     </div>
   );
 });

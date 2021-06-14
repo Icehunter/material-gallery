@@ -1,5 +1,6 @@
 import React, { FC, useCallback, useRef, useState } from 'react';
 
+import { CssBaseline } from '@material-ui/core';
 import { SlideshowGallery } from './lib';
 import styles from './App.module.scss';
 import { useKeyDownEvent } from './lib/hooks/useKeyDownEvent';
@@ -23,22 +24,25 @@ const App: FC = () => {
   useKeyDownEvent(elementRef, 'ArrowRight', nextItem);
 
   return (
-    <div
-      ref={elementRef}
-      className={styles.container}
-      role="presentation"
-      tabIndex={-1}
-      style={{
-        outline: 'none'
-      }}>
-      <SlideshowGallery
-        items={images}
-        previousItem={previousItem}
-        nextItem={nextItem}
-        selectedItem={selectedItem}
-        setSelectedItem={setSelectedItem}
-      />
-    </div>
+    <>
+      <CssBaseline />
+      <div
+        ref={elementRef}
+        className={styles.container}
+        role="presentation"
+        tabIndex={-1}
+        style={{
+          outline: 'none'
+        }}>
+        <SlideshowGallery
+          items={images}
+          previousItem={previousItem}
+          nextItem={nextItem}
+          selectedItem={selectedItem}
+          setSelectedItem={setSelectedItem}
+        />
+      </div>
+    </>
   );
 };
 
