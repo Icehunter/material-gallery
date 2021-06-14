@@ -58,7 +58,7 @@ const Template: Story<
 
   const rect = useRect(elementRef);
 
-  const images = useUnsplashStatic({ imageCount, targetSize: rect.height, collectionSource });
+  const images = useUnsplashStatic({ imageCount, targetSize: Math.floor(rect.height), collectionSource });
 
   const previousItem = useCallback(() => {
     setSelectedItem((prev) => (prev === 0 ? images.length - 1 : prev - 1));

@@ -1,0 +1,13 @@
+.image {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transition: transform 0.25s ease;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+}
+
+.image:hover {
+  opacity: 0.75;
+  transition: transform 0.25s;
+}

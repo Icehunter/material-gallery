@@ -1,14 +1,14 @@
-import { ImageCarousel, ImageCarouselProps } from '../lib';
+import { Carousel, CarouselProps } from '../lib';
 import { Meta, Story } from '@storybook/react/types-6-0';
 import { UnsplashCollectionSource, useUnsplashStatic } from './hooks/useUnsplashStatic';
 import { useCallback, useRef, useState } from 'react';
 
-import ModuleStyles from './ImageCarousel.stories.module.scss';
+import ModuleStyles from './Carousel.stories.module.scss';
 import { useKeyDownEvent } from '../lib/hooks/useKeyDownEvent';
 
 export default {
-  title: 'Galleries/ImageCarousel',
-  component: ImageCarousel,
+  title: 'Components/Carousel',
+  component: Carousel,
   args: {
     imageCount: 50,
     collectionSource: UnsplashCollectionSource.Landscape
@@ -41,10 +41,10 @@ export default {
   parameters: {
     layout: 'fullscreen'
   }
-} as Meta<ImageCarouselProps>;
+} as Meta<CarouselProps>;
 
 const Template: Story<
-  ImageCarouselProps & {
+  CarouselProps & {
     imageCount: number;
     autoplay: boolean;
     delay: number;
@@ -69,7 +69,7 @@ const Template: Story<
 
   return (
     <div className={ModuleStyles.container} ref={elementRef} role="presentation" tabIndex={-1}>
-      <ImageCarousel
+      <Carousel
         items={images}
         previousItem={previousItem}
         nextItem={nextItem}
@@ -81,4 +81,4 @@ const Template: Story<
   );
 };
 
-export const ImageCarouselDefault = Template.bind({});
+export const CarouselDefault = Template.bind({});

@@ -1,14 +1,14 @@
 import { ImageItem, VirtualImageItem } from 'lib/types/ImageItem';
 import React, { FC, Fragment, memo, useMemo, useRef } from 'react';
 
-import { GalleryImage } from './GalleryImage';
+import { ImageTile } from './ImageTile';
 import ModuleStyles from './FlowGallery.module.scss';
 import clsx from 'clsx';
 import { useRect } from 'lib/hooks/useRect';
 
 export type FlowGalleryProps = {
   items: VirtualImageItem[];
-  targetHeight: number;
+  targetSize: number;
   padding: number;
   margin: number;
   zoomLevel: number;
@@ -20,29 +20,6 @@ const NEGATIVE_ZOOM_LEVELS = [0.9, 0.8, 0.7, 0.6, 0.5];
 type Row = {
   items: ImageItem[];
   width: number;
-};
-
-const createGalleryImage = (
-  item: ImageItem,
-  key: string,
-  className: string,
-  height: number,
-  width: number,
-  margin: number
-): JSX.Element => {
-  return (
-    <GalleryImage
-      key={key}
-      className={className}
-      src={item.src}
-      srcSet={item.srcSet}
-      style={{
-        height,
-        width,
-        margin
-      }}
-    />
-  );
 };
 
 type NormalizedElementRow = {
@@ -119,13 +96,8 @@ const resolveImageNodes = (
       const width = useRowNormalizedValues ? rowNormalizedWidth : normalizedWidth;
 
       imageNodes[i].isNormalized = useRowNormalizedValues;
-      imageNodes[i].items[j] = createGalleryImage(
-        item,
-        `thumbnail - ${i} - ${j}`,
-        ModuleStyles.image,
-        height,
-        width,
-        margin
+      imageNodes[i].items[j] = (
+        <ImageTile item={item} key={`thumbnail - ${i} - ${j}`} width={width} height={height} margin={margin} />
       );
     }
   }
@@ -133,7 +105,7 @@ const resolveImageNodes = (
   return imageNodes;
 };
 
-export const FlowGallery: FC<FlowGalleryProps> = memo(({ items, targetHeight, padding, margin, zoomLevel }) => {
+export const FlowGallery: FC<FlowGalleryProps> = memo(({ items, targetSize, padding, margin, zoomLevel }) => {
   const containerNodeRef = useRef<HTMLDivElement | null>(null);
 
   const rect = useRect(containerNodeRef);
@@ -143,12 +115,12 @@ export const FlowGallery: FC<FlowGalleryProps> = memo(({ items, targetHeight, pa
       return [];
     }
 
-    let zoomTargetSize = targetHeight;
+    let zoomTargetSize = targetSize;
     if (zoomLevel < 0) {
-      zoomTargetSize = Math.floor(targetHeight * NEGATIVE_ZOOM_LEVELS[Math.abs(zoomLevel) - 1]);
+      zoomTargetSize = Math.floor(targetSize * NEGATIVE_ZOOM_LEVELS[Math.abs(zoomLevel) - 1]);
     }
     if (zoomLevel > 0) {
-      zoomTargetSize = Math.floor(targetHeight * POSITIVE_ZOOM_LEVELS[zoomLevel - 1]);
+      zoomTargetSize = Math.floor(targetSize * POSITIVE_ZOOM_LEVELS[zoomLevel - 1]);
     }
     // remove padding from width
     const normalizedRectWidth = Math.floor(rect.width - padding * 2);
@@ -156,7 +128,7 @@ export const FlowGallery: FC<FlowGalleryProps> = memo(({ items, targetHeight, pa
     const imageNodes: NormalizedElementRow[] = resolveImageNodes(items, normalizedRectWidth, zoomTargetSize, margin);
 
     return imageNodes;
-  }, [items, margin, padding, rect, targetHeight, zoomLevel]);
+  }, [items, margin, padding, rect, targetSize, zoomLevel]);
 
   const content = useMemo(() => {
     const rows: JSX.Element[] = [];

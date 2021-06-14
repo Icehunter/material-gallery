@@ -8,15 +8,11 @@
   justify-content: center;
   align-content: stretch;
   align-items: stretch;
+  height: 50%;
 }
 
 .content {
-  order: 0;
   flex: 1 1 auto;
-  align-self: auto;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 .imageContainer {
@@ -26,20 +22,20 @@
 }
 
 .image {
-  position: absolute;
-  max-height: 100%;
   max-width: 100%;
-  height: auto;
+  max-height: 100%;
   width: auto;
+  height: auto;
   border-radius: 5px;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
   display: block;
 }
 
+.loader {
+  box-shadow: none;
+}
+
 .navigation {
-  order: 0;
-  flex: 0 1 auto;
-  align-self: auto;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -61,11 +57,14 @@
   display: none;
   opacity: 0;
   margin: 0;
+  padding: 0;
   transition-duration: 0.25s ease;
 }
 
 .selectedImage {
-  display: inline-block;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   opacity: 1;
   width: 100%;
   height: 100%;

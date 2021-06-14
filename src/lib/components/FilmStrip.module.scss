@@ -1,10 +1,5 @@
 .container {
-  order: 0;
-  flex: 0 1 auto;
-  align-self: auto;
   display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
   justify-content: center;
   align-content: stretch;
   align-items: stretch;
@@ -34,9 +29,6 @@
 }
 
 .navigation {
-  order: 0;
-  flex: 0 1 auto;
-  align-self: auto;
   display: flex;
   justify-content: center;
   align-items: center;

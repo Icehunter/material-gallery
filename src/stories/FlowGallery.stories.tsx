@@ -10,7 +10,7 @@ export default {
   args: {
     imageCount: 50,
     zoomLevel: 0,
-    targetHeight: 180,
+    targetSize: 180,
     padding: 20,
     margin: 5,
     collectionSource: UnsplashCollectionSource.Landscape
@@ -37,12 +37,10 @@ export default {
 
 const Template: Story<
   FlowGalleryProps & { imageCount: number; zoomLevel: number; collectionSource: UnsplashCollectionSource }
-> = ({ zoomLevel, targetHeight, padding, margin, imageCount, collectionSource }) => {
-  const images = useUnsplashStatic({ imageCount, targetSize: targetHeight, collectionSource });
+> = ({ zoomLevel, targetSize, padding, margin, imageCount, collectionSource }) => {
+  const images = useUnsplashStatic({ imageCount, targetSize: targetSize, collectionSource });
 
-  return (
-    <FlowGallery items={images} zoomLevel={zoomLevel} targetHeight={targetHeight} padding={padding} margin={margin} />
-  );
+  return <FlowGallery items={images} zoomLevel={zoomLevel} targetSize={targetSize} padding={padding} margin={margin} />;
 };
 
 export const FlowGalleryDefault = Template.bind({});

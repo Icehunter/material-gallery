@@ -1,7 +1,7 @@
 import { ImageItem, VirtualImageItem } from 'lib/types/ImageItem';
 import React, { FC, Fragment, memo, useMemo, useRef } from 'react';
 
-import { GalleryImage } from './GalleryImage';
+import { ImageTile } from './ImageTile';
 import ModuleStyles from './MasonryGallery.module.scss';
 import clsx from 'clsx';
 import { findAndInsertByProperty } from 'lib/utils/arrays';
@@ -33,28 +33,6 @@ type Panel = {
 type ElementPanel = {
   panelIndex: number;
   items: JSX.Element[];
-};
-
-const createGalleryImage = (
-  item: ImageItem,
-  key: string,
-  className: string,
-  height: number,
-  width: number,
-  margin: number
-): JSX.Element => {
-  return (
-    <GalleryImage
-      key={key}
-      className={className}
-      src={item.src}
-      style={{
-        height,
-        width,
-        margin
-      }}
-    />
-  );
 };
 
 const resolveImageNodes = (
@@ -154,13 +132,8 @@ const resolveImageNodes = (
           break;
       }
 
-      imageNodes[i].items[j] = createGalleryImage(
-        item,
-        `thumbnail - ${i} - ${j}`,
-        ModuleStyles.image,
-        height,
-        width,
-        margin
+      imageNodes[i].items[j] = (
+        <ImageTile item={item} key={`thumbnail - ${i} - ${j}`} width={width} height={height} margin={margin} />
       );
     }
   }

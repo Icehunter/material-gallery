@@ -1,17 +1,32 @@
-import React, { FC, ImgHTMLAttributes, memo, useMemo, useState } from 'react';
+import React, { CSSProperties, FC, ImgHTMLAttributes, memo, useMemo, useState } from 'react';
 
-import { CSSProperties } from '@material-ui/core/styles/withStyles';
 import { CircularProgress } from '@material-ui/core';
 import ModuleStyles from './GalleryImage.module.scss';
+import clsx from 'clsx';
+import { noop } from 'lib/utils/noop';
 import { useInView } from 'react-intersection-observer';
 
+export type GalleryImageDynamicStyles = {
+  image?: CSSProperties;
+  loader?: CSSProperties;
+};
+
+export type GalleryImageStyles = {
+  root?: string;
+  image?: string;
+  loader?: string;
+};
+
 export type GalleryImageProps = {
+  /**
+   * Styles to be applied to the various nodes in the dom tree; will override defaults
+   */
+  styles?: GalleryImageStyles;
   preload?: boolean;
-  progressContainerStyles?: CSSProperties;
 } & ImgHTMLAttributes<HTMLImageElement>;
 
 export const GalleryImage: FC<GalleryImageProps> = memo(
-  ({ src, style, className, preload = false, progressContainerStyles, ...imageElementProps }) => {
+  ({ styles = {}, src, alt, preload = false, onClick = noop, ...imageElementProps }) => {
     const { ref, inView } = useInView({
       triggerOnce: true,
       rootMargin: '200px'
@@ -19,42 +34,38 @@ export const GalleryImage: FC<GalleryImageProps> = memo(
 
     const [loading, setLoading] = useState(true);
 
-    const imageClassName = className ?? ModuleStyles.image;
+    const rootClass = clsx(ModuleStyles.root, { [styles.root ?? '']: true });
+    const imageClass = clsx(ModuleStyles.image, { [styles.image ?? '']: true });
+    const loaderClass = clsx(ModuleStyles.loader, { [styles.loader ?? '']: true });
 
-    const content = useMemo(() => {
-      const placeholder = (
-        <div
-          className={imageClassName}
-          style={{
-            ...(style ?? {}),
-            ...(progressContainerStyles ?? {
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center'
-            })
-          }}>
+    const placeholder = useMemo(
+      () => (
+        <div className={clsx(imageClass, { [loaderClass]: true })}>
           {loading && inView && <CircularProgress size={16} />}
         </div>
-      );
+      ),
+      [imageClass, inView, loaderClass, loading]
+    );
 
-      const image = (
+    const image = useMemo(
+      () => (
         <img
           {...imageElementProps}
-          // why can't this be spread? I have no idea
-          alt={imageElementProps.alt}
           src={src}
-          className={imageClassName}
-          role="presentation"
+          className={imageClass}
           style={{
-            ...(style ?? {}),
             ...(loading ? { display: 'none' } : undefined)
           }}
           onLoad={(): void => {
             setLoading(false);
           }}
+          alt={alt}
         />
-      );
+      ),
+      [alt, imageClass, imageElementProps, loading, src]
+    );
 
+    const content = useMemo(() => {
       if (src && (inView || preload)) {
         return (
           <>
@@ -65,10 +76,10 @@ export const GalleryImage: FC<GalleryImageProps> = memo(
       }
 
       return placeholder;
-    }, [imageClassName, imageElementProps, inView, loading, preload, progressContainerStyles, src, style]);
+    }, [image, inView, loading, placeholder, preload, src]);
 
     return (
-      <div className={ModuleStyles.container} ref={ref}>
+      <div className={rootClass} ref={ref} role="presentation" onClick={onClick}>
         {content}
       </div>
     );

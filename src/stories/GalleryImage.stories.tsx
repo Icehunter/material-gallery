@@ -34,17 +34,12 @@ const Template: Story<GalleryImageProps & { collectionSource: UnsplashCollection
 }) => {
   const [item] = useUnsplashStatic({ imageCount: 1 });
 
-  const { src, width, height } = item ?? {};
-
   return (
-    <GalleryImage
-      {...props}
-      {...{
-        src,
-        width,
-        height
-      }}
-    />
+    <div className={ModuleStyles.container}>
+      <div className={ModuleStyles.wrapper}>
+        <GalleryImage {...props} {...(item ?? {})} />
+      </div>
+    </div>
   );
 };
 
@@ -52,7 +47,9 @@ export const GalleryImageDefault = Template.bind({});
 
 export const GalleryImageWithStyle = Template.bind({});
 GalleryImageWithStyle.args = {
-  className: ModuleStyles.image
+  styles: {
+    image: ModuleStyles.image
+  }
 };
 
 export const GalleryImageWithClickHandler = Template.bind({});

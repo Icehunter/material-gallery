@@ -3,13 +3,13 @@ import React, { FC, memo, useLayoutEffect, useMemo } from 'react';
 
 import { GalleryImage } from './GalleryImage';
 import { IconButton } from '@material-ui/core';
-import ModuleStyles from './ImageCarousel.module.scss';
+import ModuleStyles from './Carousel.module.scss';
 import { VirtualImageItem } from '../types/ImageItem';
 import clsx from 'clsx';
 import { getNeighborIndexes } from 'lib/utils/getNeighborIndexes';
 import { noop } from '../utils/noop';
 
-export type ImageCarouselProps = {
+export type CarouselProps = {
   items: VirtualImageItem[];
   previousItem: () => void;
   nextItem: () => void;
@@ -18,7 +18,7 @@ export type ImageCarouselProps = {
   delay?: number;
 };
 
-export const ImageCarousel: FC<ImageCarouselProps> = memo(
+export const Carousel: FC<CarouselProps> = memo(
   ({ items, previousItem = noop, nextItem = noop, selectedItem, autoplay = false, delay = 2500 }) => {
     const neighbors = useMemo(() => getNeighborIndexes(selectedItem, items.length), [items.length, selectedItem]);
 
@@ -55,11 +55,9 @@ export const ImageCarousel: FC<ImageCarouselProps> = memo(
               <GalleryImage
                 src={item.src}
                 srcSet={item.srcSet}
-                width={item.width}
-                height={item.height}
-                className={ModuleStyles.image}
-                progressContainerStyles={{
-                  boxShadow: 'none'
+                styles={{
+                  image: ModuleStyles.image,
+                  loader: ModuleStyles.loader
                 }}
                 preload={preload}
               />

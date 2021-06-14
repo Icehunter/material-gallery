@@ -1,6 +1,6 @@
 import React, { FC, memo, useMemo, useRef } from 'react';
 
-import { GalleryImage } from './GalleryImage';
+import { ImageTile } from './ImageTile';
 import ModuleStyles from './GridGallery.module.scss';
 import { VirtualImageItem } from 'lib/types/ImageItem';
 import { useRect } from 'lib/hooks/useRect';
@@ -45,16 +45,12 @@ export const GridGallery: FC<GridGalleryProps> = memo(({ items, targetSize, padd
         return null;
       }
       return (
-        <GalleryImage
-          key={index}
-          className={ModuleStyles.image}
-          src={item.src}
-          srcSet={item.srcSet}
-          style={{
-            height: normalizedTargetSize,
-            width: normalizedTargetSize,
-            margin
-          }}
+        <ImageTile
+          item={item}
+          key={`thumbnail - ${index}`}
+          width={normalizedTargetSize}
+          height={normalizedTargetSize}
+          margin={margin}
         />
       );
     });
