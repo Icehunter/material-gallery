@@ -1,18 +1,21 @@
 .container {
+  order: 0;
+  flex: 0 1 auto;
+  align-self: auto;
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
   justify-content: center;
-  align-content: center;
-  align-items: center;
+  align-content: stretch;
+  align-items: stretch;
 }
 
-.wrapper {
+.content {
   position: relative;
   overflow: hidden;
 }
 
-.wrapperInner {
+.contentInner {
   display: flex;
   overflow-x: scroll;
   scroll-snap-type: x mandatory;
@@ -21,26 +24,32 @@
   margin: 10px;
 }
 
-.wrapperInner::-webkit-scrollbar {
+.contentInner::-webkit-scrollbar {
   display: none;
 }
 
-.wrapperInner > * {
+.contentInner > * {
   scroll-snap-align: center;
   margin: 5px;
 }
 
 .navigation {
-  z-index: 100;
+  order: 0;
   flex: 0 1 auto;
   align-self: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.icon {
   cursor: pointer;
   user-select: none;
   opacity: 0;
   transition: transform 1s ease;
 }
 
-.navigationVisible {
+.iconVisible {
   opacity: 1;
   transition: transform 1s;
 }

@@ -27,19 +27,13 @@ export const GalleryImage: FC<GalleryImageProps> = memo(
           className={imageClassName}
           style={{
             ...(style ?? {}),
-            ...(progressContainerStyles ?? {})
+            ...(progressContainerStyles ?? {
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center'
+            })
           }}>
-          {loading && inView && (
-            <CircularProgress
-              size={16}
-              style={{
-                display: 'flex',
-                padding: '10px',
-                justifyContent: 'center',
-                alignItems: 'center'
-              }}
-            />
-          )}
+          {loading && inView && <CircularProgress size={16} />}
         </div>
       );
 

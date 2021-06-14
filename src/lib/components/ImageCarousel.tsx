@@ -47,15 +47,16 @@ export const ImageCarousel: FC<ImageCarouselProps> = memo(
         const preload = neighbors.includes(index);
         return (
           <figure
-            className={clsx(ModuleStyles.slide, {
-              [ModuleStyles.activeSlide]: index === selectedItem,
-              [ModuleStyles.inActiveSlide]: index !== selectedItem
+            className={clsx(ModuleStyles.imageDisplayContainer, {
+              [ModuleStyles.selectedImage]: index === selectedItem
             })}
             key={index}>
             {(index === selectedItem || preload) && (
               <GalleryImage
                 src={item.src}
                 srcSet={item.srcSet}
+                width={item.width}
+                height={item.height}
                 className={ModuleStyles.image}
                 progressContainerStyles={{
                   boxShadow: 'none'
@@ -70,18 +71,29 @@ export const ImageCarousel: FC<ImageCarouselProps> = memo(
 
     return (
       <div className={ModuleStyles.container}>
-        {items.length > 1 && (
-          <IconButton color="primary" onClick={previousItem}>
+        <div className={ModuleStyles.navigation}>
+          <IconButton
+            color="primary"
+            className={clsx(ModuleStyles.icon, {
+              [ModuleStyles.iconVisible]: items.length > 1
+            })}
+            onClick={previousItem}>
             <ChevronLeftIcon />
           </IconButton>
-        )}
-        {/* switch these two lines of you want to animate between slides */}
-        <div className={ModuleStyles.slides}>{itemElements}</div>
-        {items.length > 1 && (
-          <IconButton color="primary" onClick={nextItem}>
+        </div>
+        <div className={ModuleStyles.content}>
+          <div className={ModuleStyles.imageContainer}>{itemElements}</div>
+        </div>
+        <div className={ModuleStyles.navigation}>
+          <IconButton
+            color="primary"
+            className={clsx(ModuleStyles.icon, {
+              [ModuleStyles.iconVisible]: items.length > 1
+            })}
+            onClick={nextItem}>
             <ChevronRightIcon />
           </IconButton>
-        )}
+        </div>
       </div>
     );
   }

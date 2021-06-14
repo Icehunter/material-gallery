@@ -3,6 +3,7 @@ import { SlideshowGallery, SlideshowGalleryProps } from '../lib';
 import { UnsplashCollectionSource, useUnsplashStatic } from './hooks/useUnsplashStatic';
 import { useCallback, useRef, useState } from 'react';
 
+import ModuleStyles from './Slideshow.stories.module.scss';
 import { useKeyDownEvent } from '../lib/hooks/useKeyDownEvent';
 import { useRect } from 'lib/hooks/useRect';
 
@@ -71,15 +72,7 @@ const Template: Story<
   useKeyDownEvent(elementRef, 'ArrowRight', nextItem);
 
   return (
-    <div
-      ref={elementRef}
-      role="presentation"
-      tabIndex={-1}
-      style={{
-        width: '100%',
-        height: '100%',
-        outline: 'none'
-      }}>
+    <div className={ModuleStyles.container} ref={elementRef} role="presentation" tabIndex={-1}>
       <SlideshowGallery
         {...args}
         items={images}
@@ -122,28 +115,19 @@ const TemplateWithSmallShell: Story<
   useKeyDownEvent(elementRef, 'ArrowRight', nextItem);
 
   return (
-    <div
-      ref={elementRef}
-      role="presentation"
-      tabIndex={-1}
-      style={{
-        width: '50vw',
-        height: '50vh',
-        outline: 'none',
-        padding: '1rem',
-        borderRadius: '5px',
-        boxShadow: '0 0 5px rgba(0, 0, 0, 0.25)'
-      }}>
-      <SlideshowGallery
-        {...args}
-        items={images}
-        previousItem={previousItem}
-        nextItem={nextItem}
-        selectedItem={selectedItem}
-        setSelectedItem={setSelectedItem}
-        autoplay={autoplay}
-        delay={delay}
-      />
+    <div className={ModuleStyles.containerSmall} ref={elementRef} role="presentation" tabIndex={-1}>
+      <div className={ModuleStyles.wrapperSmall}>
+        <SlideshowGallery
+          {...args}
+          items={images}
+          previousItem={previousItem}
+          nextItem={nextItem}
+          selectedItem={selectedItem}
+          setSelectedItem={setSelectedItem}
+          autoplay={autoplay}
+          delay={delay}
+        />
+      </div>
     </div>
   );
 };

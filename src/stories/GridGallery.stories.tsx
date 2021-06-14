@@ -45,15 +45,7 @@ const Template: Story<
     collectionSource
   });
 
-  return (
-    <div
-      style={{
-        width: '100%',
-        height: '100%'
-      }}>
-      <GridGallery items={images} zoomLevel={zoomLevel} targetSize={targetSize} padding={padding} margin={margin} />
-    </div>
-  );
+  return <GridGallery items={images} zoomLevel={zoomLevel} targetSize={targetSize} padding={padding} margin={margin} />;
 };
 
 export const GridGalleryDefault = Template.bind({});

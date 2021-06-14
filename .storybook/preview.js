@@ -1,5 +1,6 @@
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
+import { CssBaseline } from '@material-ui/core';
 import React from 'react';
 import { addDecorator } from '@storybook/react';
 import { create } from '@storybook/theming/create';
@@ -42,17 +43,8 @@ export const decorators = [
 
     return (
       <ThemeProvider theme={defaultTheme}>
-        <div
-          style={{
-            width: '100%',
-            height: '100vh',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            alignContent: 'center'
-          }}>
-          <Story />
-        </div>
+        <CssBaseline />
+        <Story />
       </ThemeProvider>
     );
   }

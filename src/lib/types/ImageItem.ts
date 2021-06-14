@@ -19,6 +19,7 @@ export type ImageItemMeta = {
 export type ImageItem = {
   /** default primary source for all images */
   src: string;
+  raw: string;
   width: number;
   height: number;
   /** source set list of url's for browser to determine the right picture */

@@ -54,20 +54,14 @@ const Template: Story<
   });
 
   return (
-    <div
-      style={{
-        width: '100%',
-        height: '100%'
-      }}>
-      <MasonryGallery
-        items={images}
-        zoomLevel={zoomLevel}
-        targetSize={targetSize}
-        padding={padding}
-        margin={margin}
-        direction={direction}
-      />
-    </div>
+    <MasonryGallery
+      items={images}
+      zoomLevel={zoomLevel}
+      targetSize={targetSize}
+      padding={padding}
+      margin={margin}
+      direction={direction}
+    />
   );
 };
 

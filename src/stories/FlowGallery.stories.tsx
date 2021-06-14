@@ -41,13 +41,7 @@ const Template: Story<
   const images = useUnsplashStatic({ imageCount, targetSize: targetHeight, collectionSource });
 
   return (
-    <div
-      style={{
-        width: '100%',
-        height: '100%'
-      }}>
-      <FlowGallery items={images} zoomLevel={zoomLevel} targetHeight={targetHeight} padding={padding} margin={margin} />
-    </div>
+    <FlowGallery items={images} zoomLevel={zoomLevel} targetHeight={targetHeight} padding={padding} margin={margin} />
   );
 };
 

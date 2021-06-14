@@ -37,23 +37,14 @@ const Template: Story<GalleryImageProps & { collectionSource: UnsplashCollection
   const { src, width, height } = item ?? {};
 
   return (
-    <div
-      style={{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        width: '100%',
-        height: '100%'
-      }}>
-      <GalleryImage
-        {...props}
-        {...{
-          src,
-          width,
-          height
-        }}
-      />
-    </div>
+    <GalleryImage
+      {...props}
+      {...{
+        src,
+        width,
+        height
+      }}
+    />
   );
 };
 

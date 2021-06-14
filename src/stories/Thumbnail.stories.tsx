@@ -40,18 +40,7 @@ const Template: Story<ThumbnailProps & { collectionSource: UnsplashCollectionSou
     meta: { thumbnail }
   } = item as ImageItem;
 
-  return (
-    <div
-      style={{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        width: '100%',
-        height: '100%'
-      }}>
-      <Thumbnail {...props} {...{ src: thumbnail, width, height }} />
-    </div>
-  );
+  return <Thumbnail {...props} {...{ src: thumbnail, width, height }} />;
 };
 
 export const ThumbnailDefault = Template.bind({});

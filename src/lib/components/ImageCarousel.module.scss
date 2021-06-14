@@ -1,60 +1,89 @@
 .container {
+  order: 0;
   flex: 1 1 auto;
-  align-self: stretch;
+  align-self: auto;
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
   justify-content: center;
-  align-content: center;
-  align-items: center;
-  height: 100%;
-  overflow: hidden;
+  align-content: stretch;
+  align-items: stretch;
 }
 
-.slides {
-  position: relative;
+.content {
+  order: 0;
+  flex: 1 1 auto;
+  align-self: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.imageContainer {
+  padding: 20px;
   width: 100%;
   height: 100%;
-  flex: 1 1 auto;
 }
 
 .image {
   position: absolute;
-  max-width: 100%;
   max-height: 100%;
+  max-width: 100%;
+  height: auto;
+  width: auto;
   border-radius: 5px;
-  box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+  display: block;
 }
 
 .navigation {
-  z-index: 100;
+  order: 0;
   flex: 0 1 auto;
   align-self: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.icon {
   cursor: pointer;
   user-select: none;
   opacity: 0;
+  transition: transform 1s ease;
 }
 
-.navigationVisible {
+.iconVisible {
   opacity: 1;
+  transition: transform 1s;
 }
 
-.slide {
+.imageDisplayContainer {
+  display: none;
   opacity: 0;
-  transition-duration: 0.25s ease;
   margin: 0;
+  transition-duration: 0.25s ease;
 }
 
-.inActiveSlide {
-  visibility: collapse;
-  transform: scale(0.95);
-}
-
-.activeSlide {
-  visibility: visible;
+.selectedImage {
+  display: inline-block;
+  opacity: 1;
   width: 100%;
   height: 100%;
-  opacity: 1;
   transition-duration: 0.25s;
   transform: scale(1);
+  animation: showImage 0.25s ease;
+}
+
+@keyframes showImage {
+  0% {
+    display: none;
+    opacity: 0;
+  }
+  1% {
+    display: inline-block;
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }

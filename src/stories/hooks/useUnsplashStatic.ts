@@ -89,6 +89,7 @@ export const useUnsplashStatic = ({
       results[i] = {
         // setup for retina displays/4k
         src: `${raw}&fm=jpg&q=80&${sizeQueryString}`,
+        raw,
         width: normalizedWidth,
         height: normalizedHeight,
         meta: {

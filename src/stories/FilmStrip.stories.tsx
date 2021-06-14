@@ -3,6 +3,7 @@ import { Meta, Story } from '@storybook/react/types-6-0';
 import { UnsplashCollectionSource, useUnsplashStatic } from './hooks/useUnsplashStatic';
 import { useCallback, useRef, useState } from 'react';
 
+import ModuleStyles from './FilmStrip.stories.module.scss';
 import { useKeyDownEvent } from 'lib/hooks/useKeyDownEvent';
 
 export default {
@@ -50,29 +51,8 @@ const Template: Story<FilmStripProps & { imageCount: number; collectionSource: U
   useKeyDownEvent(elementRef, 'ArrowRight', nextItem);
 
   return (
-    <div
-      ref={elementRef}
-      role="presentation"
-      tabIndex={-1}
-      style={{
-        width: '100%',
-        height: '100%',
-        outline: 'none'
-      }}>
-      <div
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          flexWrap: 'nowrap',
-          justifyContent: 'center',
-          alignContent: 'stretch',
-          alignItems: 'stretch',
-          height: '100%'
-        }}>
-        {images.length > 1 && (
-          <FilmStrip items={images} selectedItem={selectedItem} setSelectedItem={setSelectedItem} />
-        )}
-      </div>
+    <div className={ModuleStyles.container} ref={elementRef} role="presentation" tabIndex={-1}>
+      {images.length > 1 && <FilmStrip items={images} selectedItem={selectedItem} setSelectedItem={setSelectedItem} />}
     </div>
   );
 };

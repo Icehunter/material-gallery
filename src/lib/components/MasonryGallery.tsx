@@ -116,7 +116,9 @@ const resolveImageNodes = (
 
       panel.items.push(item);
 
-      panels.splice(findAndInsertByProperty<Panel>(panels, panel, 'size'), 0, panel);
+      const insertionIndex = findAndInsertByProperty<Panel>(panels, panel, 'size');
+
+      panels.splice(insertionIndex, 0, panel);
     }
   }
 
