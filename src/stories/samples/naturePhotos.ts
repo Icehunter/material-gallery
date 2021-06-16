@@ -8,9 +8,9 @@ import Page6 from './nature-page-6.json';
 import Page7 from './nature-page-7.json';
 import Page8 from './nature-page-8.json';
 import Page9 from './nature-page-9.json';
-import { UnsplashAPIResponse } from 'stories/types/UnsplashAPIResponse';
+import { UnsplashAPIResponse } from 'stories/types';
 
-export const NaturePhotos: UnsplashAPIResponse[] = [
+export const naturePhotos: UnsplashAPIResponse[] = [
   ...Page1.results,
   ...Page2.results,
   ...Page3.results,

@@ -1,4 +1,4 @@
-import { GalleryImage, GalleryImageProps } from './GalleryImage';
+import { ImageTile, ImageTileProps } from './ImageTile';
 import React, { FC, memo } from 'react';
 
 import { CreateCSSProperties } from '@material-ui/core/styles/withStyles';
@@ -9,7 +9,7 @@ import { makeStyles } from '@material-ui/core';
 export type ThumbnailProps = {
   selected?: boolean;
   size?: number;
-} & GalleryImageProps;
+} & ImageTileProps;
 
 const useStyles = makeStyles(() => ({
   image: (props: { size: number }): CreateCSSProperties => ({
@@ -18,11 +18,11 @@ const useStyles = makeStyles(() => ({
   })
 }));
 
-export const Thumbnail: FC<ThumbnailProps> = memo(({ selected, size = 100, ...galleryImageProps }) => {
+export const Thumbnail: FC<ThumbnailProps> = memo(({ selected, size = 100, ...ImageTileProps }) => {
   const classes = useStyles({ size });
   return (
-    <GalleryImage
-      {...galleryImageProps}
+    <ImageTile
+      {...ImageTileProps}
       styles={{
         image: clsx(ModuleStyles.image, {
           [ModuleStyles.selected]: selected === true,

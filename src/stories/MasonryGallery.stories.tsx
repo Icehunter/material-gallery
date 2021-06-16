@@ -1,6 +1,6 @@
 import { MasonryGallery, MasonryGalleryDirection, MasonryGalleryProps } from '../lib';
 import { Meta, Story } from '@storybook/react/types-6-0';
-import { TargetType, UnsplashCollectionSource, useUnsplashStatic } from './hooks/useUnsplashStatic';
+import { TargetType, UnsplashCollectionSource, useUnsplashStatic } from './hooks';
 
 import React from 'react';
 
@@ -46,16 +46,17 @@ export default {
 const Template: Story<
   MasonryGalleryProps & { imageCount: number; zoomLevel: number; collectionSource: UnsplashCollectionSource }
 > = ({ zoomLevel, targetSize, padding, margin, imageCount, direction, collectionSource }) => {
-  const images = useUnsplashStatic({
+  const collection = useUnsplashStatic({
     imageCount,
     targetSize: targetSize,
     targetType: direction === MasonryGalleryDirection.Vertical ? TargetType.Width : TargetType.Height,
     collectionSource
   });
+  const mediaItems = collection?.items ?? [];
 
   return (
     <MasonryGallery
-      items={images}
+      items={mediaItems}
       zoomLevel={zoomLevel}
       targetSize={targetSize}
       padding={padding}

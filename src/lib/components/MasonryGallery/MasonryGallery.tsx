@@ -1,7 +1,8 @@
-import { ImageItem, VirtualImageItem } from 'lib/types/ImageItem';
+import { MediaItem, MediaType, VirtualMediaItem } from 'lib/types';
 import React, { FC, Fragment, memo, useMemo, useRef } from 'react';
 
-import { ImageTile } from './ImageTile';
+import { ImageItem } from 'lib/types/ImageItem';
+import { MasonryImageTile } from './MasonryImageTile';
 import ModuleStyles from './MasonryGallery.module.scss';
 import clsx from 'clsx';
 import { findAndInsertByProperty } from 'lib/utils/arrays';
@@ -13,7 +14,7 @@ export enum MasonryGalleryDirection {
 }
 
 export type MasonryGalleryProps = {
-  items: VirtualImageItem[];
+  items: VirtualMediaItem<unknown>[];
   targetSize: number;
   padding: number;
   margin: number;
@@ -26,7 +27,7 @@ const NEGATIVE_ZOOM_LEVELS = [0.9, 0.8, 0.7, 0.6, 0.5];
 
 type Panel = {
   index: number;
-  items: ImageItem[];
+  items: MediaItem<unknown>[];
   size: number;
 };
 
@@ -35,14 +36,22 @@ type ElementPanel = {
   items: JSX.Element[];
 };
 
-const resolveImageNodes = (
-  items: VirtualImageItem[],
+const resolveImageNode = (item: ImageItem, key: string, width: number, height: number, margin: number): JSX.Element => {
+  return (
+    <Fragment key={key}>
+      <MasonryImageTile item={item} width={width} height={height} margin={margin} />
+    </Fragment>
+  );
+};
+
+const resolveMediaNodes = (
+  items: VirtualMediaItem<unknown>[],
   normalizedRectSize: number,
   zoomTargetSize: number,
   margin: number,
   direction: MasonryGalleryDirection
 ): ElementPanel[] => {
-  const imageNodes: ElementPanel[] = [];
+  const mediaNodes: ElementPanel[] = [];
 
   // get optimal panel count based on adjusted target size and with
   const panelCount = Math.ceil(normalizedRectSize / zoomTargetSize);
@@ -63,8 +72,15 @@ const resolveImageNodes = (
       }))
   ];
 
+  // resolve element sizes
   for (let itemIndex = 0; itemIndex < items.length; itemIndex++) {
-    const item = items[itemIndex];
+    const mediaItem = items[itemIndex];
+
+    if (!mediaItem || !mediaItem.item) {
+      continue;
+    }
+
+    const { item } = mediaItem;
 
     if (item) {
       const panel = panels.shift() as Panel;
@@ -72,7 +88,15 @@ const resolveImageNodes = (
       switch (direction) {
         case MasonryGalleryDirection.Vertical:
           {
-            const aspectRatio = item.height / item.width;
+            let aspectRatio = 1.0;
+            switch (mediaItem.type) {
+              case MediaType.Image:
+                {
+                  const imageItem = item as ImageItem;
+                  aspectRatio = imageItem.height / imageItem.width;
+                }
+                break;
+            }
 
             const normalizedWidth = normalizedTargetSize;
             const normalizedHeight = Math.floor(normalizedWidth * aspectRatio);
@@ -82,7 +106,15 @@ const resolveImageNodes = (
           break;
         case MasonryGalleryDirection.Horizontal:
           {
-            const aspectRatio = item.width / item.height;
+            let aspectRatio = 1.0;
+            switch (mediaItem.type) {
+              case MediaType.Image:
+                {
+                  const imageItem = item as ImageItem;
+                  aspectRatio = imageItem.width / imageItem.height;
+                }
+                break;
+            }
 
             const normalizedHeight = normalizedTargetSize;
             const normalizedWidth = Math.floor(normalizedHeight * aspectRatio);
@@ -92,7 +124,7 @@ const resolveImageNodes = (
           break;
       }
 
-      panel.items.push(item);
+      panel.items.push(mediaItem);
 
       const insertionIndex = findAndInsertByProperty<Panel>(panels, panel, 'size');
 
@@ -104,13 +136,14 @@ const resolveImageNodes = (
     const panel = panels[i];
 
     // process current panels
-    imageNodes[i] = imageNodes[i] ?? {
+    mediaNodes[i] = mediaNodes[i] ?? {
       panelIndex: panel.index,
       items: []
     };
 
     for (let j = 0; j < panel.items.length; j++) {
-      const item = panel.items[j];
+      const mediaItem = panel.items[j];
+      const { item } = mediaItem;
 
       let height = 200;
       let width = 200;
@@ -118,27 +151,47 @@ const resolveImageNodes = (
       switch (direction) {
         case MasonryGalleryDirection.Vertical:
           {
-            const aspectRatio = item.height / item.width;
+            let aspectRatio = 1.0;
+            switch (mediaItem.type) {
+              case MediaType.Image:
+                {
+                  const imageItem = item as ImageItem;
+                  aspectRatio = imageItem.height / imageItem.width;
+                }
+                break;
+            }
             width = normalizedTargetSize;
             height = Math.floor(width * aspectRatio);
           }
           break;
         case MasonryGalleryDirection.Horizontal:
           {
-            const aspectRatio = item.width / item.height;
+            let aspectRatio = 1.0;
+            switch (mediaItem.type) {
+              case MediaType.Image:
+                {
+                  const imageItem = item as ImageItem;
+                  aspectRatio = imageItem.width / imageItem.height;
+                }
+                break;
+            }
             height = normalizedTargetSize;
             width = Math.floor(height * aspectRatio);
           }
           break;
       }
-
-      imageNodes[i].items[j] = (
-        <ImageTile item={item} key={`thumbnail - ${i} - ${j}`} width={width} height={height} margin={margin} />
-      );
+      switch (mediaItem.type) {
+        case MediaType.Image:
+          {
+            const imageItem = item as ImageItem;
+            mediaNodes[i].items[j] = resolveImageNode(imageItem, `thumbnail - ${i} - ${j}`, width, height, margin);
+          }
+          break;
+      }
     }
   }
 
-  return imageNodes;
+  return mediaNodes;
 };
 
 export const MasonryGallery: FC<MasonryGalleryProps> = memo(
@@ -147,7 +200,7 @@ export const MasonryGallery: FC<MasonryGalleryProps> = memo(
 
     const rect = useRect(containerNodeRef);
 
-    const itemElements = useMemo(() => {
+    const elements = useMemo(() => {
       if (!rect) {
         return [];
       }
@@ -163,9 +216,9 @@ export const MasonryGallery: FC<MasonryGalleryProps> = memo(
       const normalizedRectSize =
         Math.floor(direction === MasonryGalleryDirection.Vertical ? rect.width : rect.height) - padding * 2;
 
-      const imageNodes = resolveImageNodes(items, normalizedRectSize, zoomTargetSize, margin, direction);
+      const mediaNodes = resolveMediaNodes(items, normalizedRectSize, zoomTargetSize, margin, direction);
 
-      imageNodes.sort((a, b) => {
+      mediaNodes.sort((a, b) => {
         if (a.panelIndex > b.panelIndex) {
           return 1;
         }
@@ -175,13 +228,13 @@ export const MasonryGallery: FC<MasonryGalleryProps> = memo(
         return 0;
       });
 
-      return imageNodes;
+      return mediaNodes;
     }, [direction, items, margin, padding, rect, targetSize, zoomLevel]);
 
     const content = useMemo(() => {
       const panels: JSX.Element[] = [];
-      for (let i = 0; i < itemElements.length; i++) {
-        const nodes: ElementPanel = itemElements[i];
+      for (let i = 0; i < elements.length; i++) {
+        const element: ElementPanel = elements[i];
         panels[i] = (
           <div
             key={i}
@@ -189,14 +242,14 @@ export const MasonryGallery: FC<MasonryGalleryProps> = memo(
               [ModuleStyles.Vertical]: direction === MasonryGalleryDirection.Vertical,
               [ModuleStyles.Horizontal]: direction === MasonryGalleryDirection.Horizontal
             })}>
-            {nodes.items.map((node, nodeIndex: number) => {
+            {element.items.map((node, nodeIndex: number) => {
               return <Fragment key={nodeIndex}>{node}</Fragment>;
             })}
           </div>
         );
       }
       return panels;
-    }, [direction, itemElements]);
+    }, [direction, elements]);
 
     return (
       <div

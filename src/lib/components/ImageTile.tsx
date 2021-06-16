@@ -1,31 +1,26 @@
-import React, { CSSProperties, FC, ImgHTMLAttributes, memo, useMemo, useState } from 'react';
+import React, { FC, ImgHTMLAttributes, memo, useMemo, useState } from 'react';
 
 import { CircularProgress } from '@material-ui/core';
-import ModuleStyles from './GalleryImage.module.scss';
+import ModuleStyles from './ImageTile.module.scss';
 import clsx from 'clsx';
 import { noop } from 'lib/utils/noop';
 import { useInView } from 'react-intersection-observer';
 
-export type GalleryImageDynamicStyles = {
-  image?: CSSProperties;
-  loader?: CSSProperties;
-};
-
-export type GalleryImageStyles = {
+export type ImageTileStyles = {
   root?: string;
   image?: string;
   loader?: string;
 };
 
-export type GalleryImageProps = {
+export type ImageTileProps = {
   /**
    * Styles to be applied to the various nodes in the dom tree; will override defaults
    */
-  styles?: GalleryImageStyles;
+  styles?: ImageTileStyles;
   preload?: boolean;
 } & ImgHTMLAttributes<HTMLImageElement>;
 
-export const GalleryImage: FC<GalleryImageProps> = memo(
+export const ImageTile: FC<ImageTileProps> = memo(
   ({ styles = {}, src, alt, preload = false, onClick = noop, ...imageElementProps }) => {
     const { ref, inView } = useInView({
       triggerOnce: true,

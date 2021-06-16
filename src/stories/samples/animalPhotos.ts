@@ -8,9 +8,9 @@ import Page6 from './animals-page-6.json';
 import Page7 from './animals-page-7.json';
 import Page8 from './animals-page-8.json';
 import Page9 from './animals-page-9.json';
-import { UnsplashAPIResponse } from 'stories/types/UnsplashAPIResponse';
+import { UnsplashAPIResponse } from 'stories/types';
 
-export const AnimalsPhotos: UnsplashAPIResponse[] = [
+export const animalsPhotos: UnsplashAPIResponse[] = [
   ...Page1.results,
   ...Page2.results,
   ...Page3.results,

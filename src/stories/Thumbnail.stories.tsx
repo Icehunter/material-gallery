@@ -1,10 +1,10 @@
 import { Meta, Story } from '@storybook/react/types-6-0';
 import { Thumbnail, ThumbnailProps } from '../lib';
-import { UnsplashCollectionSource, useUnsplashStatic } from './hooks/useUnsplashStatic';
+import { UnsplashCollectionSource, useUnsplashStatic } from './hooks';
 
-import { ImageItem } from 'lib/types/ImageItem';
+import { ImageItem } from 'lib/types';
 import React from 'react';
-import { noop } from 'lib/utils/noop';
+import { noop } from 'lib/utils';
 
 export default {
   title: 'Components/Thumbnail',
@@ -32,13 +32,15 @@ const Template: Story<ThumbnailProps & { collectionSource: UnsplashCollectionSou
   collectionSource,
   ...props
 }) => {
-  const [item] = useUnsplashStatic({ imageCount: 1, targetSize: 200, collectionSource });
+  const collection = useUnsplashStatic({ imageCount: 1, targetSize: 200, collectionSource });
+  const [mediaItem] = collection?.items ?? [];
+  const item = mediaItem?.item as ImageItem;
 
   const {
     width,
     height,
     meta: { thumbnail }
-  } = item as ImageItem;
+  } = item;
 
   return <Thumbnail {...props} {...{ src: thumbnail, width, height }} />;
 };

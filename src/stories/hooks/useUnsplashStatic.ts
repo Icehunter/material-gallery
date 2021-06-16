@@ -1,9 +1,10 @@
-import { AnimalsPhotos } from 'stories/samples/AnimalPhotos';
-import { LandscapePhotos } from 'stories/samples/LandscapePhotos';
-import { NaturePhotos } from 'stories/samples/NaturePhotos';
+import { animalsPhotos, landscapePhotos, naturePhotos } from 'stories/samples';
+
+import { MediaType } from 'lib/types/MediaType';
 import { UnsplashAPIResponse } from 'stories/types/UnsplashAPIResponse';
-import { VirtualImageItem } from 'lib/types/ImageItem';
-import { clamp } from 'lib/utils/math';
+import { VirtualImageItem } from 'lib/types';
+import { VirtualMediaCollection } from 'lib/types/MediaCollection';
+import { clamp } from 'lib/utils';
 import { useMemo } from 'react';
 
 export enum UnsplashCollectionSource {
@@ -30,22 +31,24 @@ export const useUnsplashStatic = ({
   targetSize = 500,
   targetType = TargetType.Height,
   collectionSource = UnsplashCollectionSource.Landscape
-} = {}): VirtualImageItem[] => {
+} = {}): VirtualMediaCollection<VirtualImageItem> => {
   const normalizedImageCount = clamp(imageCount, 1, 300);
 
   const collection: UnsplashAPIResponse[] = useMemo(() => {
     switch (collectionSource) {
       case UnsplashCollectionSource.Animals:
-        return AnimalsPhotos;
+        return animalsPhotos;
       case UnsplashCollectionSource.Landscape:
-        return LandscapePhotos;
+        return landscapePhotos;
       case UnsplashCollectionSource.Nature:
-        return NaturePhotos;
+        return naturePhotos;
     }
   }, [collectionSource]);
 
   const images = useMemo(() => {
-    const results: VirtualImageItem[] = [];
+    const results: VirtualMediaCollection<VirtualImageItem> = {
+      items: []
+    };
 
     for (let i = 0; i < normalizedImageCount; i++) {
       const {
@@ -86,7 +89,7 @@ export const useUnsplashStatic = ({
           break;
       }
 
-      results[i] = {
+      const imageItem: VirtualImageItem = {
         // setup for retina displays/4k
         src: `${raw}&fm=jpg&q=80&${sizeQueryString}`,
         raw,
@@ -103,6 +106,11 @@ export const useUnsplashStatic = ({
           }
         }
       };
+
+      results.items.push({
+        type: MediaType.Image,
+        item: imageItem
+      });
     }
 
     return results;

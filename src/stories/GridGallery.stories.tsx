@@ -1,6 +1,6 @@
 import { GridGallery, GridGalleryProps } from '../lib';
 import { Meta, Story } from '@storybook/react/types-6-0';
-import { TargetType, UnsplashCollectionSource, useUnsplashStatic } from './hooks/useUnsplashStatic';
+import { TargetType, UnsplashCollectionSource, useUnsplashStatic } from './hooks';
 
 import React from 'react';
 
@@ -38,14 +38,17 @@ export default {
 const Template: Story<
   GridGalleryProps & { imageCount: number; zoomLevel: number; collectionSource: UnsplashCollectionSource }
 > = ({ zoomLevel, targetSize, padding, margin, imageCount, collectionSource }) => {
-  const images = useUnsplashStatic({
+  const collection = useUnsplashStatic({
     imageCount,
     targetSize: targetSize,
     targetType: TargetType.Height,
     collectionSource
   });
+  const mediaItems = collection?.items ?? [];
 
-  return <GridGallery items={images} zoomLevel={zoomLevel} targetSize={targetSize} padding={padding} margin={margin} />;
+  return (
+    <GridGallery items={mediaItems} zoomLevel={zoomLevel} targetSize={targetSize} padding={padding} margin={margin} />
+  );
 };
 
 export const GridGalleryDefault = Template.bind({});

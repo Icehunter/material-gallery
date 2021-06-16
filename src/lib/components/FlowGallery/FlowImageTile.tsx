@@ -1,34 +1,32 @@
 import React, { FC, memo } from 'react';
 
 import { CreateCSSProperties } from '@material-ui/core/styles/withStyles';
-import { GalleryImage } from '../GalleryImage';
 import { ImageItem } from 'lib/types/ImageItem';
-import ModuleStyles from './ImageTile.module.scss';
+import { ImageTile } from '../ImageTile';
+import ModuleStyles from './FlowImageTile.module.scss';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core';
 
-export type ImageTileProps = {
+export type FlowImageTileProps = {
   item: ImageItem;
-  key: string;
   height: number;
   width: number;
   margin: number;
 };
 
 const useStyles = makeStyles(() => ({
-  image: (props: Pick<ImageTileProps, 'width' | 'height' | 'margin'>): CreateCSSProperties => ({
+  image: (props: Pick<FlowImageTileProps, 'width' | 'height' | 'margin'>): CreateCSSProperties => ({
     width: props.width,
     height: props.height,
     margin: props.margin
   })
 }));
 
-export const ImageTile: FC<ImageTileProps> = memo(({ item, key, height, width, margin }) => {
+export const FlowImageTile: FC<FlowImageTileProps> = memo(({ item, height, width, margin }) => {
   const classes = useStyles({ width, height, margin });
 
   return (
-    <GalleryImage
-      key={key}
+    <ImageTile
       src={item.src}
       srcSet={item.srcSet}
       styles={{

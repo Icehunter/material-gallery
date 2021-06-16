@@ -1,10 +1,10 @@
 import { FilmStrip, FilmStripProps } from '../lib';
 import { Meta, Story } from '@storybook/react/types-6-0';
-import { UnsplashCollectionSource, useUnsplashStatic } from './hooks/useUnsplashStatic';
+import { UnsplashCollectionSource, useUnsplashStatic } from './hooks';
 import { useCallback, useRef, useState } from 'react';
 
-import ModuleStyles from './FilmStrip.stories.module.scss';
-import { useKeyDownEvent } from 'lib/hooks/useKeyDownEvent';
+import styles from './FilmStrip.stories.module.scss';
+import { useKeyDownEvent } from 'lib/hooks';
 
 export default {
   title: 'Components/FilmStrip',
@@ -37,22 +37,25 @@ const Template: Story<FilmStripProps & { imageCount: number; collectionSource: U
   const [selectedItem, setSelectedItem] = useState(0);
   const elementRef = useRef<HTMLDivElement | null>(null);
 
-  const images = useUnsplashStatic({ imageCount, targetSize: 200, collectionSource });
+  const collection = useUnsplashStatic({ imageCount, targetSize: 200, collectionSource });
+  const mediaItems = collection?.items ?? [];
 
   const previousItem = useCallback(() => {
-    setSelectedItem((prev) => (prev === 0 ? images.length - 1 : prev - 1));
-  }, [images.length]);
+    setSelectedItem((prev) => (prev === 0 ? mediaItems.length - 1 : prev - 1));
+  }, [mediaItems.length]);
 
   const nextItem = useCallback(() => {
-    setSelectedItem((prev) => (prev === images.length - 1 ? 0 : prev + 1));
-  }, [images.length]);
+    setSelectedItem((prev) => (prev === mediaItems.length - 1 ? 0 : prev + 1));
+  }, [mediaItems.length]);
 
   useKeyDownEvent(elementRef, 'ArrowLeft', previousItem);
   useKeyDownEvent(elementRef, 'ArrowRight', nextItem);
 
   return (
-    <div className={ModuleStyles.container} ref={elementRef} role="presentation" tabIndex={-1}>
-      {images.length > 1 && <FilmStrip items={images} selectedItem={selectedItem} setSelectedItem={setSelectedItem} />}
+    <div className={styles.container} ref={elementRef} role="presentation" tabIndex={-1}>
+      {mediaItems.length > 1 && (
+        <FilmStrip items={mediaItems} selectedItem={selectedItem} setSelectedItem={setSelectedItem} />
+      )}
     </div>
   );
 };

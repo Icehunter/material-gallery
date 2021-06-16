@@ -1,12 +1,12 @@
-import React, { FC, memo, useMemo, useRef } from 'react';
+import { ImageItem, MediaType, VirtualMediaItem } from 'lib/types';
+import React, { FC, Fragment, memo, useMemo, useRef } from 'react';
 
-import { ImageTile } from './ImageTile';
+import { GridImageTile } from './GridImageTile';
 import ModuleStyles from './GridGallery.module.scss';
-import { VirtualImageItem } from 'lib/types/ImageItem';
 import { useRect } from 'lib/hooks/useRect';
 
 export type GridGalleryProps = {
-  items: VirtualImageItem[];
+  items: VirtualMediaItem<unknown>[];
   targetSize: number;
   padding: number;
   margin: number;
@@ -40,19 +40,30 @@ export const GridGallery: FC<GridGalleryProps> = memo(({ items, targetSize, padd
     // find optimal target size; account for margins around images
     const normalizedTargetSize = Math.floor(normalizedRectWidth / columnCount) - margin * 2;
 
-    return items.map((item, index) => {
-      if (!item) {
+    return items.map((mediaItem, index) => {
+      if (!mediaItem || !mediaItem.item) {
         return null;
       }
-      return (
-        <ImageTile
-          item={item}
-          key={`thumbnail - ${index}`}
-          width={normalizedTargetSize}
-          height={normalizedTargetSize}
-          margin={margin}
-        />
-      );
+
+      const { item } = mediaItem;
+
+      switch (mediaItem.type) {
+        case MediaType.Image: {
+          const imageItem = item as ImageItem;
+          return (
+            <Fragment key={`thumbnail - ${index}`}>
+              <GridImageTile
+                item={imageItem}
+                width={normalizedTargetSize}
+                height={normalizedTargetSize}
+                margin={margin}
+              />
+            </Fragment>
+          );
+        }
+        default:
+          return null;
+      }
     });
   }, [items, margin, padding, rect, targetSize, zoomLevel]);
 

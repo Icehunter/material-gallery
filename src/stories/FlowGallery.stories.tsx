@@ -1,6 +1,6 @@
 import { FlowGallery, FlowGalleryProps } from '../lib';
 import { Meta, Story } from '@storybook/react/types-6-0';
-import { UnsplashCollectionSource, useUnsplashStatic } from './hooks/useUnsplashStatic';
+import { UnsplashCollectionSource, useUnsplashStatic } from './hooks';
 
 import React from 'react';
 
@@ -38,9 +38,12 @@ export default {
 const Template: Story<
   FlowGalleryProps & { imageCount: number; zoomLevel: number; collectionSource: UnsplashCollectionSource }
 > = ({ zoomLevel, targetSize, padding, margin, imageCount, collectionSource }) => {
-  const images = useUnsplashStatic({ imageCount, targetSize: targetSize, collectionSource });
+  const collection = useUnsplashStatic({ imageCount, targetSize: targetSize, collectionSource });
+  const mediaItems = collection?.items ?? [];
 
-  return <FlowGallery items={images} zoomLevel={zoomLevel} targetSize={targetSize} padding={padding} margin={margin} />;
+  return (
+    <FlowGallery items={mediaItems} zoomLevel={zoomLevel} targetSize={targetSize} padding={padding} margin={margin} />
+  );
 };
 
 export const FlowGalleryDefault = Template.bind({});

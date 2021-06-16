@@ -1,21 +1,69 @@
 import { ChevronLeft as ChevronLeftIcon, ChevronRight as ChevronRightIcon } from '@material-ui/icons';
+import { ImageItem, MediaType, VirtualMediaItem } from 'lib/types';
 import React, { FC, memo, useLayoutEffect, useMemo } from 'react';
+import { getNeighborIndexes, noop } from 'lib/utils';
 
-import { GalleryImage } from './GalleryImage';
 import { IconButton } from '@material-ui/core';
+import { ImageTile } from './ImageTile';
 import ModuleStyles from './Carousel.module.scss';
-import { VirtualImageItem } from '../types/ImageItem';
 import clsx from 'clsx';
-import { getNeighborIndexes } from 'lib/utils/getNeighborIndexes';
-import { noop } from '../utils/noop';
 
 export type CarouselProps = {
-  items: VirtualImageItem[];
+  items: VirtualMediaItem<unknown>[];
   previousItem: () => void;
   nextItem: () => void;
   selectedItem: number;
   autoplay?: boolean;
   delay?: number;
+};
+
+const resolveMediaItems = (
+  items: VirtualMediaItem<unknown>[],
+  neighbors: number[],
+  selectedItem: number
+): (JSX.Element | null)[] => {
+  return items.map((mediaItem, index) => {
+    if (!mediaItem || !mediaItem.item) {
+      return null;
+    }
+
+    const { item } = mediaItem;
+
+    const preload = neighbors.includes(index);
+
+    let content = null;
+
+    switch (mediaItem.type) {
+      case MediaType.Image:
+        {
+          const imageItem = item as ImageItem;
+          content = (
+            <ImageTile
+              src={imageItem.src}
+              srcSet={imageItem.srcSet}
+              styles={{
+                image: ModuleStyles.image,
+                loader: ModuleStyles.loader
+              }}
+              preload={preload}
+            />
+          );
+        }
+        break;
+      default:
+        return null;
+    }
+
+    return (
+      <figure
+        className={clsx(ModuleStyles.imageDisplayContainer, {
+          [ModuleStyles.selectedImage]: index === selectedItem
+        })}
+        key={index}>
+        {(index === selectedItem || preload) && content}
+      </figure>
+    );
+  });
 };
 
 export const Carousel: FC<CarouselProps> = memo(
@@ -37,35 +85,7 @@ export const Carousel: FC<CarouselProps> = memo(
       return (): void => window.clearInterval(interval);
     }, [autoplay, delay, nextItem]);
 
-    const itemElements = useMemo(() => {
-      // handle if we should preload future neighbors
-
-      return items.map((item, index) => {
-        if (!item) {
-          return null;
-        }
-        const preload = neighbors.includes(index);
-        return (
-          <figure
-            className={clsx(ModuleStyles.imageDisplayContainer, {
-              [ModuleStyles.selectedImage]: index === selectedItem
-            })}
-            key={index}>
-            {(index === selectedItem || preload) && (
-              <GalleryImage
-                src={item.src}
-                srcSet={item.srcSet}
-                styles={{
-                  image: ModuleStyles.image,
-                  loader: ModuleStyles.loader
-                }}
-                preload={preload}
-              />
-            )}
-          </figure>
-        );
-      });
-    }, [items, neighbors, selectedItem]);
+    const elements = useMemo(() => resolveMediaItems(items, neighbors, selectedItem), [items, neighbors, selectedItem]);
 
     return (
       <div className={ModuleStyles.container}>
@@ -80,7 +100,7 @@ export const Carousel: FC<CarouselProps> = memo(
           </IconButton>
         </div>
         <div className={ModuleStyles.content}>
-          <div className={ModuleStyles.imageContainer}>{itemElements}</div>
+          <div className={ModuleStyles.imageContainer}>{elements}</div>
         </div>
         <div className={ModuleStyles.navigation}>
           <IconButton

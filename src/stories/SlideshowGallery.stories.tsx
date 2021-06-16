@@ -1,11 +1,11 @@
 import { Meta, Story } from '@storybook/react/types-6-0';
 import { SlideshowGallery, SlideshowGalleryProps } from '../lib';
-import { UnsplashCollectionSource, useUnsplashStatic } from './hooks/useUnsplashStatic';
+import { UnsplashCollectionSource, useUnsplashStatic } from './hooks';
 import { useCallback, useRef, useState } from 'react';
 
-import ModuleStyles from './Slideshow.stories.module.scss';
-import { useKeyDownEvent } from '../lib/hooks/useKeyDownEvent';
-import { useRect } from 'lib/hooks/useRect';
+import styles from './Slideshow.stories.module.scss';
+import { useKeyDownEvent } from '../lib/hooks';
+import { useRect } from 'lib/hooks';
 
 export default {
   title: 'Galleries/SlideshowGallery',
@@ -58,24 +58,25 @@ const Template: Story<
 
   const rect = useRect(elementRef);
 
-  const images = useUnsplashStatic({ imageCount, targetSize: Math.floor(rect.height), collectionSource });
+  const collection = useUnsplashStatic({ imageCount, targetSize: Math.floor(rect.height), collectionSource });
+  const mediaItems = collection?.items ?? [];
 
   const previousItem = useCallback(() => {
-    setSelectedItem((prev) => (prev === 0 ? images.length - 1 : prev - 1));
-  }, [images.length]);
+    setSelectedItem((prev) => (prev === 0 ? mediaItems.length - 1 : prev - 1));
+  }, [mediaItems.length]);
 
   const nextItem = useCallback(() => {
-    setSelectedItem((prev) => (prev === images.length - 1 ? 0 : prev + 1));
-  }, [images.length]);
+    setSelectedItem((prev) => (prev === mediaItems.length - 1 ? 0 : prev + 1));
+  }, [mediaItems.length]);
 
   useKeyDownEvent(elementRef, 'ArrowLeft', previousItem);
   useKeyDownEvent(elementRef, 'ArrowRight', nextItem);
 
   return (
-    <div className={ModuleStyles.container} ref={elementRef} role="presentation" tabIndex={-1}>
+    <div className={styles.container} ref={elementRef} role="presentation" tabIndex={-1}>
       <SlideshowGallery
         {...args}
-        items={images}
+        items={mediaItems}
         previousItem={previousItem}
         nextItem={nextItem}
         selectedItem={selectedItem}
@@ -101,25 +102,26 @@ const TemplateWithSmallShell: Story<
 
   const rect = useRect(elementRef);
 
-  const images = useUnsplashStatic({ imageCount, targetSize: rect.height, collectionSource });
+  const collection = useUnsplashStatic({ imageCount, targetSize: Math.floor(rect.height), collectionSource });
+  const mediaItems = collection?.items ?? [];
 
   const previousItem = useCallback(() => {
-    setSelectedItem((prev) => (prev === 0 ? images.length - 1 : prev - 1));
-  }, [images.length]);
+    setSelectedItem((prev) => (prev === 0 ? mediaItems.length - 1 : prev - 1));
+  }, [mediaItems.length]);
 
   const nextItem = useCallback(() => {
-    setSelectedItem((prev) => (prev === images.length - 1 ? 0 : prev + 1));
-  }, [images.length]);
+    setSelectedItem((prev) => (prev === mediaItems.length - 1 ? 0 : prev + 1));
+  }, [mediaItems.length]);
 
   useKeyDownEvent(elementRef, 'ArrowLeft', previousItem);
   useKeyDownEvent(elementRef, 'ArrowRight', nextItem);
 
   return (
-    <div className={ModuleStyles.containerSmall} ref={elementRef} role="presentation" tabIndex={-1}>
-      <div className={ModuleStyles.wrapperSmall}>
+    <div className={styles.containerSmall} ref={elementRef} role="presentation" tabIndex={-1}>
+      <div className={styles.wrapperSmall}>
         <SlideshowGallery
           {...args}
-          items={images}
+          items={mediaItems}
           previousItem={previousItem}
           nextItem={nextItem}
           selectedItem={selectedItem}
