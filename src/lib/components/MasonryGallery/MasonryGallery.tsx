@@ -1,7 +1,7 @@
-import { MediaItem, MediaType, VirtualMediaItem } from 'lib/types';
+import { Media, MediaItem, MediaType } from 'lib/types';
 import React, { FC, Fragment, memo, useMemo, useRef } from 'react';
 
-import { ImageItem } from 'lib/types/ImageItem';
+import { Image } from 'lib/types/Image';
 import { MasonryImageTile } from './MasonryImageTile';
 import ModuleStyles from './MasonryGallery.module.scss';
 import clsx from 'clsx';
@@ -14,7 +14,7 @@ export enum MasonryGalleryDirection {
 }
 
 export type MasonryGalleryProps = {
-  items: VirtualMediaItem<unknown>[];
+  items: MediaItem<Media>[];
   targetSize: number;
   padding: number;
   margin: number;
@@ -27,7 +27,7 @@ const NEGATIVE_ZOOM_LEVELS = [0.9, 0.8, 0.7, 0.6, 0.5];
 
 type Panel = {
   index: number;
-  items: MediaItem<unknown>[];
+  items: MediaItem<Media>[];
   size: number;
 };
 
@@ -36,7 +36,7 @@ type ElementPanel = {
   items: JSX.Element[];
 };
 
-const resolveImageNode = (item: ImageItem, key: string, width: number, height: number, margin: number): JSX.Element => {
+const resolveImageNode = (item: Image, key: string, width: number, height: number, margin: number): JSX.Element => {
   return (
     <Fragment key={key}>
       <MasonryImageTile item={item} width={width} height={height} margin={margin} />
@@ -45,7 +45,7 @@ const resolveImageNode = (item: ImageItem, key: string, width: number, height: n
 };
 
 const resolveMediaNodes = (
-  items: VirtualMediaItem<unknown>[],
+  items: MediaItem<Media>[],
   normalizedRectSize: number,
   zoomTargetSize: number,
   margin: number,
@@ -92,7 +92,7 @@ const resolveMediaNodes = (
             switch (mediaItem.type) {
               case MediaType.Image:
                 {
-                  const imageItem = item as ImageItem;
+                  const imageItem = item as Image;
                   aspectRatio = imageItem.height / imageItem.width;
                 }
                 break;
@@ -110,7 +110,7 @@ const resolveMediaNodes = (
             switch (mediaItem.type) {
               case MediaType.Image:
                 {
-                  const imageItem = item as ImageItem;
+                  const imageItem = item as Image;
                   aspectRatio = imageItem.width / imageItem.height;
                 }
                 break;
@@ -124,7 +124,7 @@ const resolveMediaNodes = (
           break;
       }
 
-      panel.items.push(mediaItem);
+      panel.items[panel.items.length] = mediaItem;
 
       const insertionIndex = findAndInsertByProperty<Panel>(panels, panel, 'size');
 
@@ -132,17 +132,17 @@ const resolveMediaNodes = (
     }
   }
 
-  for (let i = 0; i < panels.length; i++) {
-    const panel = panels[i];
+  for (let panelIndex = 0; panelIndex < panels.length; panelIndex++) {
+    const panel = panels[panelIndex];
 
     // process current panels
-    mediaNodes[i] = mediaNodes[i] ?? {
+    mediaNodes[panelIndex] = mediaNodes[panelIndex] ?? {
       panelIndex: panel.index,
       items: []
     };
 
-    for (let j = 0; j < panel.items.length; j++) {
-      const mediaItem = panel.items[j];
+    for (let itemIndex = 0; itemIndex < panel.items.length; itemIndex++) {
+      const mediaItem = panel.items[itemIndex];
       const { item } = mediaItem;
 
       let height = 200;
@@ -155,7 +155,7 @@ const resolveMediaNodes = (
             switch (mediaItem.type) {
               case MediaType.Image:
                 {
-                  const imageItem = item as ImageItem;
+                  const imageItem = item as Image;
                   aspectRatio = imageItem.height / imageItem.width;
                 }
                 break;
@@ -170,7 +170,7 @@ const resolveMediaNodes = (
             switch (mediaItem.type) {
               case MediaType.Image:
                 {
-                  const imageItem = item as ImageItem;
+                  const imageItem = item as Image;
                   aspectRatio = imageItem.width / imageItem.height;
                 }
                 break;
@@ -183,8 +183,14 @@ const resolveMediaNodes = (
       switch (mediaItem.type) {
         case MediaType.Image:
           {
-            const imageItem = item as ImageItem;
-            mediaNodes[i].items[j] = resolveImageNode(imageItem, `thumbnail - ${i} - ${j}`, width, height, margin);
+            const imageItem = item as Image;
+            mediaNodes[panelIndex].items[itemIndex] = resolveImageNode(
+              imageItem,
+              `thumbnail - ${panelIndex} - ${itemIndex}`,
+              width,
+              height,
+              margin
+            );
           }
           break;
       }
@@ -233,18 +239,25 @@ export const MasonryGallery: FC<MasonryGalleryProps> = memo(
 
     const content = useMemo(() => {
       const panels: JSX.Element[] = [];
-      for (let i = 0; i < elements.length; i++) {
-        const element: ElementPanel = elements[i];
-        panels[i] = (
+      for (let elementIndex = 0; elementIndex < elements.length; elementIndex++) {
+        const element: ElementPanel = elements[elementIndex];
+
+        const nodes = [];
+
+        for (let nodeIndex = 0; nodeIndex < element.items.length; nodeIndex++) {
+          const node = element.items[nodeIndex];
+
+          nodes[nodeIndex] = <Fragment key={nodeIndex}>{node}</Fragment>;
+        }
+
+        panels[elementIndex] = (
           <div
-            key={i}
+            key={elementIndex}
             className={clsx(ModuleStyles.panel, {
               [ModuleStyles.Vertical]: direction === MasonryGalleryDirection.Vertical,
               [ModuleStyles.Horizontal]: direction === MasonryGalleryDirection.Horizontal
             })}>
-            {element.items.map((node, nodeIndex: number) => {
-              return <Fragment key={nodeIndex}>{node}</Fragment>;
-            })}
+            {nodes}
           </div>
         );
       }

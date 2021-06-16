@@ -4,7 +4,6 @@ import { CssBaseline } from '@material-ui/core';
 import React from 'react';
 import { addDecorator } from '@storybook/react';
 import { create } from '@storybook/theming/create';
-import pkg from '../package.json';
 import { withPerformance } from 'storybook-addon-performance';
 
 export const parameters = {
@@ -19,9 +18,7 @@ export const parameters = {
     theme: create({
       base: 'light',
       fontBase: '"Roboto", sans-serif',
-      fontCode: 'monospace',
-      brandTitle: `Material Gallery ${pkg.version}`,
-      brandUrl: 'https://github.com/Icehunter/material-gallery'
+      fontCode: 'monospace'
     }),
     storySort: {
       order: ['Introduction']
@@ -34,10 +31,10 @@ export const parameters = {
 addDecorator(withPerformance);
 
 export const decorators = [
-  (Story) => {
+  (Story, { args }) => {
     const defaultTheme = createMuiTheme({
       palette: {
-        type: 'light'
+        type: args.themePaletteType ?? 'light'
       }
     });
 

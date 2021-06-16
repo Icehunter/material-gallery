@@ -1,5 +1,5 @@
 import { ChevronLeft as ChevronLeftIcon, ChevronRight as ChevronRightIcon } from '@material-ui/icons';
-import { ImageItem, MediaType, VirtualMediaItem } from 'lib/types';
+import { Image, Media, MediaItem, MediaType } from 'lib/types';
 import React, { FC, memo, useLayoutEffect, useMemo } from 'react';
 import { getNeighborIndexes, noop } from 'lib/utils';
 
@@ -9,7 +9,7 @@ import ModuleStyles from './Carousel.module.scss';
 import clsx from 'clsx';
 
 export type CarouselProps = {
-  items: VirtualMediaItem<unknown>[];
+  items: MediaItem<Media>[];
   previousItem: () => void;
   nextItem: () => void;
   selectedItem: number;
@@ -18,27 +18,33 @@ export type CarouselProps = {
 };
 
 const resolveMediaItems = (
-  items: VirtualMediaItem<unknown>[],
+  items: MediaItem<Media>[],
   neighbors: number[],
   selectedItem: number
 ): (JSX.Element | null)[] => {
-  return items.map((mediaItem, index) => {
+  const results = [];
+
+  for (let itemIndex = 0; itemIndex < items.length; itemIndex++) {
+    const mediaItem = items[itemIndex];
     if (!mediaItem || !mediaItem.item) {
-      return null;
+      continue;
     }
 
     const { item } = mediaItem;
 
-    const preload = neighbors.includes(index);
+    const preload = neighbors.includes(itemIndex);
 
     let content = null;
 
     switch (mediaItem.type) {
       case MediaType.Image:
         {
-          const imageItem = item as ImageItem;
+          const imageItem = item as Image;
+          const preload = neighbors.includes(itemIndex);
           content = (
             <ImageTile
+              width={imageItem.width}
+              height={imageItem.height}
               src={imageItem.src}
               srcSet={imageItem.srcSet}
               styles={{
@@ -50,20 +56,22 @@ const resolveMediaItems = (
           );
         }
         break;
-      default:
-        return null;
     }
 
-    return (
-      <figure
-        className={clsx(ModuleStyles.imageDisplayContainer, {
-          [ModuleStyles.selectedImage]: index === selectedItem
-        })}
-        key={index}>
-        {(index === selectedItem || preload) && content}
-      </figure>
-    );
-  });
+    if (content !== null) {
+      results[results.length] = (
+        <figure
+          className={clsx(ModuleStyles.imageDisplayContainer, {
+            [ModuleStyles.selectedImage]: itemIndex === selectedItem
+          })}
+          key={itemIndex}>
+          {(itemIndex === selectedItem || preload) && content}
+        </figure>
+      );
+    }
+  }
+
+  return results;
 };
 
 export const Carousel: FC<CarouselProps> = memo(

@@ -9,13 +9,13 @@ export const getNeighborIndexes = (home: number, neighborhoodSize: number, range
     .fill(0)
     .map((_: number, index: number) => start + index);
 
-  for (let i = 0; i < neighborhoodRanges.length; i++) {
-    const neighborhoodRange = neighborhoodRanges[i];
+  for (let neighborIndex = 0; neighborIndex < neighborhoodRanges.length; neighborIndex++) {
+    const neighborhoodRange = neighborhoodRanges[neighborIndex];
     let result = (home + neighborhoodRange) % neighborhoodSize;
     if (result < 0) {
       result += neighborhoodSize;
     }
-    results[i] = result;
+    results[neighborIndex] = result;
   }
 
   return [...new Set(results)];

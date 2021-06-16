@@ -1,6 +1,7 @@
 import { Meta, Story } from '@storybook/react/types-6-0';
 import { SlideshowGallery, SlideshowGalleryProps } from '../lib';
 import { UnsplashCollectionSource, useUnsplashStatic } from './hooks';
+import { autoplay, collectionSource, delay, imageCount, themePaletteType } from './argTypes';
 import { useCallback, useRef, useState } from 'react';
 
 import styles from './Slideshow.stories.module.scss';
@@ -15,29 +16,11 @@ export default {
     collectionSource: UnsplashCollectionSource.Landscape
   },
   argTypes: {
-    imageCount: {
-      control: { type: 'range', min: 1, max: 300, step: 1 }
-    },
-    autoplay: {
-      type: 'boolean',
-      defaultValue: false
-    },
-    delay: {
-      control: {
-        type: 'range',
-        min: 1000,
-        max: 10000,
-        step: 300
-      },
-      defaultValue: 1500
-    },
-    collectionSource: {
-      defaultValue: UnsplashCollectionSource.Landscape,
-      control: {
-        type: 'select',
-        options: Object.keys(UnsplashCollectionSource)
-      }
-    }
+    autoplay,
+    collectionSource,
+    delay,
+    imageCount,
+    themePaletteType
   },
   parameters: {
     layout: 'fullscreen'

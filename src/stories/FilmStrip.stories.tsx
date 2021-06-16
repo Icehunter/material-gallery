@@ -1,6 +1,7 @@
 import { FilmStrip, FilmStripProps } from '../lib';
 import { Meta, Story } from '@storybook/react/types-6-0';
 import { UnsplashCollectionSource, useUnsplashStatic } from './hooks';
+import { collectionSource, imageCount, themePaletteType } from './argTypes';
 import { useCallback, useRef, useState } from 'react';
 
 import styles from './FilmStrip.stories.module.scss';
@@ -14,16 +15,9 @@ export default {
     collectionSource: UnsplashCollectionSource.Landscape
   },
   argTypes: {
-    imageCount: {
-      control: { type: 'range', min: 1, max: 300, step: 1 }
-    },
-    collectionSource: {
-      defaultValue: UnsplashCollectionSource.Landscape,
-      control: {
-        type: 'select',
-        options: Object.keys(UnsplashCollectionSource)
-      }
-    }
+    imageCount,
+    collectionSource,
+    themePaletteType
   },
   parameters: {
     layout: 'fullscreen'

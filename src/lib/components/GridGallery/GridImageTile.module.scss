@@ -4,10 +4,19 @@
   object-fit: cover;
   object-position: center;
   transition: transform 0.25s ease;
-  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.75);
+}
+
+.image:hover,
+.selected {
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.75), 0 0 0 1px rgba(0, 0, 0, 0.75);
+  transition: transform 0.25s;
 }
 
 .image:hover {
   opacity: 0.75;
-  transition: transform 0.25s;
+}
+
+.selected {
+  transform: scale(1.05);
 }

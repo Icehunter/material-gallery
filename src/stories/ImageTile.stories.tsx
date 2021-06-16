@@ -1,8 +1,9 @@
 import { ImageTile, ImageTileProps } from '../lib';
 import { Meta, Story } from '@storybook/react/types-6-0';
 import { UnsplashCollectionSource, useUnsplashStatic } from './hooks';
+import { collectionSource, themePaletteType } from './argTypes';
 
-import { ImageItem } from 'lib/types';
+import { Image } from 'lib/types';
 import React from 'react';
 import { noop } from 'lib/utils';
 import styles from './ImageTile.stories.module.scss';
@@ -16,13 +17,8 @@ export default {
     collectionSource: UnsplashCollectionSource.Landscape
   },
   argTypes: {
-    collectionSource: {
-      defaultValue: UnsplashCollectionSource.Landscape,
-      control: {
-        type: 'select',
-        options: Object.keys(UnsplashCollectionSource)
-      }
-    }
+    collectionSource,
+    themePaletteType
   },
   parameters: {
     layout: 'fullscreen'
@@ -35,7 +31,7 @@ const Template: Story<ImageTileProps & { collectionSource: UnsplashCollectionSou
 }) => {
   const collection = useUnsplashStatic({ imageCount: 1, collectionSource });
   const [mediaItem] = collection?.items ?? [];
-  const item = mediaItem?.item as ImageItem;
+  const item = mediaItem?.item as Image;
 
   return (
     <div className={styles.container}>

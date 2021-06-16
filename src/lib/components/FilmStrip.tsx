@@ -1,5 +1,5 @@
 import { ChevronLeft as ChevronLeftIcon, ChevronRight as ChevronRightIcon } from '@material-ui/icons';
-import { ImageItem, MediaType, VirtualMediaItem } from 'lib/types';
+import { Image, Media, MediaItem, MediaType } from 'lib/types';
 import React, { Dispatch, FC, SetStateAction, memo, useEffect, useMemo, useRef } from 'react';
 
 import { IconButton } from '@material-ui/core';
@@ -10,56 +10,61 @@ import { getNeighborIndexes } from 'lib/utils';
 import { useHorizontalScrollPosition } from 'lib/hooks';
 
 export type FilmStripProps = {
-  items: VirtualMediaItem<unknown>[];
+  items: MediaItem<Media>[];
   thumbnailSize?: number;
   selectedItem: number;
   setSelectedItem: Dispatch<SetStateAction<number>>;
 };
 
 const resolveMediaItems = (
-  items: VirtualMediaItem<unknown>[],
+  items: MediaItem<Media>[],
   neighbors: number[],
   selectedItem: number,
   setSelectedItem: Dispatch<SetStateAction<number>>,
   thumbnailSize?: number
-): (JSX.Element | null)[] => {
-  return items.map((mediaItem, index) => {
+): JSX.Element[] => {
+  const results = [];
+
+  for (let itemIndex = 0; itemIndex < items.length; itemIndex++) {
+    const mediaItem = items[itemIndex];
     if (!mediaItem || !mediaItem.item) {
-      return null;
+      continue;
     }
 
     const { item } = mediaItem;
 
     switch (mediaItem.type) {
-      case MediaType.Image: {
-        const imageItem = item as ImageItem;
-        const {
-          width,
-          height,
-          meta: { thumbnail }
-        } = imageItem;
-        const preload = neighbors.includes(index);
-        return (
-          <Thumbnail
-            key={index}
-            {...{
-              width,
-              height,
-              src: thumbnail
-            }}
-            size={thumbnailSize}
-            selected={selectedItem === index}
-            preload={preload}
-            onClick={(): void => {
-              setSelectedItem(index);
-            }}
-          />
-        );
-      }
-      default:
-        return null;
+      case MediaType.Image:
+        {
+          const imageItem = item as Image;
+          const {
+            width,
+            height,
+            meta: { thumbnail }
+          } = imageItem;
+          const preload = neighbors.includes(itemIndex);
+          results[results.length] = (
+            <Thumbnail
+              key={itemIndex}
+              {...{
+                width,
+                height,
+                src: thumbnail
+              }}
+              size={thumbnailSize}
+              selected={selectedItem === itemIndex}
+              preload={preload}
+              onClick={(): void => {
+                setSelectedItem(itemIndex);
+              }}
+            />
+          );
+        }
+        break;
     }
-  });
+  }
+
+  return results;
 };
 
 export const FilmStrip: FC<FilmStripProps> = memo(({ items, thumbnailSize, selectedItem, setSelectedItem }) => {

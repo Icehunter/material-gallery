@@ -1,7 +1,5 @@
-import { VirtualMediaItem } from './MediaItem';
+import { MediaItem } from './MediaItem';
 
 export type MediaCollection<T> = {
-  items: VirtualMediaItem<T>[];
+  items: MediaItem<T>[];
 };
-
-export type VirtualMediaCollection<T> = MediaCollection<T> | undefined;

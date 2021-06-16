@@ -1,0 +1,477 @@
+12096 execve("/usr/bin/gpg", ["gpg", "--clearsign"], 0x7ffc0b09ab50 /* 36 vars */) = 0
+12096 brk(NULL)                         = 0x564c6a9f2000
+12096 arch_prctl(0x3001 /* ARCH_??? */, 0x7fff119318c0) = -1 EINVAL (Invalid argument)
+12096 access("/etc/ld.so.preload", R_OK) = -1 ENOENT (No such file or directory)
+12096 openat(AT_FDCWD, "/etc/ld.so.cache", O_RDONLY|O_CLOEXEC) = 3
+12096 fstat(3, {st_mode=S_IFREG|0644, st_size=42402, ...}) = 0
+12096 mmap(NULL, 42402, PROT_READ, MAP_PRIVATE, 3, 0) = 0x7faa2bb26000
+12096 close(3)                          = 0
+12096 openat(AT_FDCWD, "/lib/x86_64-linux-gnu/libz.so.1", O_RDONLY|O_CLOEXEC) = 3
+12096 read(3, "\177ELF\2\1\1\3\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0\200\"\0\0\0\0\0\0"..., 832) = 832
+12096 fstat(3, {st_mode=S_IFREG|0644, st_size=108936, ...}) = 0
+12096 mmap(NULL, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7faa2bb24000
+12096 mmap(NULL, 110776, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x7faa2bb08000
+12096 mprotect(0x7faa2bb0a000, 98304, PROT_NONE) = 0
+12096 mmap(0x7faa2bb0a000, 69632, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x2000) = 0x7faa2bb0a000
+12096 mmap(0x7faa2bb1b000, 24576, PROT_READ, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x13000) = 0x7faa2bb1b000
+12096 mmap(0x7faa2bb22000, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x19000) = 0x7faa2bb22000
+12096 close(3)                          = 0
+12096 openat(AT_FDCWD, "/lib/x86_64-linux-gnu/libbz2.so.1.0", O_RDONLY|O_CLOEXEC) = 3
+12096 read(3, "\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0@\"\0\0\0\0\0\0"..., 832) = 832
+12096 fstat(3, {st_mode=S_IFREG|0644, st_size=74848, ...}) = 0
+12096 mmap(NULL, 76840, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x7faa2baf5000
+12096 mmap(0x7faa2baf7000, 53248, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x2000) = 0x7faa2baf7000
+12096 mmap(0x7faa2bb04000, 8192, PROT_READ, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0xf000) = 0x7faa2bb04000
+12096 mmap(0x7faa2bb06000, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x10000) = 0x7faa2bb06000
+12096 close(3)                          = 0
+12096 openat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/libsqlite3.so.0", O_RDONLY|O_CLOEXEC) = 3
+12096 read(3, "\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0\0\346\0\0\0\0\0\0"..., 832) = 832
+12096 fstat(3, {st_mode=S_IFREG|0644, st_size=1212216, ...}) = 0
+12096 mmap(NULL, 1216056, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x7faa2b9cc000
+12096 mprotect(0x7faa2b9da000, 1134592, PROT_NONE) = 0
+12096 mmap(0x7faa2b9da000, 917504, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0xe000) = 0x7faa2b9da000
+12096 mmap(0x7faa2baba000, 212992, PROT_READ, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0xee000) = 0x7faa2baba000
+12096 mmap(0x7faa2baef000, 24576, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x122000) = 0x7faa2baef000
+12096 close(3)                          = 0
+12096 openat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/libgcrypt.so.20", O_RDONLY|O_CLOEXEC) = 3
+12096 read(3, "\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0\200\305\0\0\0\0\0\0"..., 832) = 832
+12096 fstat(3, {st_mode=S_IFREG|0644, st_size=1168056, ...}) = 0
+12096 mmap(NULL, 1171400, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x7faa2b8ae000
+12096 mmap(0x7faa2b8ba000, 843776, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0xc000) = 0x7faa2b8ba000
+12096 mmap(0x7faa2b988000, 249856, PROT_READ, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0xda000) = 0x7faa2b988000
+12096 mmap(0x7faa2b9c5000, 28672, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x116000) = 0x7faa2b9c5000
+12096 close(3)                          = 0
+12096 openat(AT_FDCWD, "/lib/x86_64-linux-gnu/libreadline.so.8", O_RDONLY|O_CLOEXEC) = 3
+12096 read(3, "\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0 M\1\0\0\0\0\0"..., 832) = 832
+12096 fstat(3, {st_mode=S_IFREG|0644, st_size=319528, ...}) = 0
+12096 mmap(NULL, 327032, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x7faa2b85e000
+12096 mmap(0x7faa2b872000, 167936, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x14000) = 0x7faa2b872000
+12096 mmap(0x7faa2b89b000, 40960, PROT_READ, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x3d000) = 0x7faa2b89b000
+12096 mmap(0x7faa2b8a5000, 32768, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x46000) = 0x7faa2b8a5000
+12096 mmap(0x7faa2b8ad000, 3448, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_ANONYMOUS, -1, 0) = 0x7faa2b8ad000
+12096 close(3)                          = 0
+12096 openat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/libassuan.so.0", O_RDONLY|O_CLOEXEC) = 3
+12096 read(3, "\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0\0:\0\0\0\0\0\0"..., 832) = 832
+12096 fstat(3, {st_mode=S_IFREG|0644, st_size=80184, ...}) = 0
+12096 mmap(NULL, 82272, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x7faa2b849000
+12096 mmap(0x7faa2b84c000, 45056, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x3000) = 0x7faa2b84c000
+12096 mmap(0x7faa2b857000, 20480, PROT_READ, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0xe000) = 0x7faa2b857000
+12096 mmap(0x7faa2b85c000, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x12000) = 0x7faa2b85c000
+12096 close(3)                          = 0
+12096 openat(AT_FDCWD, "/lib/x86_64-linux-gnu/libgpg-error.so.0", O_RDONLY|O_CLOEXEC) = 3
+12096 read(3, "\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0`L\0\0\0\0\0\0"..., 832) = 832
+12096 fstat(3, {st_mode=S_IFREG|0644, st_size=137584, ...}) = 0
+12096 mmap(NULL, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7faa2b847000
+12096 mmap(NULL, 139872, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x7faa2b824000
+12096 mmap(0x7faa2b828000, 77824, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x4000) = 0x7faa2b828000
+12096 mmap(0x7faa2b83b000, 40960, PROT_READ, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x17000) = 0x7faa2b83b000
+12096 mmap(0x7faa2b845000, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x20000) = 0x7faa2b845000
+12096 close(3)                          = 0
+12096 openat(AT_FDCWD, "/lib/x86_64-linux-gnu/libc.so.6", O_RDONLY|O_CLOEXEC) = 3
+12096 read(3, "\177ELF\2\1\1\3\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0\360q\2\0\0\0\0\0"..., 832) = 832
+12096 pread64(3, "\6\0\0\0\4\0\0\0@\0\0\0\0\0\0\0@\0\0\0\0\0\0\0@\0\0\0\0\0\0\0"..., 784, 64) = 784
+12096 pread64(3, "\4\0\0\0\20\0\0\0\5\0\0\0GNU\0\2\0\0\300\4\0\0\0\3\0\0\0\0\0\0\0", 32, 848) = 32
+12096 pread64(3, "\4\0\0\0\24\0\0\0\3\0\0\0GNU\0\316x.\316\10\320\210\347~\352\334\10o\204\324\210"..., 68, 880) = 68
+12096 fstat(3, {st_mode=S_IFREG|0755, st_size=2029224, ...}) = 0
+12096 pread64(3, "\6\0\0\0\4\0\0\0@\0\0\0\0\0\0\0@\0\0\0\0\0\0\0@\0\0\0\0\0\0\0"..., 784, 64) = 784
+12096 pread64(3, "\4\0\0\0\20\0\0\0\5\0\0\0GNU\0\2\0\0\300\4\0\0\0\3\0\0\0\0\0\0\0", 32, 848) = 32
+12096 pread64(3, "\4\0\0\0\24\0\0\0\3\0\0\0GNU\0\316x.\316\10\320\210\347~\352\334\10o\204\324\210"..., 68, 880) = 68
+12096 mmap(NULL, 2036952, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x7faa2b632000
+12096 mprotect(0x7faa2b657000, 1847296, PROT_NONE) = 0
+12096 mmap(0x7faa2b657000, 1540096, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x25000) = 0x7faa2b657000
+12096 mmap(0x7faa2b7cf000, 303104, PROT_READ, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x19d000) = 0x7faa2b7cf000
+12096 mmap(0x7faa2b81a000, 24576, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x1e7000) = 0x7faa2b81a000
+12096 mmap(0x7faa2b820000, 13528, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_ANONYMOUS, -1, 0) = 0x7faa2b820000
+12096 close(3)                          = 0
+12096 openat(AT_FDCWD, "/lib/x86_64-linux-gnu/libm.so.6", O_RDONLY|O_CLOEXEC) = 3
+12096 read(3, "\177ELF\2\1\1\3\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0\300\363\0\0\0\0\0\0"..., 832) = 832
+12096 fstat(3, {st_mode=S_IFREG|0644, st_size=1369352, ...}) = 0
+12096 mmap(NULL, 1368336, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x7faa2b4e3000
+12096 mmap(0x7faa2b4f2000, 684032, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0xf000) = 0x7faa2b4f2000
+12096 mmap(0x7faa2b599000, 618496, PROT_READ, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0xb6000) = 0x7faa2b599000
+12096 mmap(0x7faa2b630000, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x14c000) = 0x7faa2b630000
+12096 close(3)                          = 0
+12096 openat(AT_FDCWD, "/lib/x86_64-linux-gnu/libpthread.so.0", O_RDONLY|O_CLOEXEC) = 3
+12096 read(3, "\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0\220\201\0\0\0\0\0\0"..., 832) = 832
+12096 pread64(3, "\4\0\0\0\24\0\0\0\3\0\0\0GNU\0\356\265\260U\251\3278\333d\344P\6_\210\230\v"..., 68, 824) = 68
+12096 fstat(3, {st_mode=S_IFREG|0755, st_size=157224, ...}) = 0
+12096 pread64(3, "\4\0\0\0\24\0\0\0\3\0\0\0GNU\0\356\265\260U\251\3278\333d\344P\6_\210\230\v"..., 68, 824) = 68
+12096 mmap(NULL, 140408, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x7faa2b4c0000
+12096 mmap(0x7faa2b4c7000, 69632, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x7000) = 0x7faa2b4c7000
+12096 mmap(0x7faa2b4d8000, 20480, PROT_READ, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x18000) = 0x7faa2b4d8000
+12096 mmap(0x7faa2b4dd000, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x1c000) = 0x7faa2b4dd000
+12096 mmap(0x7faa2b4df000, 13432, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_ANONYMOUS, -1, 0) = 0x7faa2b4df000
+12096 close(3)                          = 0
+12096 openat(AT_FDCWD, "/lib/x86_64-linux-gnu/libdl.so.2", O_RDONLY|O_CLOEXEC) = 3
+12096 read(3, "\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0 \22\0\0\0\0\0\0"..., 832) = 832
+12096 fstat(3, {st_mode=S_IFREG|0644, st_size=18816, ...}) = 0
+12096 mmap(NULL, 20752, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x7faa2b4ba000
+12096 mmap(0x7faa2b4bb000, 8192, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x1000) = 0x7faa2b4bb000
+12096 mmap(0x7faa2b4bd000, 4096, PROT_READ, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x3000) = 0x7faa2b4bd000
+12096 mmap(0x7faa2b4be000, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x3000) = 0x7faa2b4be000
+12096 close(3)                          = 0
+12096 openat(AT_FDCWD, "/lib/x86_64-linux-gnu/libtinfo.so.6", O_RDONLY|O_CLOEXEC) = 3
+12096 read(3, "\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0\240\346\0\0\0\0\0\0"..., 832) = 832
+12096 fstat(3, {st_mode=S_IFREG|0644, st_size=192032, ...}) = 0
+12096 mmap(NULL, 194944, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x7faa2b48a000
+12096 mmap(0x7faa2b498000, 61440, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0xe000) = 0x7faa2b498000
+12096 mmap(0x7faa2b4a7000, 57344, PROT_READ, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x1d000) = 0x7faa2b4a7000
+12096 mmap(0x7faa2b4b5000, 20480, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x2a000) = 0x7faa2b4b5000
+12096 close(3)                          = 0
+12096 mmap(NULL, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7faa2b488000
+12096 mmap(NULL, 12288, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7faa2b485000
+12096 arch_prctl(ARCH_SET_FS, 0x7faa2b485740) = 0
+12096 mprotect(0x7faa2b81a000, 12288, PROT_READ) = 0
+12096 mprotect(0x7faa2b4b5000, 16384, PROT_READ) = 0
+12096 mprotect(0x7faa2b4be000, 4096, PROT_READ) = 0
+12096 mprotect(0x7faa2b4dd000, 4096, PROT_READ) = 0
+12096 mprotect(0x7faa2b630000, 4096, PROT_READ) = 0
+12096 mprotect(0x7faa2b845000, 4096, PROT_READ) = 0
+12096 mprotect(0x7faa2b85c000, 4096, PROT_READ) = 0
+12096 mprotect(0x7faa2b8a5000, 8192, PROT_READ) = 0
+12096 mprotect(0x7faa2b9c5000, 8192, PROT_READ) = 0
+12096 mprotect(0x7faa2baef000, 12288, PROT_READ) = 0
+12096 mprotect(0x7faa2bb06000, 4096, PROT_READ) = 0
+12096 mprotect(0x7faa2bb22000, 4096, PROT_READ) = 0
+12096 mprotect(0x564c6a06b000, 12288, PROT_READ) = 0
+12096 mprotect(0x7faa2bb5e000, 4096, PROT_READ) = 0
+12096 munmap(0x7faa2bb26000, 42402)     = 0
+12096 set_tid_address(0x7faa2b485a10)   = 12096
+12096 set_robust_list(0x7faa2b485a20, 24) = 0
+12096 rt_sigaction(SIGRTMIN, {sa_handler=0x7faa2b4c7bf0, sa_mask=[], sa_flags=SA_RESTORER|SA_SIGINFO, sa_restorer=0x7faa2b4d5420}, NULL, 8) = 0
+12096 rt_sigaction(SIGRT_1, {sa_handler=0x7faa2b4c7c90, sa_mask=[], sa_flags=SA_RESTORER|SA_RESTART|SA_SIGINFO, sa_restorer=0x7faa2b4d5420}, NULL, 8) = 0
+12096 rt_sigprocmask(SIG_UNBLOCK, [RTMIN RT_1], NULL, 8) = 0
+12096 prlimit64(0, RLIMIT_STACK, NULL, {rlim_cur=8192*1024, rlim_max=RLIM64_INFINITY}) = 0
+12096 brk(NULL)                         = 0x564c6a9f2000
+12096 brk(0x564c6aa13000)               = 0x564c6aa13000
+12096 fcntl(0, F_GETFD)                 = 0
+12096 fcntl(1, F_GETFD)                 = 0
+12096 fcntl(2, F_GETFD)                 = 0
+12096 openat(AT_FDCWD, "/usr/lib/locale/locale-archive", O_RDONLY|O_CLOEXEC) = 3
+12096 fstat(3, {st_mode=S_IFREG|0644, st_size=3035952, ...}) = 0
+12096 mmap(NULL, 3035952, PROT_READ, MAP_PRIVATE, 3, 0) = 0x7faa2b19f000
+12096 close(3)                          = 0
+12096 openat(AT_FDCWD, "/usr/share/locale/locale.alias", O_RDONLY|O_CLOEXEC) = 3
+12096 fstat(3, {st_mode=S_IFREG|0644, st_size=2996, ...}) = 0
+12096 read(3, "# Locale name alias data base.\n#"..., 4096) = 2996
+12096 read(3, "", 4096)                 = 0
+12096 close(3)                          = 0
+12096 openat(AT_FDCWD, "/usr/lib/locale/C.UTF-8/LC_IDENTIFICATION", O_RDONLY|O_CLOEXEC) = 3
+12096 fstat(3, {st_mode=S_IFREG|0644, st_size=252, ...}) = 0
+12096 mmap(NULL, 252, PROT_READ, MAP_PRIVATE, 3, 0) = 0x7faa2bb5d000
+12096 close(3)                          = 0
+12096 openat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gconv/gconv-modules.cache", O_RDONLY) = 3
+12096 fstat(3, {st_mode=S_IFREG|0644, st_size=27002, ...}) = 0
+12096 mmap(NULL, 27002, PROT_READ, MAP_SHARED, 3, 0) = 0x7faa2bb2a000
+12096 close(3)                          = 0
+12096 futex(0x7faa2b81f634, FUTEX_WAKE_PRIVATE, 2147483647) = 0
+12096 openat(AT_FDCWD, "/usr/lib/locale/C.UTF-8/LC_MEASUREMENT", O_RDONLY|O_CLOEXEC) = 3
+12096 fstat(3, {st_mode=S_IFREG|0644, st_size=23, ...}) = 0
+12096 mmap(NULL, 23, PROT_READ, MAP_PRIVATE, 3, 0) = 0x7faa2bb29000
+12096 close(3)                          = 0
+12096 openat(AT_FDCWD, "/usr/lib/locale/C.UTF-8/LC_TELEPHONE", O_RDONLY|O_CLOEXEC) = 3
+12096 fstat(3, {st_mode=S_IFREG|0644, st_size=47, ...}) = 0
+12096 mmap(NULL, 47, PROT_READ, MAP_PRIVATE, 3, 0) = 0x7faa2bb28000
+12096 close(3)                          = 0
+12096 openat(AT_FDCWD, "/usr/lib/locale/C.UTF-8/LC_ADDRESS", O_RDONLY|O_CLOEXEC) = 3
+12096 fstat(3, {st_mode=S_IFREG|0644, st_size=131, ...}) = 0
+12096 mmap(NULL, 131, PROT_READ, MAP_PRIVATE, 3, 0) = 0x7faa2bb27000
+12096 close(3)                          = 0
+12096 openat(AT_FDCWD, "/usr/lib/locale/C.UTF-8/LC_NAME", O_RDONLY|O_CLOEXEC) = 3
+12096 fstat(3, {st_mode=S_IFREG|0644, st_size=62, ...}) = 0
+12096 mmap(NULL, 62, PROT_READ, MAP_PRIVATE, 3, 0) = 0x7faa2bb26000
+12096 close(3)                          = 0
+12096 openat(AT_FDCWD, "/usr/lib/locale/C.UTF-8/LC_PAPER", O_RDONLY|O_CLOEXEC) = 3
+12096 fstat(3, {st_mode=S_IFREG|0644, st_size=34, ...}) = 0
+12096 mmap(NULL, 34, PROT_READ, MAP_PRIVATE, 3, 0) = 0x7faa2b19e000
+12096 close(3)                          = 0
+12096 openat(AT_FDCWD, "/usr/lib/locale/C.UTF-8/LC_MESSAGES", O_RDONLY|O_CLOEXEC) = 3
+12096 fstat(3, {st_mode=S_IFDIR|0755, st_size=4096, ...}) = 0
+12096 close(3)                          = 0
+12096 openat(AT_FDCWD, "/usr/lib/locale/C.UTF-8/LC_MESSAGES/SYS_LC_MESSAGES", O_RDONLY|O_CLOEXEC) = 3
+12096 fstat(3, {st_mode=S_IFREG|0644, st_size=48, ...}) = 0
+12096 mmap(NULL, 48, PROT_READ, MAP_PRIVATE, 3, 0) = 0x7faa2b19d000
+12096 close(3)                          = 0
+12096 openat(AT_FDCWD, "/usr/lib/locale/C.UTF-8/LC_MONETARY", O_RDONLY|O_CLOEXEC) = 3
+12096 fstat(3, {st_mode=S_IFREG|0644, st_size=270, ...}) = 0
+12096 mmap(NULL, 270, PROT_READ, MAP_PRIVATE, 3, 0) = 0x7faa2b19c000
+12096 close(3)                          = 0
+12096 openat(AT_FDCWD, "/usr/lib/locale/C.UTF-8/LC_COLLATE", O_RDONLY|O_CLOEXEC) = 3
+12096 fstat(3, {st_mode=S_IFREG|0644, st_size=1518110, ...}) = 0
+12096 mmap(NULL, 1518110, PROT_READ, MAP_PRIVATE, 3, 0) = 0x7faa2b029000
+12096 close(3)                          = 0
+12096 openat(AT_FDCWD, "/usr/lib/locale/C.UTF-8/LC_TIME", O_RDONLY|O_CLOEXEC) = 3
+12096 fstat(3, {st_mode=S_IFREG|0644, st_size=3360, ...}) = 0
+12096 mmap(NULL, 3360, PROT_READ, MAP_PRIVATE, 3, 0) = 0x7faa2b028000
+12096 close(3)                          = 0
+12096 openat(AT_FDCWD, "/usr/lib/locale/C.UTF-8/LC_NUMERIC", O_RDONLY|O_CLOEXEC) = 3
+12096 fstat(3, {st_mode=S_IFREG|0644, st_size=50, ...}) = 0
+12096 mmap(NULL, 50, PROT_READ, MAP_PRIVATE, 3, 0) = 0x7faa2b027000
+12096 close(3)                          = 0
+12096 openat(AT_FDCWD, "/usr/lib/locale/C.UTF-8/LC_CTYPE", O_RDONLY|O_CLOEXEC) = 3
+12096 fstat(3, {st_mode=S_IFREG|0644, st_size=201272, ...}) = 0
+12096 mmap(NULL, 201272, PROT_READ, MAP_PRIVATE, 3, 0) = 0x7faa2aff5000
+12096 close(3)                          = 0
+12096 access("/etc/gcrypt/fips_enabled", F_OK) = -1 ENOENT (No such file or directory)
+12096 openat(AT_FDCWD, "/etc/gcrypt/hwf.deny", O_RDONLY) = -1 ENOENT (No such file or directory)
+12096 prlimit64(0, RLIMIT_CORE, NULL, {rlim_cur=0, rlim_max=RLIM64_INFINITY}) = 0
+12096 prlimit64(0, RLIMIT_CORE, {rlim_cur=0, rlim_max=RLIM64_INFINITY}, NULL) = 0
+12096 rt_sigaction(SIGINT, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+12096 rt_sigaction(SIGINT, {sa_handler=0x564c6a028bb0, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7faa2b678210}, NULL, 8) = 0
+12096 rt_sigaction(SIGHUP, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+12096 rt_sigaction(SIGHUP, {sa_handler=0x564c6a028bb0, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7faa2b678210}, NULL, 8) = 0
+12096 rt_sigaction(SIGTERM, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+12096 rt_sigaction(SIGTERM, {sa_handler=0x564c6a028bb0, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7faa2b678210}, NULL, 8) = 0
+12096 rt_sigaction(SIGQUIT, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+12096 rt_sigaction(SIGQUIT, {sa_handler=0x564c6a028bb0, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7faa2b678210}, NULL, 8) = 0
+12096 rt_sigaction(SIGSEGV, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+12096 rt_sigaction(SIGSEGV, {sa_handler=0x564c6a028bb0, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7faa2b678210}, NULL, 8) = 0
+12096 rt_sigaction(SIGUSR1, {sa_handler=0x564c6a028b10, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7faa2b678210}, NULL, 8) = 0
+12096 rt_sigaction(SIGPIPE, {sa_handler=SIG_IGN, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7faa2b678210}, NULL, 8) = 0
+12096 mmap(NULL, 65536, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7faa2afe5000
+12096 getuid()                          = 1000
+12096 mlock(0x7faa2afe5000, 65536)      = 0
+12096 geteuid()                         = 1000
+12096 access("/home/icehunter/.gnupg/gpg.conf-2.2.19", R_OK) = -1 ENOENT (No such file or directory)
+12096 access("/home/icehunter/.gnupg/gpg.conf-2.2", R_OK) = -1 ENOENT (No such file or directory)
+12096 access("/home/icehunter/.gnupg/gpg.conf-2", R_OK) = -1 ENOENT (No such file or directory)
+12096 access("/home/icehunter/.gnupg/gpg.conf", R_OK) = -1 ENOENT (No such file or directory)
+12096 access("/home/icehunter/.gnupg/options", R_OK) = -1 ENOENT (No such file or directory)
+12096 stat("/home/icehunter/.gnupg", {st_mode=S_IFDIR|0700, st_size=4096, ...}) = 0
+12096 stat("/home/icehunter", {st_mode=S_IFDIR|0755, st_size=4096, ...}) = 0
+12096 getuid()                          = 1000
+12096 openat(AT_FDCWD, "/home/icehunter/.gnupg/gpg.conf", O_RDONLY) = -1 ENOENT (No such file or directory)
+12096 access("/home/icehunter/.gnupg/random_seed", F_OK) = -1 ENOENT (No such file or directory)
+12096 openat(AT_FDCWD, "/home/icehunter/.gnupg/pubring.gpg", O_RDONLY) = -1 ENOENT (No such file or directory)
+12096 openat(AT_FDCWD, "/home/icehunter/.gnupg/pubring.kbx", O_RDONLY) = 3
+12096 fstat(3, {st_mode=S_IFREG|0644, st_size=2481, ...}) = 0
+12096 read(3, "\0\0\0 \1\1\0\2KBXf\0\0\0\0`\312C\212`\312C\212\0\0\0\0\0\0\0\0"..., 4096) = 2481
+12096 close(3)                          = 0
+12096 access("/home/icehunter/.gnupg/pubring.kbx", F_OK) = 0
+12096 access("/home/icehunter/.gnupg/pubring.kbx", R_OK) = 0
+12096 access("/home/icehunter/.gnupg/pubring.kbx", W_OK) = 0
+12096 getpid()                          = 12096
+12096 uname({sysname="Linux", nodename="DESKTOP-J18HNA4", ...}) = 0
+12096 getpid()                          = 12096
+12096 openat(AT_FDCWD, "/home/icehunter/.gnupg/.#lk0x0000564c6a9fea10.DESKTOP-J18HNA4.12096", O_WRONLY|O_CREAT|O_EXCL, 0644) = 3
+12096 write(3, "     12096\n", 11)      = 11
+12096 write(3, "DESKTOP-J18HNA4", 15)   = 15
+12096 write(3, "\n", 1)                 = 1
+12096 close(3)                          = 0
+12096 stat("/home/icehunter/.gnupg/.#lk0x0000564c6a9fea10.DESKTOP-J18HNA4.12096", {st_mode=S_IFREG|0644, st_size=27, ...}) = 0
+12096 link("/home/icehunter/.gnupg/.#lk0x0000564c6a9fea10.DESKTOP-J18HNA4.12096", "/home/icehunter/.gnupg/.#lk0x0000564c6a9fea10.DESKTOP-J18HNA4.12096x") = 0
+12096 stat("/home/icehunter/.gnupg/.#lk0x0000564c6a9fea10.DESKTOP-J18HNA4.12096", {st_mode=S_IFREG|0644, st_size=27, ...}) = 0
+12096 unlink("/home/icehunter/.gnupg/.#lk0x0000564c6a9fea10.DESKTOP-J18HNA4.12096x") = 0
+12096 link("/home/icehunter/.gnupg/.#lk0x0000564c6a9fea10.DESKTOP-J18HNA4.12096", "/home/icehunter/.gnupg/pubring.kbx.lock") = 0
+12096 stat("/home/icehunter/.gnupg/.#lk0x0000564c6a9fea10.DESKTOP-J18HNA4.12096", {st_mode=S_IFREG|0644, st_size=27, ...}) = 0
+12096 access("/home/icehunter/.gnupg/pubring.kbx", W_OK) = 0
+12096 openat(AT_FDCWD, "/home/icehunter/.gnupg/pubring.kbx", O_RDONLY) = 3
+12096 lseek(3, 0, SEEK_CUR)             = 0
+12096 fstat(3, {st_mode=S_IFREG|0644, st_size=2481, ...}) = 0
+12096 read(3, "\0\0\0 \1\1\0\2KBXf\0\0\0\0`\312C\212`\312C\212\0\0\0\0\0\0\0\0"..., 4096) = 2481
+12096 lseek(3, 0, SEEK_SET)             = 0
+12096 openat(AT_FDCWD, "/home/icehunter/.gnupg/pubring.kbx.tmp", O_WRONLY|O_CREAT|O_TRUNC, 0666) = 4
+12096 read(3, "\0\0\0 \1\1\0\2KBXf\0\0\0\0`\312C\212`\312C\212\0\0\0\0\0\0\0\0"..., 4096) = 2481
+12096 fstat(4, {st_mode=S_IFREG|0644, st_size=0, ...}) = 0
+12096 read(3, "", 4096)                 = 0
+12096 close(3)                          = 0
+12096 write(4, "\0\0\0 \1\1\0\2KBXf\0\0\0\0`\312C\212`\312\225\253\0\0\0\0\0\0\0\0"..., 2481) = 2481
+12096 close(4)                          = 0
+12096 unlink("/home/icehunter/.gnupg/pubring.kbx.tmp") = 0
+12096 access("/home/icehunter/.gnupg/pubring.kbx", W_OK) = 0
+12096 openat(AT_FDCWD, "/home/icehunter/.gnupg/pubring.kbx.lock", O_RDONLY) = 3
+12096 read(3, "     12096\nDESKTOP-J18HNA4\n", 27) = 27
+12096 close(3)                          = 0
+12096 getpid()                          = 12096
+12096 unlink("/home/icehunter/.gnupg/pubring.kbx.lock") = 0
+12096 access("/home/icehunter/.gnupg/secring.gpg", F_OK) = -1 ENOENT (No such file or directory)
+12096 openat(AT_FDCWD, "/usr/share/locale/C.UTF-8/LC_MESSAGES/libgpg-error.mo", O_RDONLY) = -1 ENOENT (No such file or directory)
+12096 openat(AT_FDCWD, "/usr/share/locale/C.utf8/LC_MESSAGES/libgpg-error.mo", O_RDONLY) = -1 ENOENT (No such file or directory)
+12096 openat(AT_FDCWD, "/usr/share/locale/C/LC_MESSAGES/libgpg-error.mo", O_RDONLY) = -1 ENOENT (No such file or directory)
+12096 openat(AT_FDCWD, "/usr/share/locale-langpack/C.UTF-8/LC_MESSAGES/libgpg-error.mo", O_RDONLY) = -1 ENOENT (No such file or directory)
+12096 openat(AT_FDCWD, "/usr/share/locale-langpack/C.utf8/LC_MESSAGES/libgpg-error.mo", O_RDONLY) = -1 ENOENT (No such file or directory)
+12096 openat(AT_FDCWD, "/usr/share/locale-langpack/C/LC_MESSAGES/libgpg-error.mo", O_RDONLY) = -1 ENOENT (No such file or directory)
+12096 getuid()                          = 1000
+12096 stat("/run/user/1000", 0x7fff11930790) = -1 ENOENT (No such file or directory)
+12096 getuid()                          = 1000
+12096 stat("/var/run/user/1000", 0x7fff11930790) = -1 ENOENT (No such file or directory)
+12096 stat("/home/icehunter/.gnupg/S.gpg-agent", {st_mode=S_IFSOCK|0700, st_size=0, ...}) = 0
+12096 socket(AF_UNIX, SOCK_STREAM, 0)   = 3
+12096 stat("/home/icehunter/.gnupg/S.gpg-agent", {st_mode=S_IFSOCK|0700, st_size=0, ...}) = 0
+12096 connect(3, {sa_family=AF_UNIX, sun_path="/home/icehunter/.gnupg/S.gpg-agent"}, 36) = 0
+12096 read(3, "OK Pleased to meet you, process "..., 1002) = 38
+12096 write(3, "RESET", 5)              = 5
+12096 write(3, "\n", 1)                 = 1
+12096 read(3, "OK\n", 1002)             = 3
+12096 ioctl(0, TCGETS, 0x7fff11930600)  = -1 ENOTTY (Inappropriate ioctl for device)
+12096 write(3, "OPTION ttytype=xterm-256color", 29) = 29
+12096 write(3, "\n", 1)                 = 1
+12096 read(3, "OK\n", 1002)             = 3
+12096 ioctl(0, TCGETS, 0x7fff11930600)  = -1 ENOTTY (Inappropriate ioctl for device)
+12096 write(3, "GETINFO version", 15)   = 15
+12096 write(3, "\n", 1)                 = 1
+12096 read(3, "D 2.2.19\nOK\n", 1002)   = 12
+12096 write(3, "OPTION allow-pinentry-notify", 28) = 28
+12096 write(3, "\n", 1)                 = 1
+12096 read(3, "OK\n", 1002)             = 3
+12096 write(3, "OPTION agent-awareness=2.1.0", 28) = 28
+12096 write(3, "\n", 1)                 = 1
+12096 read(3, "OK\n", 1002)             = 3
+12096 write(3, "SCD SERIALNO", 12)      = 12
+12096 write(3, "\n", 1)                 = 1
+12096 read(3, "ERR 67108983 No SmartCard daemon"..., 1002) = 45
+12096 openat(AT_FDCWD, "/home/icehunter/.gnupg/pubring.kbx", O_RDONLY) = 4
+12096 lseek(4, 0, SEEK_CUR)             = 0
+12096 fstat(4, {st_mode=S_IFREG|0644, st_size=2481, ...}) = 0
+12096 read(4, "\0\0\0 \1\1\0\2KBXf\0\0\0\0`\312C\212`\312C\212\0\0\0\0\0\0\0\0"..., 4096) = 2481
+12096 lseek(4, 0, SEEK_CUR)             = 2481
+12096 openat(AT_FDCWD, "/home/icehunter/.gnupg/pubring.kbx", O_RDONLY) = 5
+12096 lseek(5, 0, SEEK_CUR)             = 0
+12096 fstat(5, {st_mode=S_IFREG|0644, st_size=2481, ...}) = 0
+12096 read(5, "\0\0\0 \1\1\0\2KBXf\0\0\0\0`\312C\212`\312C\212\0\0\0\0\0\0\0\0"..., 4096) = 2481
+12096 lseek(5, 0, SEEK_CUR)             = 2481
+12096 stat("/home/icehunter/.gnupg/trustdb.gpg", {st_mode=S_IFREG|0600, st_size=1280, ...}) = 0
+12096 openat(AT_FDCWD, "/home/icehunter/.gnupg/trustdb.gpg", O_RDWR) = 6
+12096 lseek(6, 0, SEEK_SET)             = 0
+12096 read(6, "\1gpg\3\3\1\5\1\2\0\0`\312D\302\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"..., 40) = 40
+12096 lseek(6, 0, SEEK_SET)             = 0
+12096 read(6, "\1gpg\3\3\1\5\1\2\0\0`\312D\302\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"..., 40) = 40
+12096 lseek(6, 40, SEEK_SET)            = 40
+12096 read(6, "\n\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"..., 40) = 40
+12096 lseek(6, 80, SEEK_SET)            = 80
+12096 read(6, "\n\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"..., 40) = 40
+12096 lseek(6, 120, SEEK_SET)           = 120
+12096 read(6, "\n\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"..., 40) = 40
+12096 lseek(6, 160, SEEK_SET)           = 160
+12096 read(6, "\n\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"..., 40) = 40
+12096 lseek(6, 200, SEEK_SET)           = 200
+12096 read(6, "\n\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"..., 40) = 40
+12096 lseek(6, 240, SEEK_SET)           = 240
+12096 read(6, "\n\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"..., 40) = 40
+12096 lseek(6, 280, SEEK_SET)           = 280
+12096 read(6, "\n\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"..., 40) = 40
+12096 lseek(6, 320, SEEK_SET)           = 320
+12096 read(6, "\n\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"..., 40) = 40
+12096 lseek(6, 360, SEEK_SET)           = 360
+12096 read(6, "\n\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"..., 40) = 40
+12096 lseek(6, 400, SEEK_SET)           = 400
+12096 read(6, "\n\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"..., 40) = 40
+12096 lseek(6, 440, SEEK_SET)           = 440
+12096 read(6, "\n\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"..., 40) = 40
+12096 lseek(6, 480, SEEK_SET)           = 480
+12096 read(6, "\n\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"..., 40) = 40
+12096 lseek(6, 520, SEEK_SET)           = 520
+12096 read(6, "\n\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"..., 40) = 40
+12096 lseek(6, 560, SEEK_SET)           = 560
+12096 read(6, "\n\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"..., 40) = 40
+12096 lseek(6, 600, SEEK_SET)           = 600
+12096 read(6, "\n\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"..., 40) = 40
+12096 lseek(6, 640, SEEK_SET)           = 640
+12096 read(6, "\n\0\0\0\0\0\0\0\0\36\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"..., 40) = 40
+12096 lseek(6, 680, SEEK_SET)           = 680
+12096 read(6, "\n\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"..., 40) = 40
+12096 lseek(6, 720, SEEK_SET)           = 720
+12096 read(6, "\n\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"..., 40) = 40
+12096 lseek(6, 760, SEEK_SET)           = 760
+12096 read(6, "\n\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"..., 40) = 40
+12096 lseek(6, 800, SEEK_SET)           = 800
+12096 read(6, "\n\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"..., 40) = 40
+12096 lseek(6, 840, SEEK_SET)           = 840
+12096 read(6, "\n\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"..., 40) = 40
+12096 lseek(6, 880, SEEK_SET)           = 880
+12096 read(6, "\n\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"..., 40) = 40
+12096 lseek(6, 920, SEEK_SET)           = 920
+12096 read(6, "\n\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"..., 40) = 40
+12096 lseek(6, 960, SEEK_SET)           = 960
+12096 read(6, "\n\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"..., 40) = 40
+12096 lseek(6, 1000, SEEK_SET)          = 1000
+12096 read(6, "\n\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"..., 40) = 40
+12096 lseek(6, 1040, SEEK_SET)          = 1040
+12096 read(6, "\n\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"..., 40) = 40
+12096 lseek(6, 1080, SEEK_SET)          = 1080
+12096 read(6, "\n\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"..., 40) = 40
+12096 lseek(6, 1120, SEEK_SET)          = 1120
+12096 read(6, "\n\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"..., 40) = 40
+12096 lseek(6, 1160, SEEK_SET)          = 1160
+12096 read(6, "\n\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"..., 40) = 40
+12096 lseek(6, 1200, SEEK_SET)          = 1200
+12096 read(6, "\f\0\210\332h\231\312v\261{\25\177gi\24'\333@9\337^B\6\0\0\0\0\0\0\37\0\0"..., 40) = 40
+12096 lseek(6, 1240, SEEK_SET)          = 1240
+12096 read(6, "\r\0n\236\7]b\302\17X\32\316\343\272\304\255\30d\353\v\34v\6\0\0\0\0\0\0\0\0\0"..., 40) = 40
+12096 lseek(6, 1280, SEEK_SET)          = 1280
+12096 read(6, "", 40)                   = 0
+12096 lseek(6, 0, SEEK_SET)             = 0
+12096 read(6, "\1gpg\3\3\1\5\1\2\0\0`\312D\302\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"..., 40) = 40
+12096 lseek(6, 0, SEEK_SET)             = 0
+12096 read(6, "\1gpg\3\3\1\5\1\2\0\0`\312D\302\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"..., 40) = 40
+12096 lseek(6, 640, SEEK_SET)           = 640
+12096 read(6, "\n\0\0\0\0\0\0\0\0\36\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"..., 40) = 40
+12096 lseek(6, 1200, SEEK_SET)          = 1200
+12096 read(6, "\f\0\210\332h\231\312v\261{\25\177gi\24'\333@9\337^B\6\0\0\0\0\0\0\37\0\0"..., 40) = 40
+12096 write(3, "HAVEKEY 0491BCE6569D205FB6FDA321"..., 89) = 89
+12096 write(3, "\n", 1)                 = 1
+12096 read(3, "OK\n", 1002)             = 3
+12096 close(4)                          = 0
+12096 access("/dev/random", R_OK)       = 0
+12096 access("/dev/urandom", R_OK)      = 0
+12096 getrusage(RUSAGE_SELF, {ru_utime={tv_sec=0, tv_usec=0}, ru_stime={tv_sec=0, tv_usec=8479}, ...}) = 0
+12096 clock_gettime(CLOCK_PROCESS_CPUTIME_ID, {tv_sec=0, tv_nsec=8512685}) = 0
+12096 write(3, "KEYINFO 0491BCE6569D205FB6FDA321"..., 48) = 48
+12096 write(3, "\n", 1)                 = 1
+12096 read(3, "S KEYINFO 0491BCE6569D205FB6FDA3"..., 1002) = 70
+12096 getrusage(RUSAGE_SELF, {ru_utime={tv_sec=0, tv_usec=0}, ru_stime={tv_sec=0, tv_usec=8659}, ...}) = 0
+12096 clock_gettime(CLOCK_PROCESS_CPUTIME_ID, {tv_sec=0, tv_nsec=8691025}) = 0
+12096 read(0, "test\n", 8192)           = 5
+12096 read(0, "", 8192)                 = 0
+12096 write(1, "-----BEGIN PGP SIGNED MESSAGE---"..., 54) = 54
+12096 getrusage(RUSAGE_SELF, {ru_utime={tv_sec=0, tv_usec=0}, ru_stime={tv_sec=0, tv_usec=8833}, ...}) = 0
+12096 clock_gettime(CLOCK_PROCESS_CPUTIME_ID, {tv_sec=0, tv_nsec=8873493}) = 0
+12096 getrusage(RUSAGE_SELF, {ru_utime={tv_sec=0, tv_usec=0}, ru_stime={tv_sec=0, tv_usec=8920}, ...}) = 0
+12096 clock_gettime(CLOCK_PROCESS_CPUTIME_ID, {tv_sec=0, tv_nsec=8996064}) = 0
+12096 openat(AT_FDCWD, "/etc/localtime", O_RDONLY|O_CLOEXEC) = 4
+12096 fstat(4, {st_mode=S_IFREG|0644, st_size=2892, ...}) = 0
+12096 fstat(4, {st_mode=S_IFREG|0644, st_size=2892, ...}) = 0
+12096 read(4, "TZif2\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\5\0\0\0\5\0\0\0\0"..., 4096) = 2892
+12096 lseek(4, -1838, SEEK_CUR)         = 1054
+12096 read(4, "TZif2\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\5\0\0\0\5\0\0\0\0"..., 4096) = 1838
+12096 close(4)                          = 0
+12096 openat(AT_FDCWD, "/usr/share/locale/C.UTF-8/LC_MESSAGES/gnupg2.mo", O_RDONLY) = -1 ENOENT (No such file or directory)
+12096 openat(AT_FDCWD, "/usr/share/locale/C.utf8/LC_MESSAGES/gnupg2.mo", O_RDONLY) = -1 ENOENT (No such file or directory)
+12096 openat(AT_FDCWD, "/usr/share/locale/C/LC_MESSAGES/gnupg2.mo", O_RDONLY) = -1 ENOENT (No such file or directory)
+12096 openat(AT_FDCWD, "/usr/share/locale-langpack/C.UTF-8/LC_MESSAGES/gnupg2.mo", O_RDONLY) = -1 ENOENT (No such file or directory)
+12096 openat(AT_FDCWD, "/usr/share/locale-langpack/C.utf8/LC_MESSAGES/gnupg2.mo", O_RDONLY) = -1 ENOENT (No such file or directory)
+12096 openat(AT_FDCWD, "/usr/share/locale-langpack/C/LC_MESSAGES/gnupg2.mo", O_RDONLY) = -1 ENOENT (No such file or directory)
+12096 write(3, "RESET", 5)              = 5
+12096 write(3, "\n", 1)                 = 1
+12096 read(3, "OK\n", 1002)             = 3
+12096 write(3, "SIGKEY 0491BCE6569D205FB6FDA3211"..., 47) = 47
+12096 write(3, "\n", 1)                 = 1
+12096 read(3, "OK\n", 1002)             = 3
+12096 write(3, "SETKEYDESC Please+enter+the+pass"..., 186) = 186
+12096 write(3, "\n", 1)                 = 1
+12096 read(3, "OK\n", 1002)             = 3
+12096 write(3, "SETHASH 10 6A0BE302B896281B01CF2"..., 139) = 139
+12096 write(3, "\n", 1)                 = 1
+12096 read(3, "OK\n", 1002)             = 3
+12096 write(3, "PKSIGN", 6)             = 6
+12096 write(3, "\n", 1)                 = 1
+12096 read(3, "INQUIRE PINENTRY_LAUNCHED 12099 "..., 1002) = 71
+12096 write(3, "END", 3)                = 3
+12096 write(3, "\n", 1)                 = 1
+12096 read(3, "ERR 83918950 Inappropriate ioctl"..., 1002) = 55
+12096 openat(AT_FDCWD, "/usr/share/locale/C.UTF-8/LC_MESSAGES/libc.mo", O_RDONLY) = -1 ENOENT (No such file or directory)
+12096 openat(AT_FDCWD, "/usr/share/locale/C.utf8/LC_MESSAGES/libc.mo", O_RDONLY) = -1 ENOENT (No such file or directory)
+12096 openat(AT_FDCWD, "/usr/share/locale/C/LC_MESSAGES/libc.mo", O_RDONLY) = -1 ENOENT (No such file or directory)
+12096 openat(AT_FDCWD, "/usr/share/locale-langpack/C.UTF-8/LC_MESSAGES/libc.mo", O_RDONLY) = -1 ENOENT (No such file or directory)
+12096 openat(AT_FDCWD, "/usr/share/locale-langpack/C.utf8/LC_MESSAGES/libc.mo", O_RDONLY) = -1 ENOENT (No such file or directory)
+12096 openat(AT_FDCWD, "/usr/share/locale-langpack/C/LC_MESSAGES/libc.mo", O_RDONLY) = -1 ENOENT (No such file or directory)
+12096 brk(0x564c6aa34000)               = 0x564c6aa34000
+12096 write(2, "gpg: signing failed: Inappropria"..., 51) = 51
+12096 write(2, "\n", 1)                 = 1
+12096 write(2, "gpg: [stdin]: clear-sign failed:"..., 63) = 63
+12096 write(2, "\n", 1)                 = 1
+12096 close(5)                          = 0
+12096 munmap(0x7faa2afe5000, 65536)     = 0
+12096 unlink("/home/icehunter/.gnupg/.#lk0x0000564c6a9fea10.DESKTOP-J18HNA4.12096") = 0
+12096 exit_group(2)                     = ?
+12096 +++ exited with 2 +++

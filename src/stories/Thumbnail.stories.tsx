@@ -1,8 +1,9 @@
 import { Meta, Story } from '@storybook/react/types-6-0';
 import { Thumbnail, ThumbnailProps } from '../lib';
 import { UnsplashCollectionSource, useUnsplashStatic } from './hooks';
+import { collectionSource, themePaletteType } from './argTypes';
 
-import { ImageItem } from 'lib/types';
+import { Image } from 'lib/types';
 import React from 'react';
 import { noop } from 'lib/utils';
 
@@ -15,13 +16,8 @@ export default {
     collectionSource: UnsplashCollectionSource.Landscape
   },
   argTypes: {
-    collectionSource: {
-      defaultValue: UnsplashCollectionSource.Landscape,
-      control: {
-        type: 'select',
-        options: Object.keys(UnsplashCollectionSource)
-      }
-    }
+    collectionSource,
+    themePaletteType
   },
   parameters: {
     layout: 'fullscreen'
@@ -34,7 +30,7 @@ const Template: Story<ThumbnailProps & { collectionSource: UnsplashCollectionSou
 }) => {
   const collection = useUnsplashStatic({ imageCount: 1, targetSize: 200, collectionSource });
   const [mediaItem] = collection?.items ?? [];
-  const item = mediaItem?.item as ImageItem;
+  const item = mediaItem?.item as Image;
 
   const {
     width,

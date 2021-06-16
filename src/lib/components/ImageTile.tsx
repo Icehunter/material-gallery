@@ -13,6 +13,8 @@ export type ImageTileStyles = {
 };
 
 export type ImageTileProps = {
+  width: number;
+  height: number;
   /**
    * Styles to be applied to the various nodes in the dom tree; will override defaults
    */
@@ -21,7 +23,7 @@ export type ImageTileProps = {
 } & ImgHTMLAttributes<HTMLImageElement>;
 
 export const ImageTile: FC<ImageTileProps> = memo(
-  ({ styles = {}, src, alt, preload = false, onClick = noop, ...imageElementProps }) => {
+  ({ height, width, styles = {}, src, alt, preload = false, onClick = noop, ...imageElementProps }) => {
     const { ref, inView } = useInView({
       triggerOnce: true,
       rootMargin: '200px'
@@ -46,6 +48,8 @@ export const ImageTile: FC<ImageTileProps> = memo(
       () => (
         <img
           {...imageElementProps}
+          width={width}
+          height={height}
           src={src}
           className={imageClass}
           style={{
@@ -57,7 +61,7 @@ export const ImageTile: FC<ImageTileProps> = memo(
           alt={alt}
         />
       ),
-      [alt, imageClass, imageElementProps, loading, src]
+      [alt, height, imageClass, imageElementProps, loading, src, width]
     );
 
     const content = useMemo(() => {

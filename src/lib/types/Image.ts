@@ -1,23 +1,21 @@
-export type ImageItemAttribution = {
+export type ImageAttribution = {
   name: string;
   avatar: string;
   link: string;
 };
 
-export type ImageItemMeta = {
+export type ImageMeta = {
   thumbnail: string;
   description: string | null;
   likes: number;
-  attribution: ImageItemAttribution;
+  attribution: ImageAttribution;
 };
 
-export type ImageItem = {
+export type Image = {
   src: string;
   raw: string;
   width: number;
   height: number;
   srcSet?: string;
-  meta: ImageItemMeta;
+  meta: ImageMeta;
 };
-
-export type VirtualImageItem = ImageItem | undefined;

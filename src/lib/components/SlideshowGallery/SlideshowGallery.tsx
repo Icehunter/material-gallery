@@ -8,10 +8,12 @@ export type SlideshowGalleryProps = CarouselProps & FilmStripProps;
 
 export const SlideshowGallery: FC<SlideshowGalleryProps> = memo(
   ({ items, nextItem, previousItem, selectedItem = 0, setSelectedItem, autoplay, delay, thumbnailSize }) => {
+    const hasItems = items.length > 1;
+
     return (
       <div className={ModuleStyles.container}>
         <Carousel {...{ items, previousItem, nextItem, selectedItem, autoplay, delay }} />
-        {items.length > 1 && <FilmStrip {...{ items, thumbnailSize, selectedItem, setSelectedItem }} />}
+        {hasItems && <FilmStrip {...{ items, thumbnailSize, selectedItem, setSelectedItem }} />}
       </div>
     );
   }

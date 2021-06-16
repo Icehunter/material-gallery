@@ -2,7 +2,9 @@
   "name": "@icehunter/material-gallery",
   "version": "1.0.0",
   "description": "Material Gallery Components",
-  "main": "index.js",
+  "main": "lib/index.js",
+  "module": "lib/esm/index.js",
+  "typings": "lib/esm/index.d.ts",
   "author": "Ryan Wilson <syndicated.life@gmail.com> (https://syndicated.life/)",
   "license": "MIT",
   "repository": {
@@ -21,17 +23,22 @@
     "@charlietango/use-native-lazy-loading": "^1.9.0",
     "@material-ui/core": "^4.11.4",
     "@material-ui/icons": "^4.11.2",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
     "react-intersection-observer": "^8.32.0"
   },
+  "peerDependencies": {
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
+  },
   "scripts": {
+    "clean": "rimraf build lib",
     "start": "react-scripts start",
-    "build": "react-scripts build",
-    "lint": "eslint --cache 'src/**/*.{js,ts,tsx}'",
+    "build:app": "npm run clean && react-scripts build",
+    "build": "npm run clean && just build",
+    "lint": "tsc --noEmit && eslint --cache 'src/**/*.{js,ts,tsx}'",
     "prepare": "husky install",
     "storybook": "start-storybook -p 6006 -s public --no-manager-cache",
-    "build-storybook": "build-storybook -s public"
+    "build-storybook": "build-storybook -s public",
+    "test": "react-scripts test"
   },
   "browserslist": {
     "production": [
@@ -54,19 +61,27 @@
     "@storybook/preset-create-react-app": "^3.1.7",
     "@storybook/react": "^6.2.9",
     "@storybook/theming": "^6.2.9",
-    "@types/node": "^15.12.2",
+    "@testing-library/jest-dom": "^5.11.4",
+    "@testing-library/react": "^11.1.0",
+    "@testing-library/user-event": "^12.1.10",
+    "@types/jest": "^26.0.15",
+    "@types/node": "^12.0.0",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
     "clsx": "^1.1.1",
     "css-loader": "^5.2.6",
     "husky": "^6.0.0",
+    "just-scripts": "^1.5.4",
     "lint-staged": "^11.0.0",
     "node-sass": "^4.14.1",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
     "react-scripts": "4.0.3",
     "sass-loader": "^10.0.0",
     "storybook-addon-performance": "^0.15.2",
     "style-loader": "^2.0.0",
-    "typescript": "^4.1.2"
+    "typescript": "^4.1.2",
+    "web-vitals": "^1.0.1"
   },
   "lint-staged": {
     "**/*.{ts,tsx}": [

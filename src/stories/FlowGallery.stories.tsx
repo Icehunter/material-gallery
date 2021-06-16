@@ -1,6 +1,7 @@
 import { FlowGallery, FlowGalleryProps } from '../lib';
 import { Meta, Story } from '@storybook/react/types-6-0';
 import { UnsplashCollectionSource, useUnsplashStatic } from './hooks';
+import { collectionSource, imageCount, themePaletteType, zoomLevel } from './argTypes';
 
 import React from 'react';
 
@@ -16,19 +17,10 @@ export default {
     collectionSource: UnsplashCollectionSource.Landscape
   },
   argTypes: {
-    imageCount: {
-      control: { type: 'range', min: 1, max: 300, step: 1 }
-    },
-    zoomLevel: {
-      control: { type: 'range', min: -5, max: 5, step: 1 }
-    },
-    collectionSource: {
-      defaultValue: UnsplashCollectionSource.Landscape,
-      control: {
-        type: 'select',
-        options: Object.keys(UnsplashCollectionSource)
-      }
-    }
+    collectionSource,
+    imageCount,
+    themePaletteType,
+    zoomLevel
   },
   parameters: {
     layout: 'fullscreen'

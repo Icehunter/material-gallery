@@ -1,9 +1,9 @@
 import { animalsPhotos, landscapePhotos, naturePhotos } from 'stories/samples';
 
+import { Image } from 'lib/types';
+import { MediaCollection } from 'lib/types/MediaCollection';
 import { MediaType } from 'lib/types/MediaType';
 import { UnsplashAPIResponse } from 'stories/types/UnsplashAPIResponse';
-import { VirtualImageItem } from 'lib/types';
-import { VirtualMediaCollection } from 'lib/types/MediaCollection';
 import { clamp } from 'lib/utils';
 import { useMemo } from 'react';
 
@@ -31,7 +31,7 @@ export const useUnsplashStatic = ({
   targetSize = 500,
   targetType = TargetType.Height,
   collectionSource = UnsplashCollectionSource.Landscape
-} = {}): VirtualMediaCollection<VirtualImageItem> => {
+} = {}): MediaCollection<Image> => {
   const normalizedImageCount = clamp(imageCount, 1, 300);
 
   const collection: UnsplashAPIResponse[] = useMemo(() => {
@@ -46,11 +46,11 @@ export const useUnsplashStatic = ({
   }, [collectionSource]);
 
   const images = useMemo(() => {
-    const results: VirtualMediaCollection<VirtualImageItem> = {
+    const results: MediaCollection<Image> = {
       items: []
     };
 
-    for (let i = 0; i < normalizedImageCount; i++) {
+    for (let imageIndex = 0; imageIndex < normalizedImageCount; imageIndex++) {
       const {
         width,
         height,
@@ -62,7 +62,7 @@ export const useUnsplashStatic = ({
           profile_image: { small: smallProfileImage },
           links: { html: userProfileLink }
         }
-      } = collection[i];
+      } = collection[imageIndex];
 
       let normalizedWidth = width;
       let normalizedHeight = height;
@@ -89,7 +89,7 @@ export const useUnsplashStatic = ({
           break;
       }
 
-      const imageItem: VirtualImageItem = {
+      const image: Image = {
         // setup for retina displays/4k
         src: `${raw}&fm=jpg&q=80&${sizeQueryString}`,
         raw,
@@ -107,10 +107,10 @@ export const useUnsplashStatic = ({
         }
       };
 
-      results.items.push({
+      results.items[imageIndex] = {
         type: MediaType.Image,
-        item: imageItem
-      });
+        item: image
+      };
     }
 
     return results;

@@ -1,14 +1,14 @@
-import { MediaItem, MediaType, VirtualMediaItem } from 'lib/types';
+import { Media, MediaItem, MediaType } from 'lib/types';
 import React, { FC, Fragment, memo, useMemo, useRef } from 'react';
 
 import { FlowImageTile } from './FlowImageTile';
-import { ImageItem } from 'lib/types/ImageItem';
+import { Image } from 'lib/types/Image';
 import ModuleStyles from './FlowGallery.module.scss';
 import clsx from 'clsx';
 import { useRect } from 'lib/hooks/useRect';
 
 export type FlowGalleryProps = {
-  items: VirtualMediaItem<unknown>[];
+  items: MediaItem<Media>[];
   targetSize: number;
   padding: number;
   margin: number;
@@ -19,7 +19,7 @@ const POSITIVE_ZOOM_LEVELS = [1.1, 1.2, 1.3, 1.4, 1.5];
 const NEGATIVE_ZOOM_LEVELS = [0.9, 0.8, 0.7, 0.6, 0.5];
 
 type Row = {
-  items: MediaItem<unknown>[];
+  items: MediaItem<Media>[];
   width: number;
 };
 
@@ -28,7 +28,7 @@ type NormalizedElementRow = {
   items: JSX.Element[];
 };
 
-const resolveImageNode = (item: ImageItem, key: string, width: number, height: number, margin: number): JSX.Element => {
+const resolveImageNode = (item: Image, key: string, width: number, height: number, margin: number): JSX.Element => {
   return (
     <Fragment key={key}>
       <FlowImageTile item={item} width={width} height={height} margin={margin} />
@@ -37,7 +37,7 @@ const resolveImageNode = (item: ImageItem, key: string, width: number, height: n
 };
 
 const resolveMediaNodes = (
-  items: VirtualMediaItem<unknown>[],
+  items: MediaItem<Media>[],
   normalizedRectWidth: number,
   zoomTargetSize: number,
   margin: number
@@ -68,17 +68,17 @@ const resolveMediaNodes = (
       switch (mediaItem.type) {
         case MediaType.Image:
           {
-            const imageItem = item as ImageItem;
+            const imageItem = item as Image;
             aspectRatio = imageItem.width / imageItem.height;
           }
           break;
       }
       const normalizedHeight = zoomTargetSize;
-      const normalizedWidth = Math.floor(normalizedHeight * aspectRatio);
+      const normalizedWidth = Math.ceil(normalizedHeight * aspectRatio);
       const normalizedWidthWithMargin = normalizedWidth + margin * 2;
 
-      if (remainingWidth >= normalizedWidthWithMargin || Math.floor(normalizedWidthWithMargin / 2) <= remainingWidth) {
-        row.items.push(mediaItem);
+      if (remainingWidth >= normalizedWidthWithMargin || Math.ceil(normalizedWidthWithMargin / 2) <= remainingWidth) {
+        row.items[row.items.length] = mediaItem;
         row.width += normalizedWidthWithMargin;
       } else {
         currentRow++;
@@ -90,10 +90,10 @@ const resolveMediaNodes = (
     }
   }
 
-  for (let i = 0; i < rows.length; i++) {
-    const row = rows[i];
+  for (let rowIndex = 0; rowIndex < rows.length; rowIndex++) {
+    const row = rows[rowIndex];
     // process current row
-    mediaNodes[i] = mediaNodes[i] ?? {
+    mediaNodes[rowIndex] = mediaNodes[rowIndex] ?? {
       isNormalized: false,
       items: []
     };
@@ -102,36 +102,42 @@ const resolveMediaNodes = (
     const rowImageWidth = row.width - rowMarginWidth;
     const rowWidthRatio = rowImageWidth / (normalizedRectWidth - rowMarginWidth);
 
-    for (let j = 0; j < row.items.length; j++) {
-      const mediaItem = row.items[j];
+    for (let itemIndex = 0; itemIndex < row.items.length; itemIndex++) {
+      const mediaItem = row.items[itemIndex];
       const { item } = mediaItem;
       let aspectRatio = 1.0;
       switch (mediaItem.type) {
         case MediaType.Image:
           {
-            const imageItem = item as ImageItem;
+            const imageItem = item as Image;
             aspectRatio = imageItem.width / imageItem.height;
           }
           break;
       }
 
       const normalizedHeight = zoomTargetSize;
-      const normalizedWidth = Math.floor(normalizedHeight * aspectRatio);
+      const normalizedWidth = Math.ceil(normalizedHeight * aspectRatio);
 
-      const rowNormalizedHeight = Math.floor(normalizedHeight / rowWidthRatio);
-      const rowNormalizedWidth = Math.floor(rowNormalizedHeight * aspectRatio);
+      const rowNormalizedHeight = Math.ceil(normalizedHeight / rowWidthRatio);
+      const rowNormalizedWidth = Math.ceil(rowNormalizedHeight * aspectRatio);
 
-      const useRowNormalizedValues = i < rows.length - 1 || row.width > normalizedRectWidth;
+      const useRowNormalizedValues = rowIndex < rows.length - 1 || row.width > normalizedRectWidth;
 
       const height = useRowNormalizedValues ? rowNormalizedHeight : normalizedHeight;
       const width = useRowNormalizedValues ? rowNormalizedWidth : normalizedWidth;
 
-      mediaNodes[i].isNormalized = useRowNormalizedValues;
+      mediaNodes[rowIndex].isNormalized = useRowNormalizedValues;
       switch (mediaItem.type) {
         case MediaType.Image:
           {
-            const imageItem = item as ImageItem;
-            mediaNodes[i].items[j] = resolveImageNode(imageItem, `thumbnail - ${i} - ${j}`, width, height, margin);
+            const imageItem = item as Image;
+            mediaNodes[rowIndex].items[itemIndex] = resolveImageNode(
+              imageItem,
+              `thumbnail - ${rowIndex} - ${itemIndex}`,
+              width,
+              height,
+              margin
+            );
           }
           break;
       }
@@ -153,10 +159,10 @@ export const FlowGallery: FC<FlowGalleryProps> = memo(({ items, targetSize, padd
 
     let zoomTargetSize = targetSize;
     if (zoomLevel < 0) {
-      zoomTargetSize = Math.floor(targetSize * NEGATIVE_ZOOM_LEVELS[Math.abs(zoomLevel) - 1]);
+      zoomTargetSize = Math.ceil(targetSize * NEGATIVE_ZOOM_LEVELS[Math.abs(zoomLevel) - 1]);
     }
     if (zoomLevel > 0) {
-      zoomTargetSize = Math.floor(targetSize * POSITIVE_ZOOM_LEVELS[zoomLevel - 1]);
+      zoomTargetSize = Math.ceil(targetSize * POSITIVE_ZOOM_LEVELS[zoomLevel - 1]);
     }
     // remove padding from width
     const normalizedRectWidth = Math.floor(rect.width - padding * 2);
@@ -168,11 +174,11 @@ export const FlowGallery: FC<FlowGalleryProps> = memo(({ items, targetSize, padd
 
   const content = useMemo(() => {
     const rows: JSX.Element[] = [];
-    for (let i = 0; i < itemElements.length; i++) {
-      const nodes: NormalizedElementRow = itemElements[i];
-      rows[i] = (
+    for (let itemIndex = 0; itemIndex < itemElements.length; itemIndex++) {
+      const nodes: NormalizedElementRow = itemElements[itemIndex];
+      rows[itemIndex] = (
         <div
-          key={i}
+          key={itemIndex}
           className={clsx(ModuleStyles.row, {
             [ModuleStyles.normalizedRow]: nodes.isNormalized
           })}>

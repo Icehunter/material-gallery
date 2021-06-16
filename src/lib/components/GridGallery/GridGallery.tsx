@@ -1,4 +1,4 @@
-import { ImageItem, MediaType, VirtualMediaItem } from 'lib/types';
+import { Image, Media, MediaItem, MediaType } from 'lib/types';
 import React, { FC, Fragment, memo, useMemo, useRef } from 'react';
 
 import { GridImageTile } from './GridImageTile';
@@ -6,7 +6,7 @@ import ModuleStyles from './GridGallery.module.scss';
 import { useRect } from 'lib/hooks/useRect';
 
 export type GridGalleryProps = {
-  items: VirtualMediaItem<unknown>[];
+  items: MediaItem<Media>[];
   targetSize: number;
   padding: number;
   margin: number;
@@ -40,31 +40,37 @@ export const GridGallery: FC<GridGalleryProps> = memo(({ items, targetSize, padd
     // find optimal target size; account for margins around images
     const normalizedTargetSize = Math.floor(normalizedRectWidth / columnCount) - margin * 2;
 
-    return items.map((mediaItem, index) => {
+    const results = [];
+
+    for (let itemIndex = 0; itemIndex < items.length; itemIndex++) {
+      const mediaItem = items[itemIndex];
+
       if (!mediaItem || !mediaItem.item) {
-        return null;
+        continue;
       }
 
       const { item } = mediaItem;
 
       switch (mediaItem.type) {
-        case MediaType.Image: {
-          const imageItem = item as ImageItem;
-          return (
-            <Fragment key={`thumbnail - ${index}`}>
-              <GridImageTile
-                item={imageItem}
-                width={normalizedTargetSize}
-                height={normalizedTargetSize}
-                margin={margin}
-              />
-            </Fragment>
-          );
-        }
-        default:
-          return null;
+        case MediaType.Image:
+          {
+            const imageItem = item as Image;
+            results[results.length] = (
+              <Fragment key={`thumbnail - ${itemIndex}`}>
+                <GridImageTile
+                  item={imageItem}
+                  width={normalizedTargetSize}
+                  height={normalizedTargetSize}
+                  margin={margin}
+                />
+              </Fragment>
+            );
+          }
+          break;
       }
-    });
+    }
+
+    return results;
   }, [items, margin, padding, rect, targetSize, zoomLevel]);
 
   return (

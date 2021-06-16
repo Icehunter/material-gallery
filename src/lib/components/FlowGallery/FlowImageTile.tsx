@@ -1,14 +1,14 @@
 import React, { FC, memo } from 'react';
 
 import { CreateCSSProperties } from '@material-ui/core/styles/withStyles';
-import { ImageItem } from 'lib/types/ImageItem';
+import { Image } from 'lib/types/Image';
 import { ImageTile } from '../ImageTile';
 import ModuleStyles from './FlowImageTile.module.scss';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core';
 
 export type FlowImageTileProps = {
-  item: ImageItem;
+  item: Image;
   height: number;
   width: number;
   margin: number;
@@ -27,6 +27,8 @@ export const FlowImageTile: FC<FlowImageTileProps> = memo(({ item, height, width
 
   return (
     <ImageTile
+      width={width}
+      height={height}
       src={item.src}
       srcSet={item.srcSet}
       styles={{
