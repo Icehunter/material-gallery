@@ -1,6 +1,6 @@
 export enum SortDirection {
-  Ascending,
-  Descending
+  Ascending = 'Ascending',
+  Descending = 'Descending'
 }
 
 export const propertyComparer = <T>(

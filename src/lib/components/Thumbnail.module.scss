@@ -5,13 +5,13 @@
   object-fit: cover;
   object-position: center;
   transition: transform 0.25s ease;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.75);
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
   transform: scale(0.95);
 }
 
 .image:hover,
 .selected {
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.75), 0 0 0 1px rgba(0, 0, 0, 0.75);
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(0, 0, 0, 0.75);
   transition: transform 0.25s;
 }
 

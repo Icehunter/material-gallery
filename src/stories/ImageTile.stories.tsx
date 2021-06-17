@@ -26,8 +26,9 @@ export default {
 } as Meta<ImageTileProps>;
 
 const Template: Story<ImageTileProps & { collectionSource: UnsplashCollectionSource }> = ({
-  collectionSource,
-  ...props
+  className,
+  onClick,
+  collectionSource
 }) => {
   const collection = useUnsplashStatic({ imageCount: 1, collectionSource });
   const [mediaItem] = collection?.items ?? [];
@@ -36,7 +37,7 @@ const Template: Story<ImageTileProps & { collectionSource: UnsplashCollectionSou
   return (
     <div className={styles.container}>
       <div className={styles.wrapper}>
-        <ImageTile {...props} {...(item ?? {})} />
+        <ImageTile className={className} onClick={onClick} {...(item ?? {})} />
       </div>
     </div>
   );

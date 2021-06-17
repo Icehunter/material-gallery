@@ -14,9 +14,9 @@ export enum UnsplashCollectionSource {
 }
 
 export enum TargetType {
-  Width,
-  Height,
-  Thumbnail
+  Width = 'Width',
+  Height = 'Height',
+  Thumbnail = 'Thumbnail'
 }
 
 export type UseUnsplashStaticOptions = {

@@ -25,8 +25,9 @@ export default {
 } as Meta<ThumbnailProps>;
 
 const Template: Story<ThumbnailProps & { collectionSource: UnsplashCollectionSource }> = ({
-  collectionSource,
-  ...props
+  selected,
+  onClick,
+  collectionSource
 }) => {
   const collection = useUnsplashStatic({ imageCount: 1, targetSize: 200, collectionSource });
   const [mediaItem] = collection?.items ?? [];
@@ -38,7 +39,7 @@ const Template: Story<ThumbnailProps & { collectionSource: UnsplashCollectionSou
     meta: { thumbnail }
   } = item;
 
-  return <Thumbnail {...props} {...{ src: thumbnail, width, height }} />;
+  return <Thumbnail selected={selected} onClick={onClick} {...{ src: thumbnail, width, height }} />;
 };
 
 export const ThumbnailDefault = Template.bind({});
