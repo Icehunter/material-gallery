@@ -1,6 +1,6 @@
 import { ChevronLeft as ChevronLeftIcon, ChevronRight as ChevronRightIcon } from '@material-ui/icons';
 import { Image, Media, MediaItem, MediaType } from 'lib/types';
-import React, { Dispatch, FC, SetStateAction, memo, useEffect, useMemo, useRef } from 'react';
+import React, { Dispatch, FC, SetStateAction, memo, useLayoutEffect, useMemo, useRef } from 'react';
 
 import { IconButton } from '@material-ui/core';
 import ModuleStyles from './FilmStrip.module.scss';
@@ -31,6 +31,8 @@ const resolveMediaItems = (
       continue;
     }
 
+    const preload = neighbors.includes(itemIndex);
+
     const { item } = mediaItem;
 
     switch (mediaItem.type) {
@@ -42,7 +44,6 @@ const resolveMediaItems = (
             height,
             meta: { thumbnail }
           } = imageItem;
-          const preload = neighbors.includes(itemIndex);
           results[results.length] = (
             <Thumbnail
               key={itemIndex}
@@ -75,7 +76,7 @@ export const FilmStrip: FC<FilmStripProps> = memo(({ items, thumbnailSize, selec
   const { scrollToElement, canScrollLeft, canScrollRight, scrollPageRight, scrollPageLeft } =
     useHorizontalScrollPosition(currentNodeRef);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const currentNode = currentNodeRef.current;
 
     if (!currentNode) {
