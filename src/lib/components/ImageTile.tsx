@@ -3,7 +3,7 @@ import React, { FC, ImgHTMLAttributes, memo, useMemo, useState } from 'react';
 import { CircularProgress } from '@material-ui/core';
 import ModuleStyles from './ImageTile.module.scss';
 import clsx from 'clsx';
-import { noop } from 'lib/utils/noop';
+import { noop } from 'lib/utils';
 import { useInView } from 'react-intersection-observer';
 
 export type ImageTileStyles = {

@@ -1,3 +1,4 @@
+import { MasonryGalleryDirection } from 'lib';
 import { UnsplashCollectionSource } from './hooks';
 
 export const imageCount = {
@@ -27,6 +28,14 @@ export const collectionSource = {
   }
 };
 
+export const direction = {
+  defaultValue: MasonryGalleryDirection.Vertical,
+  control: {
+    type: 'select',
+    options: Object.keys(MasonryGalleryDirection)
+  }
+};
+
 export const themePaletteType = {
   defaultValue: 'light',
   control: {
@@ -35,6 +44,6 @@ export const themePaletteType = {
   }
 };
 
-export const zoomLevel = {
-  control: { type: 'range', min: -5, max: 5, step: 1 }
+export const zoomScale = {
+  control: { type: 'range', min: 0, max: 2, step: 0.25 }
 };

@@ -4,7 +4,7 @@ import { UnsplashCollectionSource, useUnsplashStatic } from './hooks';
 import { autoplay, collectionSource, delay, imageCount, themePaletteType } from './argTypes';
 import { useCallback, useRef, useState } from 'react';
 
-import styles from './Slideshow.stories.module.scss';
+import ModuleStyles from './Slideshow.stories.module.scss';
 import { useKeyDownEvent } from '../lib/hooks';
 import { useRect } from 'lib/hooks';
 
@@ -56,7 +56,7 @@ const Template: Story<
   useKeyDownEvent(elementRef, 'ArrowRight', nextItem);
 
   return (
-    <div className={styles.container} ref={elementRef} role="presentation" tabIndex={-1}>
+    <div className={ModuleStyles.container} ref={elementRef} role="presentation" tabIndex={-1}>
       <SlideshowGallery
         {...args}
         items={mediaItems}
@@ -100,8 +100,8 @@ const TemplateWithSmallShell: Story<
   useKeyDownEvent(elementRef, 'ArrowRight', nextItem);
 
   return (
-    <div className={styles.containerSmall} ref={elementRef} role="presentation" tabIndex={-1}>
-      <div className={styles.wrapperSmall}>
+    <div className={ModuleStyles.containerSmall} ref={elementRef} role="presentation" tabIndex={-1}>
+      <div className={ModuleStyles.wrapperSmall}>
         <SlideshowGallery
           {...args}
           items={mediaItems}

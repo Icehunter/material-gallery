@@ -1,7 +1,7 @@
 import { MasonryGallery, MasonryGalleryDirection, MasonryGalleryProps } from '../lib';
 import { Meta, Story } from '@storybook/react/types-6-0';
 import { TargetType, UnsplashCollectionSource, useUnsplashStatic } from './hooks';
-import { collectionSource, imageCount, themePaletteType, zoomLevel } from './argTypes';
+import { collectionSource, direction, imageCount, themePaletteType, zoomScale } from './argTypes';
 
 import React from 'react';
 
@@ -10,7 +10,7 @@ export default {
   component: MasonryGallery,
   args: {
     imageCount: 50,
-    zoomLevel: 0,
+    zoomScale: 1,
     targetSize: 320,
     padding: 20,
     margin: 5,
@@ -19,9 +19,10 @@ export default {
   },
   argTypes: {
     collectionSource,
+    direction,
     imageCount,
     themePaletteType,
-    zoomLevel
+    zoomScale
   },
   parameters: {
     layout: 'fullscreen'
@@ -29,11 +30,13 @@ export default {
 } as Meta<MasonryGalleryProps>;
 
 const Template: Story<
-  MasonryGalleryProps & { imageCount: number; zoomLevel: number; collectionSource: UnsplashCollectionSource }
-> = ({ zoomLevel, targetSize, padding, margin, imageCount, direction, collectionSource }) => {
+  MasonryGalleryProps & { imageCount: number; zoomScale: number; collectionSource: UnsplashCollectionSource }
+> = ({ zoomScale, targetSize, padding, margin, imageCount, direction, collectionSource }) => {
+  const normalizedTargetSize = Math.floor(targetSize * zoomScale);
+
   const collection = useUnsplashStatic({
     imageCount,
-    targetSize: targetSize,
+    targetSize: normalizedTargetSize,
     targetType: direction === MasonryGalleryDirection.Vertical ? TargetType.Width : TargetType.Height,
     collectionSource
   });
@@ -42,8 +45,7 @@ const Template: Story<
   return (
     <MasonryGallery
       items={mediaItems}
-      zoomLevel={zoomLevel}
-      targetSize={targetSize}
+      targetSize={normalizedTargetSize}
       padding={padding}
       margin={margin}
       direction={direction}

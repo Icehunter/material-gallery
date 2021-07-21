@@ -5,18 +5,14 @@ import { FlowImageTile } from './FlowImageTile';
 import { Image } from 'lib/types/Image';
 import ModuleStyles from './FlowGallery.module.scss';
 import clsx from 'clsx';
-import { useRect } from 'lib/hooks/useRect';
+import { useRect } from 'lib/hooks';
 
 export type FlowGalleryProps = {
   items: MediaItem<Media>[];
   targetSize: number;
   padding: number;
   margin: number;
-  zoomLevel: number;
 };
-
-const POSITIVE_ZOOM_LEVELS = [1.1, 1.2, 1.3, 1.4, 1.5];
-const NEGATIVE_ZOOM_LEVELS = [0.9, 0.8, 0.7, 0.6, 0.5];
 
 type Row = {
   items: MediaItem<Media>[];
@@ -39,7 +35,7 @@ const resolveImageNode = (item: Image, key: string, width: number, height: numbe
 const resolveMediaNodes = (
   items: MediaItem<Media>[],
   normalizedRectWidth: number,
-  zoomTargetSize: number,
+  targetSize: number,
   margin: number
 ): NormalizedElementRow[] => {
   const mediaNodes: NormalizedElementRow[] = [];
@@ -73,7 +69,7 @@ const resolveMediaNodes = (
           }
           break;
       }
-      const normalizedHeight = zoomTargetSize;
+      const normalizedHeight = targetSize;
       const normalizedWidth = Math.ceil(normalizedHeight * aspectRatio);
       const normalizedWidthWithMargin = normalizedWidth + margin * 2;
 
@@ -115,7 +111,7 @@ const resolveMediaNodes = (
           break;
       }
 
-      const normalizedHeight = zoomTargetSize;
+      const normalizedHeight = targetSize;
       const normalizedWidth = Math.ceil(normalizedHeight * aspectRatio);
 
       const rowNormalizedHeight = Math.ceil(normalizedHeight / rowWidthRatio);
@@ -147,30 +143,23 @@ const resolveMediaNodes = (
   return mediaNodes;
 };
 
-export const FlowGallery: FC<FlowGalleryProps> = memo(({ items, targetSize, padding, margin, zoomLevel }) => {
+export const FlowGallery: FC<FlowGalleryProps> = memo(({ items, targetSize, padding, margin }) => {
   const containerNodeRef = useRef<HTMLDivElement | null>(null);
 
   const rect = useRect(containerNodeRef);
 
   const itemElements = useMemo(() => {
-    if (!rect) {
+    if (!rect || targetSize <= 0) {
       return [];
     }
 
-    let zoomTargetSize = targetSize;
-    if (zoomLevel < 0) {
-      zoomTargetSize = Math.ceil(targetSize * NEGATIVE_ZOOM_LEVELS[Math.abs(zoomLevel) - 1]);
-    }
-    if (zoomLevel > 0) {
-      zoomTargetSize = Math.ceil(targetSize * POSITIVE_ZOOM_LEVELS[zoomLevel - 1]);
-    }
     // remove padding from width
     const normalizedRectWidth = Math.floor(rect.width - padding * 2);
 
-    const mediaNodes: NormalizedElementRow[] = resolveMediaNodes(items, normalizedRectWidth, zoomTargetSize, margin);
+    const mediaNodes: NormalizedElementRow[] = resolveMediaNodes(items, normalizedRectWidth, targetSize, margin);
 
     return mediaNodes;
-  }, [items, margin, padding, rect, targetSize, zoomLevel]);
+  }, [items, margin, padding, rect, targetSize]);
 
   const content = useMemo(() => {
     const rows: JSX.Element[] = [];

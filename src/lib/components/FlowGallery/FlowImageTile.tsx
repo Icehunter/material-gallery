@@ -1,7 +1,7 @@
 import React, { FC, memo } from 'react';
 
 import { CreateCSSProperties } from '@material-ui/core/styles/withStyles';
-import { Image } from 'lib/types/Image';
+import { Image } from 'lib/types';
 import { ImageTile } from '../ImageTile';
 import ModuleStyles from './FlowImageTile.module.scss';
 import clsx from 'clsx';

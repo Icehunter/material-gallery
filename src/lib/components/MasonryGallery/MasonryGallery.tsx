@@ -1,12 +1,11 @@
-import { Media, MediaItem, MediaType } from 'lib/types';
+import { Image, Media, MediaItem, MediaType } from 'lib/types';
 import React, { FC, Fragment, memo, useMemo, useRef } from 'react';
 
-import { Image } from 'lib/types/Image';
 import { MasonryImageTile } from './MasonryImageTile';
 import ModuleStyles from './MasonryGallery.module.scss';
 import clsx from 'clsx';
-import { findAndInsertByProperty } from 'lib/utils/arrays';
-import { useRect } from 'lib/hooks/useRect';
+import { findAndInsertByProperty } from 'lib/utils';
+import { useRect } from 'lib/hooks';
 
 export enum MasonryGalleryDirection {
   Vertical = 'Vertical',
@@ -18,12 +17,8 @@ export type MasonryGalleryProps = {
   targetSize: number;
   padding: number;
   margin: number;
-  zoomLevel: number;
   direction: MasonryGalleryDirection;
 };
-
-const POSITIVE_ZOOM_LEVELS = [1.1, 1.2, 1.3, 1.4, 1.5];
-const NEGATIVE_ZOOM_LEVELS = [0.9, 0.8, 0.7, 0.6, 0.5];
 
 type Panel = {
   index: number;
@@ -47,19 +42,19 @@ const resolveImageNode = (item: Image, key: string, width: number, height: numbe
 const resolveMediaNodes = (
   items: MediaItem<Media>[],
   normalizedRectSize: number,
-  zoomTargetSize: number,
+  targetSize: number,
   margin: number,
   direction: MasonryGalleryDirection
 ): ElementPanel[] => {
   const mediaNodes: ElementPanel[] = [];
 
   // get optimal panel count based on adjusted target size and with
-  const panelCount = Math.ceil(normalizedRectSize / zoomTargetSize);
+  const panelCount = Math.max(Math.floor(normalizedRectSize / targetSize), 1);
   // find optimal target size; account for margins around images
   const normalizedTargetSize = Math.floor(normalizedRectSize / panelCount) - margin * 2;
 
-  if (panelCount <= 0) {
-    return [];
+  if (normalizedTargetSize <= 0) {
+    return mediaNodes;
   }
 
   const panels: Panel[] = [
@@ -200,89 +195,80 @@ const resolveMediaNodes = (
   return mediaNodes;
 };
 
-export const MasonryGallery: FC<MasonryGalleryProps> = memo(
-  ({ items, targetSize, padding, margin, zoomLevel, direction }) => {
-    const containerNodeRef = useRef<HTMLDivElement | null>(null);
+export const MasonryGallery: FC<MasonryGalleryProps> = memo(({ items, targetSize, padding, margin, direction }) => {
+  const containerNodeRef = useRef<HTMLDivElement | null>(null);
 
-    const rect = useRect(containerNodeRef);
+  const rect = useRect(containerNodeRef);
 
-    const elements = useMemo(() => {
-      if (!rect) {
-        return [];
+  const elements = useMemo(() => {
+    if (!rect) {
+      return [];
+    }
+
+    // remove padding from width
+    const normalizedRectSize =
+      Math.floor(direction === MasonryGalleryDirection.Vertical ? rect.width : rect.height) - padding * 2;
+
+    const mediaNodes = resolveMediaNodes(items, normalizedRectSize, targetSize, margin, direction);
+
+    mediaNodes.sort((a, b) => {
+      if (a.panelIndex > b.panelIndex) {
+        return 1;
+      }
+      if (a.panelIndex < b.panelIndex) {
+        return -1;
+      }
+      return 0;
+    });
+
+    return mediaNodes;
+  }, [direction, items, margin, padding, rect, targetSize]);
+
+  const content = useMemo(() => {
+    const panels: JSX.Element[] = [];
+    for (let elementIndex = 0; elementIndex < elements.length; elementIndex++) {
+      const element: ElementPanel = elements[elementIndex];
+
+      const nodes = [];
+
+      for (let nodeIndex = 0; nodeIndex < element.items.length; nodeIndex++) {
+        const node = element.items[nodeIndex];
+
+        nodes[nodeIndex] = <Fragment key={nodeIndex}>{node}</Fragment>;
       }
 
-      let zoomTargetSize = targetSize;
-      if (zoomLevel < 0) {
-        zoomTargetSize = Math.floor(zoomTargetSize * NEGATIVE_ZOOM_LEVELS[Math.abs(zoomLevel) - 1]);
-      }
-      if (zoomLevel > 0) {
-        zoomTargetSize = Math.floor(zoomTargetSize * POSITIVE_ZOOM_LEVELS[zoomLevel - 1]);
-      }
-      // remove padding from width
-      const normalizedRectSize =
-        Math.floor(direction === MasonryGalleryDirection.Vertical ? rect.width : rect.height) - padding * 2;
-
-      const mediaNodes = resolveMediaNodes(items, normalizedRectSize, zoomTargetSize, margin, direction);
-
-      mediaNodes.sort((a, b) => {
-        if (a.panelIndex > b.panelIndex) {
-          return 1;
-        }
-        if (a.panelIndex < b.panelIndex) {
-          return -1;
-        }
-        return 0;
-      });
-
-      return mediaNodes;
-    }, [direction, items, margin, padding, rect, targetSize, zoomLevel]);
-
-    const content = useMemo(() => {
-      const panels: JSX.Element[] = [];
-      for (let elementIndex = 0; elementIndex < elements.length; elementIndex++) {
-        const element: ElementPanel = elements[elementIndex];
-
-        const nodes = [];
-
-        for (let nodeIndex = 0; nodeIndex < element.items.length; nodeIndex++) {
-          const node = element.items[nodeIndex];
-
-          nodes[nodeIndex] = <Fragment key={nodeIndex}>{node}</Fragment>;
-        }
-
-        panels[elementIndex] = (
-          <div
-            key={elementIndex}
-            className={clsx(ModuleStyles.panel, {
-              [ModuleStyles.Vertical]: direction === MasonryGalleryDirection.Vertical,
-              [ModuleStyles.Horizontal]: direction === MasonryGalleryDirection.Horizontal
-            })}>
-            {nodes}
-          </div>
-        );
-      }
-      return panels;
-    }, [direction, elements]);
-
-    return (
-      <div
-        style={{
-          height: '100%',
-          width: '100%',
-          ...(direction === MasonryGalleryDirection.Horizontal ? { overflow: 'auto' } : undefined)
-        }}>
+      panels[elementIndex] = (
         <div
-          className={clsx(ModuleStyles.container, {
+          key={elementIndex}
+          className={clsx(ModuleStyles.panel, {
             [ModuleStyles.Vertical]: direction === MasonryGalleryDirection.Vertical,
             [ModuleStyles.Horizontal]: direction === MasonryGalleryDirection.Horizontal
-          })}
-          ref={containerNodeRef}
-          style={{
-            ...(direction === MasonryGalleryDirection.Vertical ? { padding } : undefined)
-          }}>
-          {direction === MasonryGalleryDirection.Vertical ? content : <div style={{ margin: padding }}>{content}</div>}
+          })}>
+          {nodes}
         </div>
+      );
+    }
+    return panels;
+  }, [direction, elements]);
+
+  return (
+    <div
+      style={{
+        height: '100%',
+        width: '100%',
+        ...(direction === MasonryGalleryDirection.Horizontal ? { overflow: 'auto' } : undefined)
+      }}>
+      <div
+        className={clsx(ModuleStyles.container, {
+          [ModuleStyles.Vertical]: direction === MasonryGalleryDirection.Vertical,
+          [ModuleStyles.Horizontal]: direction === MasonryGalleryDirection.Horizontal
+        })}
+        ref={containerNodeRef}
+        style={{
+          ...(direction === MasonryGalleryDirection.Vertical ? { padding } : undefined)
+        }}>
+        {direction === MasonryGalleryDirection.Vertical ? content : <div style={{ margin: padding }}>{content}</div>}
       </div>
-    );
-  }
-);
+    </div>
+  );
+});

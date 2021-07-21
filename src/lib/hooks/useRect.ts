@@ -1,6 +1,6 @@
 import { MutableRefObject, useCallback, useLayoutEffect, useState } from 'react';
 
-import { noop } from 'lib/utils/noop';
+import { noop } from 'lib/utils';
 
 export const useRect = (ref: MutableRefObject<HTMLDivElement | null>): DOMRect => {
   const [rect, setRect] = useState<DOMRect>(getRect(ref ? ref.current : null));
