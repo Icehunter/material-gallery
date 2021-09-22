@@ -1,11 +1,11 @@
-import { Media, MediaItem, MediaType } from 'lib/types';
+import { Media, MediaItem, MediaType } from '../../types';
 import React, { FC, Fragment, memo, useMemo, useRef } from 'react';
 
 import { FlowImageTile } from './FlowImageTile';
-import { Image } from 'lib/types/Image';
+import { Image } from '../../types/Image';
 import ModuleStyles from './FlowGallery.module.scss';
 import clsx from 'clsx';
-import { useRect } from 'lib/hooks';
+import { useRect } from '../../hooks';
 
 export type FlowGalleryProps = {
   items: MediaItem<Media>[];

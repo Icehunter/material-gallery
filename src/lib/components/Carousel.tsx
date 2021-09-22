@@ -1,13 +1,13 @@
 import { ChevronLeft as ChevronLeftIcon, ChevronRight as ChevronRightIcon } from '@material-ui/icons';
-import { Image, Media, MediaItem, MediaType } from 'lib/types';
+import { Image, Media, MediaItem, MediaType } from '../types';
 import React, { FC, memo, useLayoutEffect, useMemo, useRef } from 'react';
-import { getNeighborIndexes, noop } from 'lib/utils';
+import { getNeighborIndexes, noop } from '../utils';
 
 import { IconButton } from '@material-ui/core';
 import { ImageTile } from './ImageTile';
 import ModuleStyles from './Carousel.module.scss';
 import clsx from 'clsx';
-import { useRect } from 'lib/hooks';
+import { useRect } from '../hooks';
 
 export type CarouselProps = {
   items: MediaItem<Media>[];

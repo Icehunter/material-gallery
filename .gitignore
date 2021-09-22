@@ -1,7 +1,11 @@
-/build
-/lib
 node_modules/
-.env.*
 
+/build
+/dist
+/coverage
+/lib
+/reports
 /storybook-static
+
+.env.*
 .eslintcache

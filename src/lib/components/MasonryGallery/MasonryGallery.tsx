@@ -1,11 +1,11 @@
-import { Image, Media, MediaItem, MediaType } from 'lib/types';
+import { Image, Media, MediaItem, MediaType } from '../../types';
 import React, { FC, Fragment, memo, useMemo, useRef } from 'react';
 
 import { MasonryImageTile } from './MasonryImageTile';
 import ModuleStyles from './MasonryGallery.module.scss';
 import clsx from 'clsx';
-import { findAndInsertByProperty } from 'lib/utils';
-import { useRect } from 'lib/hooks';
+import { findAndInsertByProperty } from '../../utils';
+import { useRect } from '../../hooks';
 
 export enum MasonryGalleryDirection {
   Vertical = 'Vertical',
@@ -57,15 +57,13 @@ const resolveMediaNodes = (
     return mediaNodes;
   }
 
-  const panels: Panel[] = [
-    ...Array(panelCount)
-      .fill(undefined)
-      .map((_, index) => ({
-        index,
-        items: [],
-        size: 0
-      }))
-  ];
+  const panels: Panel[] = Array(panelCount)
+    .fill(undefined)
+    .map((_, index) => ({
+      index,
+      items: [],
+      size: 0
+    }));
 
   // resolve element sizes
   for (let itemIndex = 0; itemIndex < items.length; itemIndex++) {

@@ -1,9 +1,9 @@
-import { Image, Media, MediaItem, MediaType } from 'lib/types';
+import { Image, Media, MediaItem, MediaType } from '../../types';
 import React, { FC, Fragment, memo, useMemo, useRef } from 'react';
 
 import { GridImageTile } from './GridImageTile';
 import ModuleStyles from './GridGallery.module.scss';
-import { useRect } from 'lib/hooks';
+import { useRect } from '../../hooks';
 
 export type GridGalleryProps = {
   items: MediaItem<Media>[];

@@ -1,13 +1,13 @@
 import { ChevronLeft as ChevronLeftIcon, ChevronRight as ChevronRightIcon } from '@material-ui/icons';
-import { Image, Media, MediaItem, MediaType } from 'lib/types';
+import { Image, Media, MediaItem, MediaType } from '../types';
 import React, { Dispatch, FC, SetStateAction, memo, useLayoutEffect, useMemo, useRef } from 'react';
 
 import { IconButton } from '@material-ui/core';
 import ModuleStyles from './FilmStrip.module.scss';
 import { Thumbnail } from './Thumbnail';
 import clsx from 'clsx';
-import { getNeighborIndexes } from 'lib/utils';
-import { useHorizontalScrollPosition } from 'lib/hooks';
+import { getNeighborIndexes } from '../utils';
+import { useHorizontalScrollPosition } from '../hooks';
 
 export type FilmStripProps = {
   items: MediaItem<Media>[];

@@ -18,5 +18,7 @@ export const getNeighborIndexes = (home: number, neighborhoodSize: number, range
     results[neighborIndex] = result;
   }
 
-  return [...new Set(results)];
+  const unique = new Set(results);
+
+  return Array.from(unique);
 };
