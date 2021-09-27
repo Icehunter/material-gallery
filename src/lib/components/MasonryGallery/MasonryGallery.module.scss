@@ -1,0 +1,33 @@
+.container {
+  display: flex;
+  justify-content: flex-start;
+  justify-items: flex-start;
+  align-items: flex-start;
+  align-content: flex-start;
+  flex-wrap: wrap;
+}
+
+.container.Vertical {
+  flex-direction: row;
+}
+
+.container.Horizontal {
+  flex-direction: column;
+}
+
+.panel.Horizontal {
+  height: auto !important;
+}
+
+.Vertical {
+  display: flex;
+  height: max-content;
+  flex-direction: column;
+}
+
+.Horizontal {
+  display: flex;
+  height: 100%;
+  width: max-content;
+  flex-direction: row;
+}

@@ -1,9 +1,10 @@
-import { AnimalsPhotos } from 'stories/samples/AnimalPhotos';
-import { LandscapePhotos } from 'stories/samples/LandscapePhotos';
-import { NaturePhotos } from 'stories/samples/NaturePhotos';
+import { animalsPhotos, landscapePhotos, naturePhotos } from 'stories/samples';
+
+import { Image } from 'lib/types';
+import { MediaCollection } from 'lib/types/MediaCollection';
+import { MediaType } from 'lib/types/MediaType';
 import { UnsplashAPIResponse } from 'stories/types/UnsplashAPIResponse';
-import { VirtualImageItem } from 'lib/types/ImageItem';
-import { clamp } from 'lib/utils/math';
+import { clamp } from 'lib/utils';
 import { useMemo } from 'react';
 
 export enum UnsplashCollectionSource {
@@ -13,9 +14,9 @@ export enum UnsplashCollectionSource {
 }
 
 export enum TargetType {
-  Width,
-  Height,
-  Thumbnail
+  Width = 'Width',
+  Height = 'Height',
+  Thumbnail = 'Thumbnail'
 }
 
 export type UseUnsplashStaticOptions = {
@@ -30,24 +31,26 @@ export const useUnsplashStatic = ({
   targetSize = 500,
   targetType = TargetType.Height,
   collectionSource = UnsplashCollectionSource.Landscape
-} = {}): VirtualImageItem[] => {
+} = {}): MediaCollection<Image> => {
   const normalizedImageCount = clamp(imageCount, 1, 300);
 
   const collection: UnsplashAPIResponse[] = useMemo(() => {
     switch (collectionSource) {
       case UnsplashCollectionSource.Animals:
-        return AnimalsPhotos;
+        return animalsPhotos;
       case UnsplashCollectionSource.Landscape:
-        return LandscapePhotos;
+        return landscapePhotos;
       case UnsplashCollectionSource.Nature:
-        return NaturePhotos;
+        return naturePhotos;
     }
   }, [collectionSource]);
 
   const images = useMemo(() => {
-    const results: VirtualImageItem[] = [];
+    const results: MediaCollection<Image> = {
+      items: []
+    };
 
-    for (let i = 0; i < normalizedImageCount; i++) {
+    for (let imageIndex = 0; imageIndex < normalizedImageCount; imageIndex++) {
       const {
         width,
         height,
@@ -59,7 +62,7 @@ export const useUnsplashStatic = ({
           profile_image: { small: smallProfileImage },
           links: { html: userProfileLink }
         }
-      } = collection[i];
+      } = collection[imageIndex];
 
       let normalizedWidth = width;
       let normalizedHeight = height;
@@ -86,9 +89,10 @@ export const useUnsplashStatic = ({
           break;
       }
 
-      results[i] = {
+      const image: Image = {
         // setup for retina displays/4k
         src: `${raw}&fm=jpg&q=80&${sizeQueryString}`,
+        raw,
         width: normalizedWidth,
         height: normalizedHeight,
         meta: {
@@ -101,6 +105,11 @@ export const useUnsplashStatic = ({
             link: userProfileLink
           }
         }
+      };
+
+      results.items[imageIndex] = {
+        type: MediaType.Image,
+        item: image
       };
     }
 

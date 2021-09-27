@@ -1,6 +1,7 @@
 import { GridGallery, GridGalleryProps } from '../lib';
 import { Meta, Story } from '@storybook/react/types-6-0';
-import { TargetType, UnsplashCollectionSource, useUnsplashStatic } from './hooks/useUnsplashStatic';
+import { TargetType, UnsplashCollectionSource, useUnsplashStatic } from './hooks';
+import { collectionSource, imageCount, themePaletteType, zoomScale } from './argTypes';
 
 import React from 'react';
 
@@ -9,26 +10,17 @@ export default {
   component: GridGallery,
   args: {
     imageCount: 50,
-    zoomLevel: 0,
+    zoomScale: 1,
     targetSize: 180,
     padding: 20,
     margin: 5,
     collectionSource: UnsplashCollectionSource.Landscape
   },
   argTypes: {
-    imageCount: {
-      control: { type: 'range', min: 1, max: 300, step: 1 }
-    },
-    zoomLevel: {
-      control: { type: 'range', min: -5, max: 5, step: 1 }
-    },
-    collectionSource: {
-      defaultValue: UnsplashCollectionSource.Landscape,
-      control: {
-        type: 'select',
-        options: Object.keys(UnsplashCollectionSource)
-      }
-    }
+    collectionSource,
+    imageCount,
+    themePaletteType,
+    zoomScale
   },
   parameters: {
     layout: 'fullscreen'
@@ -36,24 +28,19 @@ export default {
 } as Meta<GridGalleryProps>;
 
 const Template: Story<
-  GridGalleryProps & { imageCount: number; zoomLevel: number; collectionSource: UnsplashCollectionSource }
-> = ({ zoomLevel, targetSize, padding, margin, imageCount, collectionSource }) => {
-  const images = useUnsplashStatic({
+  GridGalleryProps & { imageCount: number; zoomScale: number; collectionSource: UnsplashCollectionSource }
+> = ({ zoomScale, targetSize, padding, margin, imageCount, collectionSource }) => {
+  const normalizedTargetSize = Math.floor(targetSize * zoomScale);
+
+  const collection = useUnsplashStatic({
     imageCount,
-    targetSize: targetSize,
+    targetSize: normalizedTargetSize,
     targetType: TargetType.Height,
     collectionSource
   });
+  const mediaItems = collection?.items ?? [];
 
-  return (
-    <div
-      style={{
-        width: '100%',
-        height: '100%'
-      }}>
-      <GridGallery items={images} zoomLevel={zoomLevel} targetSize={targetSize} padding={padding} margin={margin} />
-    </div>
-  );
+  return <GridGallery items={mediaItems} targetSize={normalizedTargetSize} padding={padding} margin={margin} />;
 };
 
 export const GridGalleryDefault = Template.bind({});

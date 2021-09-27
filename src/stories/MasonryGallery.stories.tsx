@@ -1,6 +1,7 @@
 import { MasonryGallery, MasonryGalleryDirection, MasonryGalleryProps } from '../lib';
 import { Meta, Story } from '@storybook/react/types-6-0';
-import { TargetType, UnsplashCollectionSource, useUnsplashStatic } from './hooks/useUnsplashStatic';
+import { TargetType, UnsplashCollectionSource, useUnsplashStatic } from './hooks';
+import { collectionSource, direction, imageCount, themePaletteType, zoomScale } from './argTypes';
 
 import React from 'react';
 
@@ -9,7 +10,7 @@ export default {
   component: MasonryGallery,
   args: {
     imageCount: 50,
-    zoomLevel: 0,
+    zoomScale: 1,
     targetSize: 320,
     padding: 20,
     margin: 5,
@@ -17,26 +18,11 @@ export default {
     collectionSource: UnsplashCollectionSource.Landscape
   },
   argTypes: {
-    imageCount: {
-      control: { type: 'range', min: 1, max: 300, step: 1 }
-    },
-    zoomLevel: {
-      control: { type: 'range', min: -5, max: 5, step: 1 }
-    },
-    direction: {
-      defaultValue: MasonryGalleryDirection.Vertical,
-      control: {
-        type: 'select',
-        options: Object.keys(MasonryGalleryDirection)
-      }
-    },
-    collectionSource: {
-      defaultValue: UnsplashCollectionSource.Landscape,
-      control: {
-        type: 'select',
-        options: Object.keys(UnsplashCollectionSource)
-      }
-    }
+    collectionSource,
+    direction,
+    imageCount,
+    themePaletteType,
+    zoomScale
   },
   parameters: {
     layout: 'fullscreen'
@@ -44,30 +30,26 @@ export default {
 } as Meta<MasonryGalleryProps>;
 
 const Template: Story<
-  MasonryGalleryProps & { imageCount: number; zoomLevel: number; collectionSource: UnsplashCollectionSource }
-> = ({ zoomLevel, targetSize, padding, margin, imageCount, direction, collectionSource }) => {
-  const images = useUnsplashStatic({
+  MasonryGalleryProps & { imageCount: number; zoomScale: number; collectionSource: UnsplashCollectionSource }
+> = ({ zoomScale, targetSize, padding, margin, imageCount, direction, collectionSource }) => {
+  const normalizedTargetSize = Math.floor(targetSize * zoomScale);
+
+  const collection = useUnsplashStatic({
     imageCount,
-    targetSize: targetSize,
+    targetSize: normalizedTargetSize,
     targetType: direction === MasonryGalleryDirection.Vertical ? TargetType.Width : TargetType.Height,
     collectionSource
   });
+  const mediaItems = collection?.items ?? [];
 
   return (
-    <div
-      style={{
-        width: '100%',
-        height: '100%'
-      }}>
-      <MasonryGallery
-        items={images}
-        zoomLevel={zoomLevel}
-        targetSize={targetSize}
-        padding={padding}
-        margin={margin}
-        direction={direction}
-      />
-    </div>
+    <MasonryGallery
+      items={mediaItems}
+      targetSize={normalizedTargetSize}
+      padding={padding}
+      margin={margin}
+      direction={direction}
+    />
   );
 };
 

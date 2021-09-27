@@ -1,4 +1,4 @@
-import { MutableRefObject, useCallback, useEffect, useState } from 'react';
+import { MutableRefObject, useCallback, useLayoutEffect, useState } from 'react';
 
 const getPrevElement = (list: Element[]): HTMLElement | null => {
   const sibling = list[0].previousElementSibling;
@@ -34,7 +34,7 @@ export const useHorizontalScrollPosition = (
   const [prevElement, setPrevElement] = useState<HTMLElement | null>(null);
   const [nextElement, setNextElement] = useState<HTMLElement | null>(null);
 
-  useEffect((): (() => void) | undefined => {
+  useLayoutEffect((): (() => void) | undefined => {
     const container = containerRef.current;
 
     if (!container) {
